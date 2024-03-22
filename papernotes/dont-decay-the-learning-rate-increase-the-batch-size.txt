@@ -1,0 +1,8 @@
+[arXiv:1711.00489](https://arxiv.org/abs/1711.00489)
+  
+<img src="papernotes/figures/dont-decay-the-learning-rate-increase-the-batch-size-title.jpg" width="400" />
+<img src="papernotes/figures/dont-decay-the-learning-rate-increase-the-batch-size-abstract.jpg" width="400" />
+
+- A common practice is to decay the learning rate throughout training. This paper shows that we can achieve the same learning curve on both training and testing by instead increasing batch size during training.
+- Linear scaling rule: if we increase batch size by a scalar K, we need to increase learning rate by a scalar K to maintain the same SGD dynamics
+- Decaying the learning rate is simulated annealing

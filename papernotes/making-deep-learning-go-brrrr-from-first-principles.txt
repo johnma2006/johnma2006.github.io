@@ -1,0 +1,16 @@
+[https://horace.io/brrr_intro.html](https://horace.io/brrr_intro.html)
+  
+<img src="papernotes/figures/making-deep-learning-go-brrrr-from-first-principles-title.jpg" width="400" />
+
+#### Efficiency from First Principles
+
+- Efficiency is the following 4 components 
+	- Compute: Time spent computing floating point operations
+	- Memory Bandwidth: Time spent transferring tensors from CUDA global memory to CUDA shared memory
+	- Overhead: everything else
+	- Other bandwidth: Data transfer costs (CPU to GPU), communication costs (GPU to GPU) 
+- Element-wise ops tend to be memory-bound since the # of FLOPs is pretty low compared to amount of data transferred
+- Solutions for each performance regime:
+	- Compute-bound: get faster GPUs
+	- Memory-bandwidth-bound: operator fusion, quantization
+	- Overhead-bound: tracing, operation fusion, don't use Python

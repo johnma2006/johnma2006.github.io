@@ -1,0 +1,32 @@
+[https://tech.preferred.jp/en/blog/technologies-behind-distributed-deep-learning-allreduce/](https://tech.preferred.jp/en/blog/technologies-behind-distributed-deep-learning-allreduce/)
+  
+<img src="papernotes/figures/ring-allreduce-title.jpg" width="400" />
+
+#### AllReduce operation
+- <img src="papernotes/figures/ring-allreduce-1.jpg" width="400" />
+
+#### Naive algorithm
+
+- Select one process to be the master, gather all arrays into the master, reduce in the master, the distribute
+	- This is **not scalable**, as the master is the bottleneck
+	
+#### Ring-AllReduce
+
+- A better algorithm is Ring-AllReduce which uses a ring topology 
+- <img src="papernotes/figures/ring-allreduce-2.jpg" width="400" />
+- <img src="papernotes/figures/ring-allreduce-3.jpg" width="400" />
+- <img src="papernotes/figures/ring-allreduce-4.jpg" width="400" />
+- <img src="papernotes/figures/ring-allreduce-5.jpg" width="400" />
+- Divide each process data into P chunks, where P = # processes. Then,
+	- Step 1: P<sub>1</sub>Chunk<sub>1</sub> is sent from P<sub>1</sub> to P<sub>2</sub>
+	- Step 2: P<sub>1</sub>Chunk<sub>1</sub> + P<sub>2</sub>Chunk<sub>1</sub> is sent from P<sub>2</sub> to P<sub>3</sub>
+	- Step 3: P<sub>1</sub>Chunk<sub>1</sub> + P<sub>2</sub>Chunk<sub>1</sub> + P<sub>3</sub>Chunk<sub>1</sub> is sent from P<sub>3</sub> to P<sub>4</sub>
+	- ...
+	- At the end, P<sub>P</sub> has Sum(Chunk<sub>1</sub>), P1 has Sum(Chunk<sub>2), ...
+- Do another round so that each process has all Sum(Chunk<sub>i</sub>)s.
+- Amount of data transferred is 2N(P-1)/P, which is independent of P.
+
+#### Examples
+
+- Average gradients during DDP / FSDP
+- Combine activations in tensor parallelism

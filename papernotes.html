@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <title>John Z. Ma \ Paper Notes</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="https://md-block.verou.me/md-block.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div id="menu-container"></div>
+    <div id="content-container">
+      <main>
+        <h2>Paper Notes</h2>
+        <div id="expandable-container"></div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+function generateExpandableHTML(data) {
+  let html = '';
+  data.forEach(item => {
+    html += `
+      <div class="expandable">
+        <div class="expandable-title expandable-title-toplevel">${item.title} (<span class="item-count">${item.content.length}</span>)</div>
+        <div class="expandable-content expandable-content-toplevel">
+    `;
+    item.content.forEach(content => {
+      html += `
+        <div class="expandable-child">
+          <div class="expandable-title">${content.title}</div>
+          <div class="expandable-content"><md-block src="${content.src}"></md-block></div>
+        </div>
+      `;
+    });
+    html += `
+        </div>
+      </div>
+    `;
+  });
+  return html;
+}
+
+function toggleContent() {
+  const content = this.nextElementSibling;
+  if (content) {
+    const isExpanded = content.classList.contains('expanded');
+    content.classList.toggle('expanded', !isExpanded);
+    this.classList.toggle('expanded', !isExpanded);
+  }
+}
+
+fetch('papernotes/papernotes.json')
+  .then(response => response.json())
+  .then(data => {
+    // Generate HTML code and insert it into the container
+    const expandableContainer = document.getElementById('expandable-container');
+    expandableContainer.innerHTML = generateExpandableHTML(data);
+
+    // Add event listeners to expandable titles
+    document.querySelectorAll('.expandable .expandable-title').forEach(title => {
+      title.addEventListener('click', toggleContent);
+    });
+  })
+  .catch(error => {
+    console.error('Error loading JSON data:', error);
+  });
+</script>
+
+  <script src="script.js"></script>
+</body>
+</html>

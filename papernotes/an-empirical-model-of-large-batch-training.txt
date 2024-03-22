@@ -1,0 +1,72 @@
+[arXiv:1812.06162](https://arxiv.org/abs/1812.06162)
+  
+<img src="papernotes/figures/an-empirical-model-of-large-batch-training-title.jpg" width="400" />
+<img src="papernotes/figures/an-empirical-model-of-large-batch-training-abstract.jpg" width="400" />
+
+#### Goal
+
+- The goal is to find the "maximum useful batch size" to minimize training loss while balancing training time and compute cost
+	- At very **small** batch sizes, doubling the batch size halves the training time (because we can parallelize on 2x the chips) without increasing compute
+	- At very **large** batch sizes, more parallelization doesn't lead to faster training, but wastes compute
+	- **"Maximum useful batch size" B<sub>crit</sub>** is the point at which more parallelization isn't as useful anymore
+
+#### Compute Cost vs. Training Time
+
+- <img src="papernotes/figures/an-empirical-model-of-large-batch-training-1.jpg" width="400" />
+- Training time: S = optimization steps (assuming high parallelization)
+- Compute cost: E = num examples processed
+- **Magical hyperbola formula: (S / S<sub>min</sub> - 1) * (E / E<sub>min</sub> - 1) = 1**
+	- S<sub>min</sub> is min steps to reach certain loss; E<sub>min</sub> is min examples. These are fixed and problem-dependent.
+
+#### Main contribution
+
+- "Gradient noise scale" B<sub>noise</sub> = E[|G<sub>i</sub> - G<sub>true</sub>|<sup>2</sup>] / |G<sub>true</sub>|<sup>2</sup> (where G<sub>i</sub> is gradient from an individual example) estimates the "maximum useful batch size" B<sub>crit</sub> that balances training time and compute cost
+	- The "maximum useful batch size" B<sub>crit</sub> (defined below) is estimated as B = B<sub>noise</sub>. As B increases past this point,
+		- <img src="papernotes/figures/an-empirical-model-of-large-batch-training-2.jpg" width="400" />
+		- B stops reducing the noisiness of the gradient significantly
+		- Therefore, E[ΔLoss] also stops improving
+	- At B = B<sub>noise</sub>,
+		- Training time / optimal training time = 2, where optimal training time uses full gradient
+		- Compute cost / optimal compute cost = 2, where optimal compute cost uses very small batch
+	- Interpretation of B<sub>noise</sub> / B: the ratio of noise to gradient in the batch gradient
+		- Intuitively, **when B / B<sub>noise</sub> = 1, the noise in the gradient is equal to the signal**
+
+#### Optimal learning rate and expected ΔLoss given noisy gradient from batch of size B
+
+- Optimal learning rate ε<sub>opt</sub> = ε<sub>max</sub> / (1 + B<sub>noise</sub> / B)
+	- Note: this suggests that at small batches, ε<sub>opt</sub> is proportional to batch size; at large batches, it levels out
+- Expected ΔL<sub>noise</sub> = ΔL<sub>max</sub> / (1 + B<sub>noise</sub> / B)
+	- Proof:
+		- ΔL<sub>max</sub> from true gradient G is roughly |G|<sup>2</sup> if use optimal step size ε<sub>max</sub>
+		- Let G<sub>batch</sub> be a noisy estimate of G with covariance Σ. Compute ΔL<sub>noise</sub> = E[L(θ - ε * G<sub>batch</sub>)] using formula for expecation on quadratic form. Solve for optimal ε to get ΔL<sub>noise</sub>
+
+#### Critical batch size B<sub>crit</sub>
+
+- Definition: B<sub>crit</sub> is the batch size at which S / S<sub>min</sub> = 2, AKA training time is 50% optimal (and therefore E / E<sub>min</sub> = 2, from the hyperbola formula)
+- Equivalently, B<sub>crit</sub> = E<sub>min</sub> / S<sub>min</sub>
+	- Proof: If S / S<sub>min</sub> = E / E<sub>min</sub>, then B = E / S = E<sub>min</sub> / S<sub>min</sub>
+- The paper predicts that B<sub>crit</sub> ≈ B<sub>noise</sub>
+	- Intuitive proof: at B = B<sub>noise</sub>, E[ΔL<sub>noise</sub>] = E[ΔL<sub>max</sub>] / 2; therefore, it'll take twice as many steps
+
+#### Discussion
+
+- Expected patterns in B<sub>noise</sub>
+	- **Larger for difficult tasks**, because individual datapoints will be less correlated
+	- **Grows over training**, because |G| decreases as we approach minimum, while noise stays constant
+	- Only weakly dependent on model size. However, larger models that achieve a better loss will have a higher noise scale
+- Temperature: at equilibrium, Bnoise ∝ 1/T, where T is the temperature
+
+#### Experiments
+
+- Goal: measure B<sub>crit</sub> usingn the formulation B<sub>crit</sub> = E<sub>min</sub> / S<sub>min</sub>, and compare that to B<sub>noise</sub>
+- Methodology:
+	- For various (generative, classification, RL) tasks
+	- For each batch size, find and fix the optimal learning rate ε<sub>opt</sub>. ε<sub>opt</sub> is determined by doing a grid search over LR and choosing the LR that minimizes loss after fixed # of steps 
+
+#### B<sub>simple</sub>
+
+- B<sub>simple</sub> is an computationally faster approximation of B<sub>noise</sub>
+	- B<sub>simple</sub> = tr(Σ) / |G|<sup>2</sup> = E[|G<sub>i</sub> - G<sub>true</sub>|<sup>2</sup>] / |G<sub>true</sub>|<sup>2</sup>
+	- Precisely, B<sub>noise</sub> = tr(HΣ) / G<sup>T</sup>HG
+		- H = Hessian, Σ = covariance of gradients w.r.t. parameters θ, G = expected gradient
+	- Empirically, B<sub>simple</sub> and B<sub>noise</sub> differ by only a small constant multiplicative factor

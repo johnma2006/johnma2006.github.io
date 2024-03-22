@@ -1,0 +1,16 @@
+[arXiv:2305.13245](https://arxiv.org/abs/2305.13245)
+  
+<img src="papernotes/figures/grouped-query-attention-title.jpg" width="400" />
+<img src="papernotes/figures/grouped-query-attention-abstract.jpg" width="400" />
+<img src="papernotes/figures/grouped-query-attention-1.jpg" width="400" />
+
+- In MHA, the Q K V O matrices are all size (dim, dim)
+- In GQA, they have size
+	- Q: (dim, dim)
+	- K: (dim, n_kv_head * per_head_dim)
+	- V: (dim, n_kv_head * per_head_dim)
+	- O: (dim, dim)
+- GQA is especially useful in inference because the KV cache memory is reduced by a factor of n_kv_head / n_head
+- The paper introduces upsampling, where a model trained with MHA can be converted to MQA or GQA
+	- Procedure: mean-pool the MHA heads, then pretrain a bit (5% of original pre-training time) to allow the model to adapt to the new structure
+	- Mistral 7B has n_head = 32, n_kv_head = 8

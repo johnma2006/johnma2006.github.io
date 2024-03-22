@@ -1,0 +1,29 @@
+#### Infinitely wide neural networks ==  kernel linear regression 
+
+- If u(t) = (f(θ, x<sub>1</sub>), ..., f(θ, x<sub>n</sub>))<sup>T</sup> is the network's outputs for all training points x<sub>i</sub> at time t, and y are the targets, then:
+	- du(t) / dt = -H(t) * (u(t) - y)
+		- where H(t) is the (n x n) PSD kernel matrix given by H(t)<sub>ij</sub> = ϕ(x<sub>i</sub>)<sup>T</sup>ϕ(x<sub>j</sub>).
+- This is the same update equation as gradient descent on linear regression!
+- The feature mapping for xi is given by ϕ(x<sub>i</sub>) = gradient of the output f(θ, x<sub>i</sub>) with respect to the parameters θ.
+	- If infinite width and NTK-parameterization, H(t) converges to the NTK and stays constant throughout training.
+	- We can therefore interpret gradient descent as just linear regression using that feature map ϕ(x)!
+
+#### Deriving NTK from neural network linearization
+
+Intuition: given NTK-parameterization and infinite width,
+
+- We can show that gradient descent operates in a small neighbourhood around the init params θ<sub>0</sub>, which is the "lazy regime" / "kernel regime"
+- The Taylor expansion w.r.t θ, f(x, θ) ≈ f(x, θ<sub>0</sub>) + ϕ(x)<sup>T<sup>∇θ becomes really accurate in this lazy regime
+- Therefore, gradient descent on θ is equivalent to {{c1::optimizing θ in this linear equation}}
+	- AKA **linear regression using the feature map ϕ(x)!!!**
+
+#### Detailed Derivation
+
+- We can expand the network function **with respect to the parameters θ** around its **initialization θ<sub>0</sub>**
+	- f(x, θ) ≈ f(x, θ<sub>0</sub>) + ∇<sub>w</sub>f(x, θ<sub>0</sub>)<sup>T</sup>(θ − θ<sub>0</sub>)
+- Remember, ϕ(x<sub>i</sub>) = gradient of the output f(θ, x<sub>i</sub>) with respect to θ.
+- We can then say
+	- f(x, θ) ≈ f(x, θ<sub>0</sub>) + ϕ(x<sub>i</sub>)<sup>T</sup>∇θ
+	- AKA, output after training is just output at init) + (gradient of output w.r.t weights) times (change in weights)
+- This linearization is accurate in the limit of infinite width
+- This explains the **tangent** in neural **tangent** kernel: this linear approx is the tangent plane to the function g( . ) = f(x, . )

@@ -1,0 +1,12 @@
+[https://nonint.com/2023/11/05/compute-multipliers/](https://nonint.com/2023/11/05/compute-multipliers/)
+
+- Compute efficiency: how much compute needed to reach a given test loss
+- Compute multipliers: any idea that improves compute efficiency by a multiplier X%
+	- Dario Amodei: proprietary compute multipliers are among the most valuable secrets Anthropic has
+- Evaluating ML ideas:
+	- If we believe in scaling laws, it's not impressive to simply achieve SOTA on some eval metric, since everything can be SOTA with enough compute
+	- All ideas, when measured against other ideas, must keep compute fixed in order to convince people that the SOTA result isn't simply due to scale
+		- (*Comment: maybe? fixed compute seems to be common, but compute efficiency doesn't seem like the end goal; for example, in production systems, inference cost will dominate, so "maximize performance while fixing inference cost / model size" seems better*)
+- Examples:
+	- New architecture: must achieve lower loss while keeping compute fixed
+- New dataset: must achieve better evals while keeping tokens trained fixed

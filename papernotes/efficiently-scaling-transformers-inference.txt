@@ -1,0 +1,37 @@
+[arXiv:2211.05102](https://arxiv.org/abs/2211.05102)
+  
+<img src="papernotes/figures/efficiently-scaling-transformers-inference-title.jpg" width="400" />
+<img src="papernotes/figures/efficiently-scaling-transformers-inference-abstract.jpg" width="400" />
+<img src="papernotes/figures/efficiently-scaling-transformers-inference-1.jpg" width="400" />
+
+#### Overview of transformer inference
+
+- Main challenges
+	- Memory: model params (12Ld<sup>2</sup>) + KV cache (L*d per token). The smaller the model, the relatively larger KV cache is
+	- Memory bandwidth: need to transfer memory from GPU HBM <-> registers
+- Inference cost has 2 forms
+	- Latency: in the "prefill" stage, how long to fill KV cache for the prompt
+	- Throughput: in autoregressive decoding, tokens per sec
+- 3 costs that bottleneck inference
+	- FLOPs. Decrease proportional to nchips.
+	- Memory bandwidth. Decrease proportional to nchips.
+	- Communication costs. For a given partitioning strategy, does not decrease w.r.t. n<sub>chips</sub>, so becomes increasingly important as n<sub>chips</sub> grows.
+
+#### Non-functional requirements
+	
+- Non-functional requirements differ by application, with different tradeoffs
+	- Chatbots require low latency, high throughput. Therefore, we need to increase n<sub>chips</sub> and partition the model as much as possible. Smaller batch also gives lower latency, but results in lower MFU (since the system becomes memory bound)
+	- Offline batch jobs (summarization, scoring) require high throughput and low cost-per-token. In this case, maximize per-chip throughput / cost per token by increasing batch size, which results in higher MFU.
+
+#### Distributed inference techniques
+
+- FFN can be partitioned in various ways. Let matrix M = (R, C). The goal is to minimize communication.
+	- 1D weight-stationary: Partition n<sub>chips</sub> along R or C axis. Communication cost per token: 2d / network bandwidth (proof: Bld FP16s in reduce-scatter and all-gather)
+	- 2D weight-stationary: Partition √n<sub>chips</sub> along both R and C axis. Drawback is, instead of communicating tensors of size d, need to communicate of size d<sub>ffn</sub> = 4d occationally. Communication cost per token: 8d / (network bandwidth * √n<sub>chips</sub>). Therefore, more efficient than 1D when nchips > 16.
+	- Weight-gathered. Keep the activations stationary on each chip, move around the weights instead. Reason: as batch or seqlen grows, size of output activations > size of model.
+- Attn (with GQA) can be partitioned by attn head which are inherently parallel.
+	- Usually partitioned by the n_kv_head, but this limits the amount of parallelism.
+	- Llama 2: to optimize for latency, host largest models using 8 A100s in a single node with tensor parallelism.
+		- In this setting, sharding for MQA cannot be done across heads, as # heads < # GPUs. If we duplicate the KV values in all GPUs, this negates the memory cost savings.
+		- If we shard across batch, it only works when batch sizes > # shards, and adds additional complexity. 
+

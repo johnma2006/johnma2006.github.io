@@ -1,0 +1,9 @@
+[arXiv:2010.05627](https://arxiv.org/abs/2010.05627)
+  
+<img src="papernotes/figures/understanding-the-generalization-of-adam-in-learningneural-networks-with-proper-regularization-title.jpg" width="400" />
+<img src="papernotes/figures/understanding-the-generalization-of-adam-in-learningneural-networks-with-proper-regularization-abstract.jpg" width="400" />
+
+#### Results
+
+- In convex optimization problems, Adam and SGD provably converge to the same solution **if** weight decay is used
+- This suggests that the generalization gap between Adam and SGD is tied to the nonconvex landscape of deep learning optimization

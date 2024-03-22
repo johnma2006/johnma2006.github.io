@@ -1,0 +1,10 @@
+[arXiv:2205.10287](https://arxiv.org/abs/2205.10287)
+  
+<img src="papernotes/figures/on-the-sdes-and-scaling-rules-for-adaptive-gradient-algorithms-title.jpg" width="400" />
+<img src="papernotes/figures/on-the-sdes-and-scaling-rules-for-adaptive-gradient-algorithms-abstract.jpg" width="400" />
+
+#### Results
+
+- Adaptive algorithms like Adam follow different SDE than SGD.
+- Linear scaling rule is proven for the simple SDE governing SGD.
+- This paper derives the more complex SDE approximation for Adam to prove the square root scaling law which says that **learning rate should scale with sqrt(batch size)**

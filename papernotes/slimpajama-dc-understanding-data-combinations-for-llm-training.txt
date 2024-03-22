@@ -1,0 +1,30 @@
+[arXiv:2309.10818](https://arxiv.org/abs/2309.10818)
+  
+<img src="papernotes/figures/slimpajama-dc-understanding-data-combinations-for-llm-training-title.jpg" width="400" />
+<img src="papernotes/figures/slimpajama-dc-understanding-data-combinations-for-llm-training-abstract.jpg" width="400" />
+
+#### Dataset
+
+- 627B token dataset
+	- 330B: Common Crawl
+	- 170B: C4 (C4 is CommonCrawl but cleans the data, discarding duplicates, spam, offensive content; used to train T5)
+	- 30B: GitHub, Books, Arxiv, Wikipedia, StackExchange
+
+#### Meticulous data filtering
+
+- Global dedup (as opposed to local) is very important. Dedup using locality aware hashing (MinHashLSH) with similarity threshold 0.8
+	- Intuition: want to train on as diverse a dataset as possible; high duplication results in overfitting on duplicated documents
+	- Make sure to dedup within train/test
+- Low-length document filtering: remove documents (besides Books and GitHub) less than 200 chars, as these are typically metadata
+
+#### Dataset Combination Experiments
+
+- Tested various data mixtures that keep total training tokens the same
+	- Starting with 330B CC, incrementally increase the diversity of source combinations (300B CC + 30B GitHub, 250B CC + 30B GitHub + 26B Books + 24B Wikipedia)
+	- Then, vary domain proportions (e.g. 250B CC + 80B GitHub, 250B CC + 80B Wiki)
+- Evaluated on Eleuther Eval Harness
+	- ARC: grad school science
+	- HellaSwag: common sense inference
+	- MMLU: multitask proficiency across math, history, CS, law, ...
+	- TruthfulQA: tests inclination to echo inaccurate info frequently encounted online
+- Results: diversity increase overall eval score a bit. RefinedWeb is higher quality.

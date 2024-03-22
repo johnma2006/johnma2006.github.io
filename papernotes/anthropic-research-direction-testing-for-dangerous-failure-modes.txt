@@ -1,0 +1,6 @@
+[https://www.anthropic.com/news/core-views-on-ai-safety](https://www.anthropic.com/news/core-views-on-ai-safety)
+  
+- One key concern is the possibility that increased capabilities through scale will lead to harmful emergent behaviours such as deception or strategic planning
+- To anticipate these problems, we set up environments where we deliberately train these properties into small-scale models, in order to isolate and study them
+- Aim to build detailed quantitative models of how dangerous failure modes vary with scale so that we can anticipate them in advance
+

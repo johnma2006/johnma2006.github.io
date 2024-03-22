@@ -1,0 +1,19 @@
+[https://distill.pub/2017/momentum/](https://distill.pub/2017/momentum/)
+  
+<img src="papernotes/figures/why-momentum-really-works-title.jpg" width="400" />
+
+#### Critical learning rate
+
+- To prevent divergence, the learning rate must satisfy
+	- (if no momentum) 0 < LR * λ < 2
+	- (if momentum) 0 < LR * λ < 2 + 2β
+
+#### Optimal learning rate
+
+- (if no momentum) Optimal LR = 2 / (λ<sub>n</sub> + λ<sub>1</sub>)
+	- Note: for ill-conditioned problems, this is near the point where λ<sub>n</sub> diverges. That is, we want to set LR as high as possible without diverging.
+	- Convergence rate: Let C = condition number = λ<sub>n</sub> / λ<sub>1</sub>.
+		- Then, converage rate = (C - 1) / (C + 1) (lower is faster)
+		- Proof: convergence along a given eigenvector/eigenvalue λi has convergence rate |1 - LR * λ<sub>i</sub>|<sup>t</sup>. Therefore, the slowest direction will be either |1 - LR * λ<sub>1</sub>| or |1 - LR * λ<sub>n</sub>|. Set these equal and solve for LR.
+- (if momentum) Optimal LR =  (2 / (√λ<sub>n</sub> + √λ<sub>1</sub>))<sup>2</sup>
+	- Note: for ill-conditioned problems, this is also near the point where λ<sub>n</sub> diverges. 

@@ -1,0 +1,40 @@
+[arXiv:2304.06939](https://arxiv.org/abs/2304.06939)
+  
+<img src="papernotes/figures/multimodal-c4-an-open-billion-scale-corpus-of-images-interleaved-with-text-title.jpg" width="400" />
+<img src="papernotes/figures/multimodal-c4-an-open-billion-scale-corpus-of-images-interleaved-with-text-abstract.jpg" width="400" />
+
+#### Motivation
+
+- Image-text models like Flamingo support in-context learning via interleaving of images/text
+- Require pretraining on similarly interleaved sequences of images and text, as opposed to image-text pair datasets like LAION
+
+#### Dataset: mmc4 (multimodal C4)
+
+<img src="papernotes/figures/multimodal-c4-an-open-billion-scale-corpus-of-images-interleaved-with-text-1.jpg" width="400" />
+
+- Variants:
+	- fewer-faces: remove images with faces to protect privacy
+	- core: smaller, higher-precision subset with stricter filtering and higher image-text similarity
+
+#### Collection Methodology
+
+- (1) Initial data collection
+	- Expansion of text-only C4 dataset, which has been cleaned via English-identification, deduplication, and obscenity filtering
+- (2) Gathering images
+	- Retrieve original webpages for each c4-en document. Eliminate c4-en documents with no downloadable images
+	- Extract image URLs (filter to png/jpeg/jpg, exclude urls with logo, button, icon, plugin, widget)
+	- Download images, resize to 800px
+- (3) De-duplication + small resolution
+	- Duplicate image detection using opennota's phash; remove duplicates
+	- Discard images with width or height < 150px (small icons, nav buttons)
+	- Discard images with apect ratio > 2 (banner ads)
+- (4) NSFW image filtering
+	- NSFW detection using DataComp's NSFW classifier: 4-layer MLP trained on LAION 2B NSFW dataset with input features extracted from CLIP-ViT
+	- Remove images with predicted NSFW prob > 10%
+- (5) Aligning images and sentences
+	- Assign images to sentences using bipartite linear assignment
+	- Use CLIP-ViT model to estimate bipartite weights := cosine similarity between image and sentence
+
+#### Applications:
+
+- Used mmc4 to train OpenFlamingo

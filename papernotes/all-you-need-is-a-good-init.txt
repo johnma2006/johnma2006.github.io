@@ -1,0 +1,9 @@
+[arXiv:1511.06422](https://arxiv.org/abs/1511.06422)
+  
+<img src="papernotes/figures/all-you-need-is-a-good-init-title.jpg" width="400" />
+<img src="papernotes/figures/all-you-need-is-a-good-init-abstract.jpg" width="400" />
+
+#### Methodology
+- Instead of computing a formula for how to scale weights in terms of the dim of particular layers (a la Kaiming, Xavier), this algorithm instead takes an empirical approach
+- Feed a batch of input data through the network layer-by-layer
+- Scale the weights of each layer until the scale of that layer's outputs is sufficiently close to 1 

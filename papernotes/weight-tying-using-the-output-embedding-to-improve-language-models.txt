@@ -1,0 +1,11 @@
+[arXiv:1608.05859](https://arxiv.org/abs/1608.05859)
+  
+<img src="papernotes/figures/weight-tying-using-the-output-embedding-to-improve-language-models-title.jpg" width="400" />
+<img src="papernotes/figures/weight-tying-using-the-output-embedding-to-improve-language-models-abstract.jpg" width="400" />
+
+- Let U be input embedding, V be output embedding. Weight tying ties U == V.
+- If V has shape (vocab_size, embed_dim), we should be thinking of V as an embedding
+	- Consider V[cat, :], V[kitten, :].
+	- Output probability = dot(actv, V[cat, :]) should be similar to dot(actv, V[feline, :])
+	- This implies V[cat, :] is similar to V[feline, :]
+

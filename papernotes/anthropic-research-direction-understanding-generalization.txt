@@ -1,0 +1,5 @@
+[https://www.anthropic.com/news/core-views-on-ai-safety](https://www.anthropic.com/news/core-views-on-ai-safety)
+  
+- Deeper understanding of LLM training procedures
+- Aims to answer question such as, if an AI displays concerning behaviour, is it just harmless memorization of training sequences, or an integral part of the model's conception of AI Assistants?
+- Examples: Studying LLM Generalization with Influence Functions, which aims to trace a model's outputs back to the training data

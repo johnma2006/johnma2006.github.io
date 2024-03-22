@@ -1,0 +1,10 @@
+[https://nonint.com/2023/07/01/techniques-for-debugging-neural-networks/](https://nonint.com/2023/07/01/techniques-for-debugging-neural-networks/)
+
+- Know how to interpret loss curves
+	- Rarely do tweaks to an NN result in a change to the shape of the loss curve
+- For generative models: Build a good eval and plot it regularly
+	- The eval should sample from the generator and the eval should measure some aspect that you aren't actively optimizing
+	- Favourite approach: take a pretrained classifier for a modality and use it to generate loss values between real/generated classes given a label
+- Plot grad, param, and activation nomrs
+	- In runs that diverge soon, {{c1::spikes in the grad norms will occur}}
+	- Param norms that grow without an upper bound are an early warning sign of {{c1::overfitting}}

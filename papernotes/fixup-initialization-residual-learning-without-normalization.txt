@@ -1,0 +1,15 @@
+[arXiv:1901.09321](https://arxiv.org/abs/1901.09321)
+  
+<img src="papernotes/figures/fixup-initialization-residual-learning-without-normalization-title.jpg" width="400" />
+<img src="papernotes/figures/fixup-initialization-residual-learning-without-normalization-abstract.jpg" width="400" />
+
+#### Results
+
+- Initialization goal: initialize such that SGD updates to the output activations are independent of the depth
+	- Comment: this is similar to constant gradient norm independent of depth. Proof Sketch: if update to output activation is θ(1), then change in loss (= gradient norm) is θ(1).
+- FixUp: scale the weights in each residual branch by 1/sqrt(L)
+	- Intuition: in a pre-norm residual network, output = output1 + output2 + ... + outputL, therefore the gradient norm of each output<sub>i</sub> needs to be proportional to 1/sqrt(L) for the entire gradient norm to be θ(1)
+- Training residual networks with FixUp is a stable as training with normalization -- even for networks as deep as 10,000 layers
+
+
+

@@ -1,0 +1,39 @@
+[https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45530.pdf](https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45530.pdf)
+  
+<img src="papernotes/figures/deep-neural-networks-for-youtube-recommendations-title.jpg" width="400" />
+
+#### Requirements / Evaluation
+
+- During development, offline metrics such as precision, recall, ranking loss guide iterative improvements
+- However, the ground truth effectiveness is measured using A/B testing via live experiments, measuring changes in user engagement via CTR, watch time
+	- Live A/B results are not always correlated with offline experiments
+
+#### Data
+
+- Although explicit feedback mechanisms exist on YouTube, we use implicit feedback (user interactions) to train the model because there is orders of magnitude more data available.
+
+#### Methodology
+
+- Two neural networks: one for candidate generation and one for ranking
+	- <img src="papernotes/figures/deep-neural-networks-for-youtube-recommendations-1.jpg" width="400" />
+
+- Candidate generation
+	- Goal: Retrieves ~hundreds of videos from the ~millions via collaborative filtering
+	- Technique: "extreme" multiclass classification, # classes = # videos
+		- <img src="papernotes/figures/deep-neural-networks-for-youtube-recommendations-2.jpg" width="400" />
+		- <img src="papernotes/figures/deep-neural-networks-for-youtube-recommendations-3.jpg" width="400" />
+		- For user U and context C at time t, they watched a video w<sub>t</sub> ∈ {millions of videos i}. Model P(w<sub>t</sub> = i) = softmax(u<sup>T</sup>v<sub>i</sub>)
+			- u = user embedding. Features: watch history (repr as average of embedded video IDs), search history (avg embedding of search tokens), demographics.
+			- v<sub>i</sub> = video embedding. This is the output layer.
+	- Dataset: predict next watch in a PIT fashion, as opposed to randomly held-out watch, to prevent leaking future information
+	- Inference: Compute top K nearest neighbours v<sub>i</sub> of u using efficient general purpose libraries.
+- Ranking
+	- Goal: Assigns a score to each of the ~hundreds of videos and returns top ~dozen
+	- Heavy Feature Engineering: Rich set of hand-built features because we only need to score hundreds.
+		- Features describe either the user or the item. Most important are those that describe the user's previous interaction with the item itself or similar items (the channel) 
+		- Categorical: video ID, last N video IDs, last search query, user/video language
+			- All cat features are embedded in dimension roughly log(size of vocab)
+		- Continuous: time since last watch, # previous impressions
+			- Normalization is critical
+		- Technique: binary classification -- given an impression, predict positive (click) or negative (no-click).
+			- Positive examples are weighted by watch time; negative examples are weighted by 1; the result is, learned odds are approx E[T]. 

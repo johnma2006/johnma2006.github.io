@@ -1,0 +1,30 @@
+[arXiv:2203.15556](https://arxiv.org/abs/2203.15556)
+
+[https://www.lesswrong.com/posts/6Fpvch8RR29qLEWNH/chinchilla-s-wild-implications](https://www.lesswrong.com/posts/6Fpvch8RR29qLEWNH/chinchilla-s-wild-implications)
+  
+<img src="papernotes/figures/chinchilla-training-compute-optimal-large-language-models-title.jpg" width="400" />
+<img src="papernotes/figures/chinchilla-training-compute-optimal-large-language-models-abstract.jpg" width="400" />
+
+#### Motivation
+
+- Question: Given a fixed FLOPs budget, how should one trade-off model size and number of training tokens?
+	- Answer: **tokens = 20 * params**
+	- Note: Chinchilla says nothing about inference costs; if this dominates, then we should train on a much larger amount of tokens than Chinchilla-optimal
+- Cosine schedule: Chinchilla differs from Scaling Laws paper because the latter used a fixed cosine LR schedule, while Chinchilla found that **matching the cosine schedule to the number of training steps (with 10x LR decay) is very important for minimizing loss**
+
+#### Methodology
+
+- Approach 1: Fix model sizes and vary # of training tokens
+- <img src="papernotes/figures/chinchilla-training-compute-optimal-large-language-models-1.jpg" width="400" />
+
+- Approach 2: For 9 different FLOP budgets, vary the model size vs tokens, and find the (model_size, token) that minimizes final training loss
+- <img src="papernotes/figures/chinchilla-training-compute-optimal-large-language-models-2.jpg" width="400" />
+
+- Approach 3: Fit a parametric loss function
+- <img src="papernotes/figures/chinchilla-training-compute-optimal-large-language-models-3.jpg" width="400" />
+- <img src="papernotes/figures/chinchilla-training-compute-optimal-large-language-models-4.jpg" width="400" />
+- <img src="papernotes/figures/chinchilla-training-compute-optimal-large-language-models-5.jpg" width="400" />
+
+#### Are we running out of (text-only, non-synthetic) data?
+
+- Say the largest text-only training datasets are 10T, Chinchilla laws implies that this will support only a 500B models

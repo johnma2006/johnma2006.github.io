@@ -1,0 +1,6 @@
+[https://www.anthropic.com/news/core-views-on-ai-safety](https://www.anthropic.com/news/core-views-on-ai-safety)
+  
+- Develop tools and measurements to predict and evaluate societal impact of AI systems 
+- Anticipate harmful behaviour in AI systems and predict how they might be used
+- Develop responsible AI policies and governance
+- Help provide policymakers with the insights they need to mitigate potentially significant societal harms

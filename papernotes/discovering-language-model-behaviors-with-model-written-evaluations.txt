@@ -1,0 +1,27 @@
+[arXiv:2212.09251](https://arxiv.org/abs/2212.09251)
+  
+<img src="papernotes/figures/discovering-language-model-behaviors-with-model-written-evaluations-title.jpg" width="400" />
+<img src="papernotes/figures/discovering-language-model-behaviors-with-model-written-evaluations-abstract.jpg" width="400" />
+
+
+
+#### Goal
+
+- Evaluate model behaviours (social biases, deception, misinformation) using **model-written evaluations**
+	- Examples:
+	- <img src="papernotes/figures/discovering-language-model-behaviors-with-model-written-evaluations-1.jpg" width="400" /> 
+
+#### Methodology
+
+- <img src="papernotes/figures/discovering-language-model-behaviors-with-model-written-evaluations-2.jpg" width="400" />
+- Evaluating **Persona**
+	- Examples of evals:
+	- <img src="papernotes/figures/discovering-language-model-behaviors-with-model-written-evaluations-3.jpg" width="400" />
+	- Results
+	- <img src="papernotes/figures/discovering-language-model-behaviors-with-model-written-evaluations-4.jpg" width="400" />
+	- RLHF makes models exhibit:
+		- Stronger political views
+		- Stated desire to pursue hypothetical "convergent instrumental subgoals" such as self-preservation
+	- Some exhibit "inverse scaling," where the behaviour is stronger for larger models
+- Evaluating sycophany
+	- Sycophany is where models tailors responses to "look preferable" rather than actual improve the responses

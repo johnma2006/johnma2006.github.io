@@ -1,0 +1,15 @@
+[arXiv:2002.10444](https://arxiv.org/abs/2002.10444)
+  
+<img src="papernotes/figures/batch-normalization-biases-residual-blocks-towards-the-identity-function-in-deep-networks-title.jpg" width="400" />
+<img src="papernotes/figures/batch-normalization-biases-residual-blocks-towards-the-identity-function-in-deep-networks-abstract.jpg" width="400" />
+
+#### Results
+
+- The combination of residual connections and batch norm dramatically increases the largest trainable depth of neural networks
+- This benefit arises because at init, batch norm downscales the residual branch relative to the skip connection, by a normalizing factor on the order of sqrt(depth)
+- Reasoning
+	- Variance of activations in an unnormalized network scales exponentially with depth.
+		- Proof: [not that hard to see] 
+	- Variance scales linearly for normalized networks
+- At init, the outputs of most residual blocks in a deep normalized ResNet are dominated by the skip connection, which biases the residual block towards the identity
+- This ensures that the network has well behaved gradients (better gradient flow)

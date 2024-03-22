@@ -1,0 +1,19 @@
+[arXiv:2305.04388](https://arxiv.org/abs/2305.04388)
+  
+<img src="papernotes/figures/studying-large-language-model-generalization-with-influence-functions-title.jpg" width="400" />
+<img src="papernotes/figures/studying-large-language-model-generalization-with-influence-functions-abstract.jpg" width="400" />
+
+#### Results
+
+- Influence function measures how the model’s behaviors change if a given training point were added to the training set?
+- Examples:
+	- <img src="papernotes/figures/studying-large-language-model-generalization-with-influence-functions-1.jpg" width="400" />
+	- <img src="papernotes/figures/studying-large-language-model-generalization-with-influence-functions-2.jpg" width="400" />
+
+#### Summary of main findings
+
+- Influence is heavy tailed, but spread out over many datapoints, suggesting that model behaviours do not result from direct memorization
+- Larger models generalize at a more abstract level than smaller models
+- Role-playing behaviour is influence primarily by examples of similar behaviours, suggesting that these behaviours result from imitation rather than sophisticated planning
+
+

@@ -1,0 +1,9 @@
+[arXiv:1706.04454](https://arxiv.org/abs/1706.04454)
+  
+<img src="papernotes/figures/empirical-analysis-of-the-hessian-of-over-parametrized-neural-networks-title.jpg" width="400" />
+<img src="papernotes/figures/empirical-analysis-of-the-hessian-of-over-parametrized-neural-networks-abstract.jpg" width="400" />
+
+
+<img src="papernotes/figures/empirical-analysis-of-the-hessian-of-over-parametrized-neural-networks-1.jpg" width="400" />
+
+- Most eigenvalues of the Hessian of the loss of overparameterized deep networks are close to zero

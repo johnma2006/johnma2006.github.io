@@ -1,0 +1,25 @@
+[arXiv:2212.08073](https://arxiv.org/abs/2212.08073)
+  
+<img src="papernotes/figures/constitutional-ai-harmlessness-from-ai-feedback-title.jpg" width="400" />
+<img src="papernotes/figures/constitutional-ai-harmlessness-from-ai-feedback-abstract.jpg" width="400" />
+
+#### Constitutional AI Methodology
+- <img src="papernotes/figures/constitutional-ai-harmlessness-from-ai-feedback-1.jpg" width="400" />
+- Supervised Fine-tuning
+	- (1) Generate responses to **harmfulness prompts** using a **helpful-only AI**
+	- <img src="papernotes/figures/constitutional-ai-harmlessness-from-ai-feedback-2.jpg" width="400" /> 
+	- (2) Ask the model to critique its response according to a constitution (similating CoT), and then revise its reponse
+	- <img src="papernotes/figures/constitutional-ai-harmlessness-from-ai-feedback-3.jpg" width="400" /> 
+	- (3) Repeat step (2) multiple times, randomly drawing principles from the constitution eat time
+	- (4) Finetune a pretrained LM on the final revised responses
+- RL from AI Feedback
+	- This is like RLHF, but with AI preferences instead
+	- Use the AI in step 1 to generate a pair of responses; then ask the AI which is better according to a constitutional principle. This becomes an AI-generated preference dataset for harmlessness, which we mix with our human feedback helpfulness dataset
+	- Then, train a preference model, which can assign a score to any given sample
+	- Then fine-tune the SL model from ofirst stage against this PM
+
+#### Discussion
+
+- As LM capabilities improve, AI identification of harm improves significantly
+- RL-CAI is never purely evasive (which means simply saying "I can't answer that"), often giving nuanced and transparent thought process
+	- Human workers tend to choose the more evasive answer when asked to choose the more harmless response

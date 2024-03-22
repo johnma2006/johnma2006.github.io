@@ -1,0 +1,9 @@
+[arXiv:2002.03495](https://arxiv.org/abs/2002.03495)
+  
+<img src="papernotes/figures/a-diffusion-theory-for-deep-learning-dynamics-title.jpg" width="400" />
+<img src="papernotes/figures/a-diffusion-theory-for-deep-learning-dynamics-abstract.jpg" width="400" />
+
+#### Results
+
+- Due to the Hessian-dependent covariance of SGD noise, SGD favours flat minima exponentially more than sharp minima, while GD with injected white noise favors flat minima only polynomially more
+- A small learning rate or large batch requires exponentially many iterations w.r.t. batchsize/LR to escape from minima

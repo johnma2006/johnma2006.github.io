@@ -1,0 +1,13 @@
+[arXiv:2002.08791](https://arxiv.org/abs/2002.08791)
+  
+<img src="papernotes/figures/bayesian-deep-learning-and-a-probabilistic-perspective-of-generalization-title.jpg" width="400" />
+<img src="papernotes/figures/bayesian-deep-learning-and-a-probabilistic-perspective-of-generalization-abstract.jpg" width="300" />
+
+#### Perspective on generalization
+
+<img src="papernotes/figures/bayesian-deep-learning-and-a-probabilistic-perspective-of-generalization-1.jpg" width="500" />
+
+- Generalization of a model architecture largely depends on two properties: support and inductive biases
+- Crucial not to conflate the flexibility (support) of a model with the complexity of its model class
+- Rademacher complexity, VC dimension are one-dimensional notions, corresponding roughly to the support of the model, and this is why they fail to explain deep learning generalization
+- Gaussian processes with RBF kernels have large support but have inductive biases towards simple, smooth solutions

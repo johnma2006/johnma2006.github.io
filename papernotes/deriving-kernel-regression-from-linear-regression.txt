@@ -1,0 +1,15 @@
+#### Linear Ridge Regression:
+
+predict(x)\
+= x<sup>T</sup>(X<sup>T</sup>X + λI)<sup>-1</sup>X<sup>T</sup>y\
+= x<sup>T</sup>X<sup>T</sup>(XX<sup>T</sup> + λI)<sup>-1</sup>y &nbsp;&nbsp;&nbsp;&nbsp; [since (X<sup>T</sup>X + λI)<sup>-1</sup>X<sup>T</sup> = X<sup>T</sup>(XX<sup>T</sup> + λI)<sup>-1</sup>]
+
+#### Kernel Ridge Regression:
+
+Let K = XX<sup>T</sup> (aka, the kernel matrix) and k(x) = xX<sup>T</sup> (aka, K(x, x<sub>i</sub>) for all rows x<sub>i</sub> in X)
+
+predict(x)\
+= k(x)<sup>T</sup>(K + λI)<sup>-1</sup>y\
+= k(x)<sup>T</sup>α &nbsp;&nbsp;&nbsp;&nbsp; where α = (K + λI)<sup>-1</sup>y has shape len(datapoints). 
+
+

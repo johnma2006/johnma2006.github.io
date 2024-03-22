@@ -1,0 +1,25 @@
+[https://learnopencv.com/demystifying-gpu-architectures-for-deep-learning/](https://learnopencv.com/demystifying-gpu-architectures-for-deep-learning/)
+  
+#### CUDA
+
+- CUDA is a programming model for GPUs that abstracts away most of the inner workings of GPUs
+- Concepts:
+	- CUDA cores
+		- The GPU equivalent of a CPU core, that executes one thread, which can do stuff like multiply, add, activation functions
+		- A GPU contains tens of thousands of cores.
+	- CUDA threads, blocks, and grids
+		- Threads are organized into blocks; blocks are organized into grids
+		- <img src="papernotes/figures/demystifying-gpu-architectures-for-deep-learning-1.jpg" width="400" />
+		- All threads in a block execute the same instructions, but on different data
+	- CUDA kernels are functions that use the thread-block-grid model to perform operations
+
+#### Memory hierarchy
+
+- <img src="papernotes/figures/demystifying-gpu-architectures-for-deep-learning-2.jpg" width="400" />
+- Components:
+	- Global memory or HBM -> CPU RAM 
+	- Per-block shared memory -> CPU cache
+	- Per-thread registers
+- For computations, need to load from Global Memory to Per-thread local memory (aka from HBM to registers). This is limited by the memory bandwidth (2TB/s in A100)
+
+

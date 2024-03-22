@@ -1,0 +1,4 @@
+- NVLink: very high bandwidth GPU-to-GPU interconnect (300 GB/s for A100). Can connect 16 A100s.
+- PCIe: high bandwidth CPU-to-GPU (32 GB/s). 
+	- CPUs only have a limited number of connections: Desktop CPUs have ~16 lanes (1 GPU typically has 8-16 lanes), which limits the number of GPUs that can connect to the GPU at full bandwidth.
+- Ethernet: slow, but cheap and covers longer distances (1 GB/s)

@@ -1,0 +1,15 @@
+[arXiv:2305.14314](https://arxiv.org/abs/2305.14314)
+  
+<img src="papernotes/figures/qlora-efficient-finetuning-of-quantized-llms-title.jpg" width="400" />
+<img src="papernotes/figures/qlora-efficient-finetuning-of-quantized-llms-abstract.jpg" width="400" />
+
+#### Existing quantization methods
+
+- Traditional quantization (say, into int4) bins the input range into 16 evenly sized bins, and affine transforms that range into [-8, 8]
+	- To prevent outlier issues, a tensor of shape (b, h) can be block quantized by dividing into blocks of some size B
+- Quantile quantization first translates inputs into quantiles, and then does traditional quantization. This ensures each bin has an equal number of values
+	- Downside: quantile estimation is expensive, and has **large error values for outliers, which are often the most important** 
+- NormalFloat quantization:
+	- **Expensive quantile estimates and approximation errors can be avoided when input tensors come from a fixed distribution (up to a quantization constant)**
+	- In such cases, **input tensors have the same quantiles** making exact quantile estimation computationally feasible
+	- Empirically, pretrained NNs have weights following a zero-centered normal distribution

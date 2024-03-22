@@ -1,0 +1,33 @@
+[https://cdn.openai.com/papers/weak-to-strong-generalization.pdf](https://cdn.openai.com/papers/weak-to-strong-generalization.pdf)
+  
+<img src="papernotes/figures/weak-to-strong-generalization-title.jpg" width="400" />
+<img src="papernotes/figures/weak-to-strong-generalization-abstract.jpg" width="400" />
+
+#### Motivation
+
+- A core challenge for aligning future superhuman AI systems (superalignment) is that humans will need to supervise AI systems much smarter than them
+- By analogy, they study how well GPT2 can supervise GPT4
+
+#### Methodology
+
+- Fine-tune GPT2 on ground truth labels
+- Use fine-tuned GPT2 to generate labels for GPT4, and fine-tune GPT4 on these labels
+- Compare performance vs GPT4 trained on ground truth labels
+
+#### Result
+
+- GPT2 can elicit around 50% of the capabilities, **generalizing beyond their weak supervisors**
+- The strong model **leverages the latent capabilities it learned from pretraining**
+- Auxiliary confidence loss helped a lot
+	- Let f(x) be strong model prob prediction, f<sub>w</sub>(x) be weak model predictiopn
+		- f'(x) be 1 if f(x) > some threshold t else 0; AKA, the "confident" predictions
+	- Auxiliary loss = (1 - alpha) * CE(f, f<sub>w</sub>) + alpha * CE(f, f')
+	- Intuitively, the auxiliary loss encourages the strong model to put more weight on its confident predictions
+- Bootstrapping: iteratively fine-tune incrementally stronger models 
+
+#### Future work
+
+- Scalable methods
+	- One intuition for why progress on weak-to-strong seems possible is because all we need to do is to extract everything the strong model already "knows" about the task of interest
+
+

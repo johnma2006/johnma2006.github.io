@@ -1,0 +1,8 @@
+#### What is Lazy Training in NTKs?
+
+- When a network is heavily over-parameterized, the model is able to learn (the training loss quickly goes to 0) but the parameters barely change. Intution: if the output neuron is the sum of N neurons, then each neuron only needs to change by O(1/N) for the output to change by O(1). 
+
+#### What does this imply about feature learning?
+
+- NTK models of neural networks can't learn features, for instance it can't learn the circuits that mechanistic intepretability have found
+- This may explain the performance gap between NTK models and finite-width models

@@ -1,0 +1,17 @@
+[arXiv:2201.02177](https://arxiv.org/abs/2201.02177)
+
+[Reproduction](https://github.com/johnma2006/candle/blob/main/experiments/generalization_experiments/1.1%20Reproducing%20Grokking%20-%20Generalization%20Beyond%20Overfitting%20-%2031x31%20modular%20division.ipynb)
+  
+<img src="papernotes/figures/grokking-generalization-beyond-overfitting-title.jpg" width="400" />
+
+
+#### Results
+
+<img src="papernotes/figures/grokking-generalization-beyond-overfitting-1.jpg" width="400" />
+
+- Generalization can seemingly spontaneously occur much after the point of fitting the training data perfectly
+- Intuition: after fitting the training data, optimization tries to find the min norm solution
+
+#### Methodology
+
+- Fit a small transformer on binary tables such as f(x, y) = x<sup>2</sup> + y<sup>2</sup> + xy + x (mod 97)

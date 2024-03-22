@@ -1,0 +1,27 @@
+[arXiv:2307.15043](https://arxiv.org/abs/2307.15043)
+
+[Reproduction](https://github.com/johnma2006/candle/blob/main/experiments/nlp_experiments/4.0%20Adversarial%20Prompts%20on%20GPT.ipynb)
+
+<img src="papernotes/figures/universal-and-transferable-adversarial-attacks-on-aligned-language-models-title.jpg" width="400" />
+
+#### Overview
+
+- <img src="papernotes/figures/universal-and-transferable-adversarial-attacks-on-aligned-language-models-2.jpg" width="400" />
+- They come up with a "universal" attack suffix, and prompt the model with {original prompt} + {attack suffix}
+	- Surprisingly, they find that the adversarial prompts are transferable, including to black-box LLMs like Claude
+	- They search for a single suffix that was able to induce negative behaviour across multiple user prompts, across multiple models
+
+#### Basic algorithm
+
+- <img src="papernotes/figures/universal-and-transferable-adversarial-attacks-on-aligned-language-models-1.jpg" width="400" />
+- **Optimize red tokens to maximize log-likelihood of purple tokens, which repeats the user's prompts affirmatively**
+- How to optimize?
+	- Modifiable tokens: shape (seqlen,)
+	- For each token position i, compute the gradient for other vocab words w
+		- This measure what would happen if we swap the current token for w
+		- Let G = gradient wrt vocab embedding, shape (vocabsize, dim)
+		- A unit increase in `w` corresponds to an increase of G[w, :].sum()
+	- Take best k tokens for that position to get seqlen * k candidates
+	- Sample B new tokens from these candidates, and evaluate change in loss exactly
+	- Take new token with best loss
+	- Repeat T times

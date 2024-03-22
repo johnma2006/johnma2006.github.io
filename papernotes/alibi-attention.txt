@@ -1,0 +1,11 @@
+[arXiv:2104.09864](https://arxiv.org/abs/2104.09864)
+  
+<img src="papernotes/figures/alibi-attention-title.jpg" width="400" />
+<img src="papernotes/figures/alibi-attention-abstract.jpg" width="400" />
+
+
+- Methodology:
+	- <img src="papernotes/figures/alibi-attention-1.jpg" width="400" />
+	- m is a head-specific slope
+		- For 8 heads, the slopes are 1/2<sup>1</sup>, 1/2<sup>2</sup>, ..., 1/2<sup>8</sup>
+		- For 16 heads, the slopes are 1/2<sup>0.5</sup>, 1/2<sup>1</sup>, ..., 1/2<sup>8</sup>

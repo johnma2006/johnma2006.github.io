@@ -1,0 +1,13 @@
+[https://nonint.com/2023/10/07/the-state-of-ml-in-2023/](https://nonint.com/2023/10/07/the-state-of-ml-in-2023/)
+
+- Where models fall short:
+	- DALL-E 3: can't tell left from right, can't count past three
+	- Text: not great at providing specific instructions
+	- Coding: can't design systems above a certain complexity
+	- Audio: weak at conversation, sounds robotic
+- Common themes with the above shortcomings:
+	- (1) Lack of data in the specific domain
+	- (2) Failure to generalize at the semantic level (e.g. rendering images of hands with 5 fingers)
+- Scaling compute directly addresses the above two points
+	- (1) Fit the data manifold more precisely
+	- (2) Raw compression

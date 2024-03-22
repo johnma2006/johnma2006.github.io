@@ -1,0 +1,14 @@
+[arXiv:2010.05627](https://arxiv.org/abs/2010.05627)
+  
+<img src="papernotes/figures/towards-theoretically-understanding-why-sgd-generalizes-better-than-adam-in-deep-learning-title.jpg" width="400" />
+<img src="papernotes/figures/towards-theoretically-understanding-why-sgd-generalizes-better-than-adam-in-deep-learning-abstract.jpg" width="400" />
+
+#### Results
+
+- To explain why SGD generalizes better than Adam, the authors analyze the escaping times from local basins and heavy tails of gradient noise
+- The escaping time of SGD and Adam:
+	- Increases wrt the Radon measure of the basin
+	- Decreases wrt heaviness of gradient noise
+- Radon measure is a way to assign a volume to different parts of space
+	- For the same basin, Adam has larger Radon measure because each gradient coordinate is adaptively scaled
+- Gradient noise: Exponential average in Adam leads to lighter noise tails

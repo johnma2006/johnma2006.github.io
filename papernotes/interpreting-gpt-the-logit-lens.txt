@@ -1,0 +1,17 @@
+[https://www.alignmentforum.org/posts/AcKRB8wDpdaN6v6ru/interpreting-gpt-the-logit-lens](https://www.alignmentforum.org/posts/AcKRB8wDpdaN6v6ru/interpreting-gpt-the-logit-lens)
+  
+<img src="papernotes/figures/interpreting-gpt-the-logit-lens-title.jpg" width="400" />
+
+#### Methodology
+
+- We can interpret the residual stream by multiplying by the unembedding and mapping to logits, and we can see the model converging on the final result
+- <img src="papernotes/figures/interpreting-gpt-the-logit-lens-1.jpg" width="400" />
+
+#### Interpretation
+
+- The model starts off with some nascent prediction, and each layer iteratively refines upon it
+	- We can see what GPT "believes" after each layer
+- The input embedding changes a lot after only the first lyaer
+- When GPT2 is faced with an easy prediction task, it converges to that prediction rapidly
+	- When it’s faced with a harder task, it takes longer
+

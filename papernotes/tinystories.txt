@@ -1,0 +1,41 @@
+[arXiv:2305.07759](https://arxiv.org/abs/2305.07759)
+  
+<img src="papernotes/figures/tinystories-title.jpg" width="400" />
+
+#### Summary
+
+- Small LMs don't produce coherent text
+- Interpret LLM training data as "knowledge" + "core principles of language"
+- Hypothesize that small LM training overindexes on the former, but doesn't have the capacity
+- TinyStories is an attempt at isolating the latter
+- It works: they produce small LMs that demonstrate reasoning capabilities, good grammar, and coherence
+
+#### Motivation
+
+- Models with around 125m params such as GPT2-small can rarely generate any consistent text beyond just a few words. These models produce incoherent, repetitive, or nonsensical sentences, and fail to maintain a clear topic or logical structure across paragraphs
+- This raises the question: does the emergence of the ability to speak coherent English require large models?
+- Is this inability of small LMs a result of the complexity of natural language, or of the excessive breadth of the training corpus?
+	- e.g. When we train a model on Wikipedia, we are not only teaching it to speak English, but also encode an immense amount of facts and concepts from various domains
+- Hypothesis: small LMs are overwhelmed by the amount of information they have to store, and this hinders their ability to learn the core mechanisms of language
+
+#### Methodology
+
+- Design a new dataset TinyStories that preserves the essential elements of natural language, such as grammar, vocab, facts, and reasoning, but is much smaller in terms of breadth and diversity
+- TinyStories is produced by:
+	- Asking GPT4 to generate short stories using simple words (from a list of 1500 hand-collected words represented a 3 year old's vocab)
+	- Utilize 3 randomly predefined words (one verb, one noun, one adjective) which increases the diversity of the dataset
+	- Include a combination of possible features, such as dialogue, a plot twist, a bad ending, or a moral value
+- Small LMs trained on TinyStories develop reasoning capabilities, knowledge of general facts, and an ability to follow certain instructions
+- Evals are done by asking GPT4 to evaluate multiple dimensions: grammar, creativity, instruction following
+
+#### Intepretability
+
+- Due to the small size of the trained models (e.g. only one layer), they exhitibit higher interpretability
+- Interpreting attention heads:
+	- (1) Distance-based attention: multiple positional-based attention heads, where different heads are associated with different fixed distances.
+	- (2) Semantic-based attention: observe heads that consistently attends to the subject of the sentence, e.g. "Tom" and "Lucy", "banana", "park".
+- Interpreting MLP neurons:
+	- Method: Visualize the most significant tokens for each neuron
+	- Some neurons are activated on pronouns that are the subject, adjectives only, the action in the sentence, 
+	- Larger model's neurons don't have clear semantic meanings
+

@@ -1,0 +1,13 @@
+[arXiv:1912.02292](https://arxiv.org/abs/1912.02292)
+  
+<img src="papernotes/figures/deep-double-descent-where-bigger-models-and-more-data-hurt-title.jpg" width="400" />
+<img src="papernotes/figures/deep-double-descent-where-bigger-models-and-more-data-hurt-abstract.jpg" width="400" />
+
+#### Results
+
+<img src="papernotes/figures/deep-double-descent-where-bigger-models-and-more-data-hurt-1.jpg" width="400" />
+
+- Double descent phenomenon: as a function of model size, test error first decreases, then increases, then decreases
+	- Intuition: there exists an interpolation threshold where only a single model that fits the data perfectly; this model likely has high norm and poor generalization
+	- Leading up to the threshold, the model underfits, and generalization follows classic bias-variance curve
+	- After the threshold, the support of the class increases, and there exist models with lower norm and higher generalization

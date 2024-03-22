@@ -1,0 +1,108 @@
+[https://transformer-circuits.pub/2021/framework/index.html](https://transformer-circuits.pub/2021/framework/index.html)
+  
+<img src="papernotes/figures/a-mathematical-framework-for-transformer-circuits-title.jpg" width="400" />
+
+#### Summary of Results
+
+- **Zero layer transformers model bigram statistics**
+	- The bigram table can be accessed directly from the weights.
+		- W<sub>E</sub>W<sub>U</sub> (vocab, vocab)
+- **One layer attention-only transformers are an ensemble of bigram and “skip-trigram” (sequences of the form "[a] …[b] [c]") models.**
+	- The bigram and skip-trigram tables can be accessed directly from the weights, without running the model.
+		- Bigrams: W<sub>E</sub>W<sub>U</sub> (vocab, vocab) as before
+		- Skip-trigrams (for each head):
+			- QK circuit (vocab, vocab) determines for token i, how much it attends to token j
+			- OV circuit (vocab, vocab) determines for token i, how much it increases logits of token j of attended to
+- Two layer attention-only transformers can implement much more complex algorithms using compositions of attention heads. In particular, induction heads, a very general in-context learning algorithm.
+
+#### Conceptual Takeaways
+
+- Attention heads can be understood as independent operations, each outputting a result which is added into the residual stream.
+- Virtual weights
+	- Example of virtual head: two "prev token" heads can V-compose to create a "virtual attention head" that looks 2 tokens back, without sacrificing a full attention to this purpose
+- Residual Stream as a Communication Channel
+	- The residual stream is the running sum of the layers and the original embedding
+	- <img src="papernotes/figures/a-mathematical-framework-for-transformer-circuits-1.jpg" width="150" />
+- We can think of the residual stream as a **communication channel**, e.g. by communicating through disjoint subspaces of the full dim
+- Residual stream bandwidth is not very high: only 4096 dimensions in Llama 7B
+- <img src="papernotes/figures/a-mathematical-framework-for-transformer-circuits-2.jpg" width="400" />
+	
+	- Deletion: say a subspace has basis vectors V = [v<sub>1</sub><sup>T</sup>, v<sub>2</sub><sup>T</sup>, v<sub>3</sub><sup>T</sup>]. Then, the projection of an activation 𝑥 onto V is given by xV<sup>T</sup>. Therefore, Q<sub>V</sub> = (-Id) V<sup>T</sup> and Q<sub>O</sub> = V deletes information.
+
+#### Attention Heads as Information Movement (!!!)
+
+- <img src="papernotes/figures/a-mathematical-framework-for-transformer-circuits-3.jpg" width="400" />
+- **Attention heads move information from the residual stream of one token to another**
+- **Which tokens to move** information is **completely separable** from **what information is read** from the src and **how it is written** to the destination
+- An attention head is really applying two linear operations, A and W<sub>OV</sub> to the residual stream of each token 𝑥
+	- h(x) = (A ⊗ WOV) 𝑥 = A 𝑥 W<sub>OV</sub><sup>T</sup>
+		- A = softmax(𝑥W<sub>QK</sub>𝑥<sup>T</sup>)
+	- Shapes:
+		- 𝑥: (seqlen, dim)
+		- A: (seqlen, seqlen)
+		- W<sub>QK</sub>, W<sub>OV</sub>: (dim, dim), rank head_dim
+
+#### QK and OV circuit independence (!!!)
+
+- <img src="papernotes/figures/a-mathematical-framework-for-transformer-circuits-4.jpg" width="400" />
+- QK and OV circuits are both shape (vocabsize, vocabsize)
+	- QK[i, j] measures how much much token i likes attending to token j
+	- OV[i, j] measures, if token i is attended to, how much token j's logits increases
+- The attention pattern is a function of both the source and destination token,
+	- But once a destination token has decided how much to attend to a source token, the effect on the output is **solely a function of that source token**
+
+#### Zero-layer Transformers
+
+- Simply embeds and unembeds a token to produce logits, T = W<sub>U</sub>W<sub>E</sub>
+- We are simply predicting the next token from the previous token, which means that this approximates the bigram statistics
+	- Example: "Barack" is followed by "Obama"
+
+#### One-layer Transformers
+
+- Allow for skip-trigrams: [b] ... [a] -> [c]
+	- [a], [b], and [c] are **specific tokens**; we can study them in the QK and OV circuits
+		- specific tokens to contrast with the arbitrary tokens that induction heads can operate on
+	- Examples: "\n\t\t\t ... \n\t\t -> else ", "open ... ',' -> rb"
+- 1 layer copying head: [b] ... [a] -> [b]
+	- Most attention heads in 1 layer models are dedicated to copying
+		- The OV circuit sets things up so that tokens, if attended to by the head, **increase the probability of that token**
+			- We can inspect the largest elements of W<sub>E</sub>W<sub>OV</sub>W<sub>U</sub><sup>T</sup> (shape vocabsize, vocabsize) to see which token's logits are most increased for a given src
+		- The QK circuit then **only attends back to tokens which could plausibly be the next token**
+			- We can inspect the largest elements of W<sub>E</sub>W<sub>QK</sub>W<sub>E</sub><sup>T</sup>  (shape (vocabsize, vocabsize)) to see which src tokens are most attended to for a given dst
+		- Thus, tokens are copied, but only to places where bigram-ish statistics make them seem plausible.
+	- Examples: "perfect ... are perfect" "large ... using large" "nbsp ... &nbsp"
+- Detecting copying behaviour
+	- We can inspect the OV circuit M = W<sub>E</sub>W<sub>OV</sub>W<sub>U</sub><sup>T</sup>, (vocabsize, vocabsize)
+	- Positive eigenvectors/values says that for a linear combination of tokens, it increases the logits of a linear combination of the same tokens
+	- Empirically, most eigenvalues of the OV circuit are positive
+	- <img src="papernotes/figures/a-mathematical-framework-for-transformer-circuits-5.jpg" width="400" />
+
+#### Two-layer Transformers
+- 2 layer **induction heads**: [a][b] ... [a] -> [b]
+	- **Search for previous examples of the present token, then copy the next token**
+- This works on **totally random tokens** (it doesn't matter what the token is)
+- <img src="papernotes/figures/a-mathematical-framework-for-transformer-circuits-6.jpg" width="400" />
+- Types of heads
+	- Previous token heads
+	- <img src="papernotes/figures/a-mathematical-framework-for-transformer-circuits-7.jpg" width="400" />
+	- Induction heads compose with prev heads, and attend on the token that *will* come next
+	- <img src="papernotes/figures/a-mathematical-framework-for-transformer-circuits-8.jpg" width="400" />
+- Mechanistic explanation of induction heads (previous token K-composition version)
+	- <img src="papernotes/figures/a-mathematical-framework-for-transformer-circuits-9.jpg" width="400" />
+	- Two versions: let the pattern be [A1][B] ... [A2] -> [B]
+	- Pointer arithmetic version
+		- Head 1:
+			- QK circuit: [A2] attends to [A1] through content
+			- OV circuit: put position of [A1] in [A2] residual stream
+		- Head 2:
+			- QK circuit: [A2] attends to [B] throguh [A1]'s position from Head 1
+			- OV circuit: put content of B into [A2] residual stream
+		- This doesn't require modifying the residual stream of B
+	- Prev token version
+		- Head 1: 
+			- QK circuit: [B] attends to prev token [A1] through content
+			- OV circuit: put content of [A1] in [B] residual stream
+		- Head 2:
+			- QK circuit: [A2] attends to [B] through [A1]'s content from Head 1
+			- OV circuit: put content of [B] onto [A2] residual stream
+		- <img src="papernotes/figures/a-mathematical-framework-for-transformer-circuits-10.jpg" width="400" />

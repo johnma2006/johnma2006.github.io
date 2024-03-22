@@ -1,0 +1,10 @@
+[https://www.youtube.com/watch?v=-K3bZYHYHEA&ab_channel=PyTorch](https://www.youtube.com/watch?v=-K3bZYHYHEA&ab_channel=PyTorch)
+
+#### Distributed Data Parallel
+
+- Model is fully replicated across all processes
+- Different GPUs get different chunks of the {{c1::batch}}
+- Each process computes its own gradients on its chunk
+	- Gradients are synced using {{c1::Ring-AllReduce}}; each process updates the model accordingly
+	- The sync does not wait for all gradients to finish to begin communication; communication is overlapped with backprop
+- DDP > DP, since DP has all communication go through a master process

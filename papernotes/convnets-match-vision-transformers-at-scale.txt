@@ -1,0 +1,16 @@
+[arXiv:2310.16764](https://arxiv.org/abs/2310.16764)
+  
+<img src="papernotes/figures/convnets-match-vision-transformers-at-scale-title.jpg" width="400" />
+<img src="papernotes/figures/convnets-match-vision-transformers-at-scale-abstract.jpg" width="400" />
+
+#### Goal
+
+- Do ViTs outperform ConvNets with similar compute budgets?
+- Pre-trained NFNets obey scaling laws
+- <img src="papernotes/figures/convnets-match-vision-transformers-at-scale-1.jpg" width="400" />
+- Despite substantial differences in architectures, the performance of NFNets at scale is remarkably similar to ViTs
+
+#### Discussion
+
+- Reinforces the bitter lesson: the most important factors determining the performance of a sensibly designed model are the compute and the data available for training
+	- Sensibly designed means sufficiently expressive and have stable gradient propogation

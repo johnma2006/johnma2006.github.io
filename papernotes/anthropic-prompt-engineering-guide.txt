@@ -1,0 +1,51 @@
+
+#### Full example: 
+
+- Claude acting as a helpful career coach chatbot
+
+<img src="papernotes/figures/anthropic-prompt-engineering-guide-1.jpg" width="550" />
+
+#### Chapter 2: Being Clear and Direct
+
+<img src="papernotes/figures/anthropic-prompt-engineering-guide-2.jpg" width="550" />
+
+#### Chapter 3: Role Prompting
+
+<img src="papernotes/figures/anthropic-prompt-engineering-guide-3.jpg" width="550" />
+
+#### Chapter 4: Separating Data from Instructions
+
+<img src="papernotes/figures/anthropic-prompt-engineering-guide-4.jpg" width="550" />
+<img src="papernotes/figures/anthropic-prompt-engineering-guide-5.jpg" width="550" />
+
+#### Chapter 5: Formatting Output & Speaking for Claude
+
+<img src="papernotes/figures/anthropic-prompt-engineering-guide-6.jpg" width="550" />
+<img src="papernotes/figures/anthropic-prompt-engineering-guide-7.jpg" width="550" />
+
+#### Chapter 6: Thinking Step by Step
+
+<img src="papernotes/figures/anthropic-prompt-engineering-guide-8.jpg" width="550" />
+<img src="papernotes/figures/anthropic-prompt-engineering-guide-9.jpg" width="550" />
+
+#### Chapter 7: Using Examples (Few-Shot Prompting)
+
+<img src="papernotes/figures/anthropic-prompt-engineering-guide-10.jpg" width="550" />
+<img src="papernotes/figures/anthropic-prompt-engineering-guide-11.jpg" width="550" />
+<img src="papernotes/figures/anthropic-prompt-engineering-guide-12.jpg" width="550" />
+<img src="papernotes/figures/anthropic-prompt-engineering-guide-13.jpg" width="550" />
+
+#### Chapter 8: Avoiding Hallucinations
+
+<img src="papernotes/figures/anthropic-prompt-engineering-guide-14.jpg" width="550" />
+<img src="papernotes/figures/anthropic-prompt-engineering-guide-15.jpg" width="550" />
+<img src="papernotes/figures/anthropic-prompt-engineering-guide-16.jpg" width="550" />
+
+#### Appendix 1: Chaining
+
+<img src="papernotes/figures/anthropic-prompt-engineering-guide-17.jpg" width="300" />
+<img src="papernotes/figures/anthropic-prompt-engineering-guide-18.jpg" width="550" />
+
+#### Appendix 2: Function Calling
+
+<img src="papernotes/figures/anthropic-prompt-engineering-guide-19.jpg" width="550" />

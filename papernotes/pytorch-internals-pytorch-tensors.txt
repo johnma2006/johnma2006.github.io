@@ -1,0 +1,26 @@
+[http://blog.ezyang.com/2019/05/pytorch-internals/](http://blog.ezyang.com/2019/05/pytorch-internals/)
+  
+<img src="papernotes/figures/pytorch-internals-pytorch-tensors-title.jpg" width="400" />
+
+#### PyTorch Tensors
+
+- A tensor is determined by 3 things:
+	- (1) Device: where the tensor is stored (e.g. CPU or GPU)
+	- (2) Layout: how do we logically interpret this physical memory; the most common is a strided tensor, but sparse tensors have a different layout
+	- (3) Dtype: what is actually stored in each element of the tensor
+
+#### Strided Representation
+
+- Strides are the fundamental basis by which PyTorch provides views
+	- Layout is given by (shape, stride, offset)
+- Given 2D tensor t, the element at t[i, j] is in physical memory location given by dot product of (i, j) and the stride
+	- <img src="papernotes/figures/pytorch-internals-pytorch-tensors-1.jpg" width="400" />
+- Slicing a row using offset
+	- <img src="papernotes/figures/pytorch-internals-pytorch-tensors-2.jpg" width="400" />
+- Slicing a col using stride
+	- <img src="papernotes/figures/pytorch-internals-pytorch-tensors-3.jpg" width="400" />
+- Other:
+	- Broadcasting: stride is 0
+	- Transposing: reverse the strides
+	- Flip: negative strides
+

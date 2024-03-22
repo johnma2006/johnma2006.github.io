@@ -1,0 +1,46 @@
+[https://blog.demofox.org/2017/11/21/floating-point-precision/](https://blog.demofox.org/2017/11/21/floating-point-precision/)
+
+[https://lambdalabs.com/blog/nvidia-hopper-h100-and-fp8-support](https://lambdalabs.com/blog/nvidia-hopper-h100-and-fp8-support)
+
+[https://www.corsix.org/content/converting-fp32-to-fp16](https://www.corsix.org/content/converting-fp32-to-fp16)
+
+
+
+
+#### Anatomy of a Floating Point Number
+
+- FP numbers have 3 components:
+	- Value = (-1)<sup>sign</sup> * (1.mantissa) * 2<sup>exponent</sup>
+		- Note: we can interpret this as binary scientific notation
+	- (1) **Sign bit**: whether the number is positive or negative.
+	- (2) **Exponent**: determines the scale of the number.
+		- Whatever number is encoded in the exponent bits, subtract bias = (2<sup>exponent bits - 1</sup> - 1) to get the actual exponent
+			- e.g., if 8 bits for exponent, the actual exponent ranges from -126 to 127, since we subtract bias=127.
+		- Special cases: all 0's means "subnormal number"
+		- <img src="papernotes/figures/floating-point-precision-1.jpg" width="400" />
+		- All 1's means "infinity" or "NaN"
+	- (3) **Mantissa or Fraction**: Contains the significant digits of the number.
+
+#### Example
+
+- Say a number is 10101.0010112 in binary, and we want to encode in FP16, which uses (1, 5, 10) bits.
+- Sign bit = 0
+- Mantissa = 01010010112
+- Exponent = 4, because we shifted the decimal point of the original mantissa 1.0101001011<sub>2</sub> four spaces to the right.
+	- Adding the bias of 15, we get 10011<sub>2</sub>
+
+#### Number of bits for different data types (sign bit, exponent bit, mantissa bit):
+
+- FP64: (1, 11, 52)
+- FP32: (1, 8, 23)
+- FP16: (1, 5, 10)
+- BF16: (1, 8, 7) (same range as FP32, so can act as drop in replacement)
+
+#### Examples in FP8
+
+<img src="papernotes/figures/floating-point-precision-2.jpg" width="400" />
+
+#### Precision
+
+- The precision at 2<sup>exp</sup> < k < 2<sup>exp</sup> + 1, is if you divide that range into 2<sup>mantissa</sup> bits  intervals
+- <img src="papernotes/figures/floating-point-precision-3.jpg" width="400" />

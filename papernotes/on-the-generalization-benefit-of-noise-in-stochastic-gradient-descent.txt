@@ -1,0 +1,33 @@
+[arXiv:2006.15081](https://arxiv.org/abs/2006.15081)
+  
+<img src="papernotes/figures/on-the-generalization-benefit-of-noise-in-stochastic-gradient-descent-title.jpg" width="400" />
+<img src="papernotes/figures/on-the-generalization-benefit-of-noise-in-stochastic-gradient-descent-abstract.jpg" width="400" />
+
+#### Noise in SGD enhances generalization
+
+- SGD has two regimes with differing behaviours.
+	- (1) "curvature dominated" regime, where noise is low, and training governed by the curvature of the full-batch loss landscape. 	
+		- Here, linear scaling rule will not hold. 
+	- (2) "noise dominated" regime (when batch size is small or loss is ill-conditioned), where noise is high and that noise governs training.
+		- Here, linear scaling rule will hold.
+		
+#### Linear scaling rule
+
+- Prove the linear scaling rule using this discretization of SDE:
+	- <img src="papernotes/figures/on-the-generalization-benefit-of-noise-in-stochastic-gradient-descent-1.jpg" width="400" />
+	- Proof: n SGD updates at temperature T and learning rate ε is equivalent to 1 update with learning rate nε.
+	
+#### Why is SGD with momentum still popular vs Adam?
+
+- Adam is designed for poorly conditioned losses
+	- However, small batch sizes 32 <= B <= 128 are often in the noise dominated regime
+	- In this regime, training dynamics are governed by gradient noise, not conditioning
+	- In this regime, SGD is generally proven to generalize better
+- Algorithms designed to tackle curvature are more likely to help when the batch size is large
+
+#### Choosing batch size and learning rate
+
+- If the objective is to minimize training time by heavy parallelization, choose B = B<sub>noise</sub>
+- First, run a cheap sweap over a few epochs to identify the largest stable learning rate
+	- Intuition: for large batches, the largest stable learning rate 2 / λ<sub>n</sub>) / (1 / B<sub>noise</sub>/B) is only weakly dependent on the batch size
+- Then, choose B = B<sub>noise</sub> for a good balance of training time and compute efficiency 

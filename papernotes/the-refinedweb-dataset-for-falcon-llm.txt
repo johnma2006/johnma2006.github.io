@@ -1,0 +1,28 @@
+[arXiv:2306.01116](https://arxiv.org/abs/2306.01116)
+  
+<img src="papernotes/figures/the-refinedweb-dataset-for-falcon-llm-title.jpg" width="400" />
+<img src="papernotes/figures/the-refinedweb-dataset-for-falcon-llm-abstract.jpg" width="400" />
+
+#### Dataset
+
+- 5T tokens from Common Crawl only after filtering and deduplication
+
+#### RefinedWeb Design Principles
+- (1) Scale first: RefinedWeb needs to be in the 5T token range to train ~200B models, per Chincilla laws
+- (2) Strict deduplication: using both exact and fuzzy deduplication, implement rules iwht higher removal rates than previous methods
+- (3) Neural filtering: to avoid introducing biases, avoid ML-based filtering
+
+#### Data Cleaning
+
+- Data naively scrapped from the web has numerous challenges, including large amounts of machine-generated text and explicit content
+- Cleaning pipelines generally have the following components
+	- (1) language identification
+	- (2) filtering rules and heuristics: e.g. only keeping lines with valid punctuation, discarding lines with too many symbols, removing docs with banned words
+	- (3) ML-based quality filtering: using lightweight models trained on gold data to identify similar high-quality web documents
+	- (4) deduplication: removing duplicate lines (exact) or entire documents (fuzzy)
+
+#### Deduplication
+
+- Repeated data has been shown to be increasingly harmful (increasing memorization) to model quality as param count increases
+- Remove similar documents using MinHash / Exact dedup
+<img src="papernotes/figures/the-refinedweb-dataset-for-falcon-llm-1.jpg" width="400" />

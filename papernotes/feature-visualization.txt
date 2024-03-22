@@ -1,0 +1,14 @@
+[https://distill.pub/2017/feature-visualization/[(https://distill.pub/2017/feature-visualization/)
+  
+<img src="papernotes/figures/feature-visualization-title.jpg" width="400" />
+
+- How to generate visualizations: optimize the input image with respect to {neuron, channel, class logit} via gradient descent
+	- Optimize neurons **layer<sub>n</sub>[x, y, z]** or channels **layer<sub>n</sub>[:, :, z]** in order to understand individual features
+	- Optimize layers as a whole **layer<sub>n</sub>[:, :, :]** (which is DeepDream's objective) to find images the layer finds "interesting"
+	- Optimize class logits **logits[k]** to create examples of output classes
+- Why visualize by optimization as opposed to look through dataset for examples?
+	- To understand what the model is truly looking for. For example, in the cow-camel example, we may see that visualizing the "cow" logit simply gives a field full of grass.
+- When visualizing GoogleNet, as we move down the layers, the visualizations become more and more complex, starting from simple local patterns (curve detectors) to parts of objects (dog eyes, billiard balls) to full semantic objects (dogs, sombreros)
+	- <img src="papernotes/figures/feature-visualization-1.jpg" width="400" />
+
+

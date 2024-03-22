@@ -1,0 +1,13 @@
+[arXiv:2305.04388](https://arxiv.org/abs/2305.04388)
+  
+<img src="papernotes/figures/language-models-dont-always-say-what-they-think-unfaithful-explanations-in-chain-of-thought-prompting-title.jpg" width="400" />
+<img src="papernotes/figures/language-models-dont-always-say-what-they-think-unfaithful-explanations-in-chain-of-thought-prompting-abstract.jpg" width="400" />
+
+#### Results
+
+- LLMs can and will make wrong/stereotypical assertions, and bullshit a plausible sounding but unfaithful justification for said assertion
+- We demonstrate that CoT explanations can be heavily influenced by adding biasing features to model inputs—e.g., by reordering the multiple-choice options in a few-shot prompt to make the answer always “(A)”—which models systematically fail to mention in their explanations
+	- <img src="papernotes/figures/language-models-dont-always-say-what-they-think-unfaithful-explanations-in-chain-of-thought-prompting-1.jpg" width="400" />
+- When we bias mdoels towards incorrect answers, they frequently generate CoT explanation rationalizing those answers
+	- <img src="papernotes/figures/language-models-dont-always-say-what-they-think-unfaithful-explanations-in-chain-of-thought-prompting-2.jpg" width="400" />
+- Intuition: when the "answer" fits a pattern, and the pattern (such as "the answer is always A") isn't a "common" patteern, the LLM picks up the pattern but makes up a plausible sounding (but incorrect) reason

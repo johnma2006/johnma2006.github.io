@@ -1,0 +1,41 @@
+[]https://platform.openai.com/docs/guides/prompt-engineering
+https://platform.openai.com/examples](https://platform.openai.com/docs/guides/prompt-engineering
+https://platform.openai.com/examples)
+  
+#### Results
+
+- Intuition: a lot of these prompting strategies relies on the idea that reasoning happens within the context window, and therefore it is helpful to encourage the model to augment the context as best it can.
+- 6 strategies for better results
+	- (1) Write clear instructions. Make sure prompts are not underspecified.
+		- Few-shot prompting: provide some examples
+		- <img src="papernotes/figures/prompt-engineering--openai-api-notes-1.jpg" width="400" />
+		- Give detailed queries
+		- <img src="papernotes/figures/prompt-engineering--openai-api-notes-2.jpg" width="400" />
+		- Specify the steps required to complete the task
+		- <img src="papernotes/figures/prompt-engineering--openai-api-notes-3.jpg" width="400" />
+		- Use delimeters to indicate distinct parts of the input
+		- <img src="papernotes/figures/prompt-engineering--openai-api-notes-4.jpg" width="400" />
+	- (2) Provide reference in the context
+		- Ask the model to answer using a reference text
+		- <img src="papernotes/figures/prompt-engineering--openai-api-notes-5.jpg" width="400" />
+	- (3) Split complex tasks into simpler subtasks
+		- Classify user intent, then use most relevant instructions for that intent
+		- <img src="papernotes/figures/prompt-engineering--openai-api-notes-6.jpg" width="400" />
+		- Summarize long documents recursively
+	- (4) Give models time to "think"
+		- Ask the model to work out its own solution before rushing to a conclusion
+		- Ask the model to explain why or why not something is true
+		- Ask the model to "think step-by-step"
+		- <img src="papernotes/figures/prompt-engineering--openai-api-notes-7.jpg" width="400" />
+	- (5) Use external tools
+		- Use RAG to augment the context with relevant document chunks. e.g., chunk your documents into chunks 1/5th the size of context, and take the top 5 relevant chunks.
+		- Use code execution to perform calculations or call external APIs
+		- <img src="papernotes/figures/prompt-engineering--openai-api-notes-8.jpg" width="400" />
+		- <img src="papernotes/figures/prompt-engineering--openai-api-notes-9.jpg" width="400" />
+	- (6) Make good evals
+		- Good evals are:
+			- Representative of real-world distribution
+			- Contain many test cases for statistical power
+			- Easy to automate
+		- Evals can be done by computers or humans
+		- <img src="papernotes/figures/prompt-engineering--openai-api-notes-10.jpg" width="400" />

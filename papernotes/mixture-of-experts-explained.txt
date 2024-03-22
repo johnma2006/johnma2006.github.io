@@ -1,0 +1,13 @@
+[https://huggingface.co/blog/moe](https://huggingface.co/blog/moe)
+
+<img src="papernotes/figures/mixture-of-experts-explained-title.jpg" width="400" />
+
+#### Summary
+
+- Are pretrained much faster vs. dense models
+- Have faster inference compared to dense models with same model size
+- Require high VRAM as high experts are loaded into memory
+- Face many challenges in fine-tuning
+	- Sparse models are more prone to overfitting (maybe because more parameters)
+	- Therefore, smaller batches and higher LRs are used in fine-tuning
+- Given a fixed compute budget for pretraining, a MoE model will be more optimal; given VRAM limits, a dense model will be better.

@@ -1,0 +1,15 @@
+[arXiv:1611.03530](https://arxiv.org/abs/1611.03530)
+  
+<img src="papernotes/figures/understanding-deep-learning-requires-rethinking-generalization-title.jpg" width="400" />
+<img src="papernotes/figures/understanding-deep-learning-requires-rethinking-generalization-abstract.jpg" width="400" />
+
+#### Results
+
+- Deep learning models have the ability to fit completely random labels
+- Therefore, traditional generalization techniques (Rademacher complexity, VC dim) cannot explain why neural networks generalize so well
+- *Comment: if you take the perspective of generalization = flexibility + inductive biases, all this paper says is that flexibility is high.*
+
+#### Methodology
+
+- Fit convnet on random labeling of the training data, and show they can obtain training accuracy of 100%
+- Random = {partially corrupted labels, completely random, shuffled pixels, random pixels, gaussian noise}

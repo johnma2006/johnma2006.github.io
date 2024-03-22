@@ -1,0 +1,18 @@
+[arXiv:2311.09227](https://arxiv.org/abs/2311.09227)
+  
+<img src="papernotes/figures/open-sourcing-highly-capable-foundation-models-title.jpg" width="400" />
+
+#### Risks of Open Source
+
+- Highly capable model shave the potential for extreme risks
+	- Malicious actors mgiht apply highly capable systems to help build new bio/chemical weapons, or to mount cyberattacks against critical infrastructure
+	- Disseminate targetted misinformation at scale or enact population surveillance
+
+#### Offense-defense balance
+
+- Open source is helpful in addressing some rsisks, but could overall exacerbate the extreme risks that highly capable AI models may pose
+	- For traditional software, open-sourcing facilitates defensive activities to guard against miuse more so than it facilitates offensive misuse by malicious actors
+	- However, the offense-defense balance for LLMs skew more towards offense for the following reasons:
+		- Open sourcing allows malicious actors to disable safeguards against misuse, and introduce new dangerous capabilities through fine-tuning
+		- Open sourcing greatly increase attacker knowledge of possible exploits
+		- Researching safety vulnerabilities is difficult, and fixes are not straightforward

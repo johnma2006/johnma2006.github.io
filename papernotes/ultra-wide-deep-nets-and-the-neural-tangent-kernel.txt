@@ -1,0 +1,38 @@
+[https://blog.ml.cmu.edu/2019/10/03/ultra-wide-deep-nets-and-the-neural-tangent-kernel-ntk/](https://blog.ml.cmu.edu/2019/10/03/ultra-wide-deep-nets-and-the-neural-tangent-kernel-ntk/)
+  
+<img src="papernotes/figures/ultra-wide-deep-nets-and-the-neural-tangent-kernel-title.jpg" width="400" />
+
+#### Key Conclusion
+
+- Under certain initializations*, a sufficiently wide deep neural network trained by gradient descent with infinitesimal step size is equivalent to a kernel regression predictor with a deterministic kernel called neural tangent kernel (NTK).
+	- *e.g. NTK parameterization rescales weights by 1/sqrt(width)
+- NTK: 
+	- <img src="papernotes/figures/ultra-wide-deep-nets-and-the-neural-tangent-kernel-1.jpg" width="400" />
+	- In words: for two examples x and x, let g, g' be the gradient of the network output f(θ, x) with respect to the parameters θ. Then, ker(x, x') is E[g ⋅ g'], where the expectation is taken over the initialization.
+
+#### How do NTKs arise?
+
+- <img src="papernotes/figures/ultra-wide-deep-nets-and-the-neural-tangent-kernel-2.jpg" width="400" />
+	
+	- Then, we use the "large width limit" condition. Now, the time-varying kernel kert(⋅, ⋅) is close to a deterministic fixed kernel ker<sub>NTK</sub>(⋅, ⋅).
+- Proof:
+	- (1) Convergence to the NTK at random initialization. As width goes to infinity, we can prove that ker<sub>0</sub>(⋅, ⋅) converges.
+	- (2) Stability of the kernel during training.
+		- Intuition: in the infinite width limit, the weights barely change from initialization during training.
+- Now, since the kernel H(t) is fixed, it's easy to show that du(t)/dt = -H(u(t) - y) is exactly the same update as when performing gradient descent on the linear regression parameters β.
+	- Thus, the final learned neural network is equivalent to the kernel regression solution
+f<sub>NN</sub>(x) = f<sub>NTK</sub>(x) = K<sub>NTK</sub>(x, X)<sup>T</sup>K<sub>NTK</sub>(X, X)<sup>-1</sup>y
+- There exists a performance gap between infinitely wide networks in the kernel regime and finite ones. (*Note: this is likely because NTK parameterization does not allow for feature learning; see Tensor Programs work*)
+
+#### Kernel gradient descent: Derivation of du(t) / dt, where u(t) is the network output at time t.
+ 
+- Given linear regression loss L(β) = 1/2 * ||y - Xβ||<sup>2</sup>, we have dL(β) / dβ = X<sup>T</sup>(Xβ - y)
+- Gradient descent on β then implies:
+	- β -> β - ɛ * dL(β) / dβ
+		- = β - ɛ * X<sup>T</sup>(Xβ - y)
+    - Xβ -> Xβ - ɛ * XX<sup>T</sup>(Xβ - y)
+		- = Xβ - ɛ * XX<sup>T</sup>(Xβ - y)
+    - u -> u - ɛ * K(u - y)
+
+
+

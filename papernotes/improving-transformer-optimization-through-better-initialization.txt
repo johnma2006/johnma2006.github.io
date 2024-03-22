@@ -1,0 +1,15 @@
+[https://proceedings.mlr.press/v119/huang20f.html](https://proceedings.mlr.press/v119/huang20f.html)
+  
+<img src="papernotes/figures/improving-transformer-optimization-through-better-initialization-title.jpg" width="400" />
+<img src="papernotes/figures/improving-transformer-optimization-through-better-initialization-abstract.jpg" width="400" />
+
+- Transformers have traditionally required warmup. This requirement comes from the instability in the Adam optimizer; warmup helps stabilize the varaince estimate.
+- Source of optimization problems in Transformer architecture
+	- <img src="papernotes/figures/improving-transformer-optimization-through-better-initialization-1.jpg" width="400" />
+	- At init, Adam inverse var is unbounded in expectation. This causes huge updates in the beginning of training.
+	- Huge updates creates large inputs into layer norm, which causes vanishing gradients in the backward step.
+	- Vanishing gradients destabilize the Adam variance further, creating a cycle
+- New weight initialization scheme
+	- Goal of init is similar to FixUp: magnitude of changes to output activations should be θ(1) independent of model size
+	- GPT2 scales each residual block by 1/sqrt(2L).
+		- Intuition: you want each update to have variance proportional to 1/(2*n_layers) to keep total variance independent of depth.

@@ -1,0 +1,8 @@
+[https://www.promptingguide.ai/techniques/cot](https://www.promptingguide.ai/techniques/cot)
+  
+
+- Give few-shot examples before asking the model for an answer
+	- <img src="papernotes/figures/chain-of-thought-prompting-1.jpg" width="400" />
+- CoT enables more complex reasoning capabilities through intermediate reasoning steps
+- Zero-shot CoT: "let's think step-by-step"
+	- <img src="papernotes/figures/chain-of-thought-prompting-2.jpg" width="400" />

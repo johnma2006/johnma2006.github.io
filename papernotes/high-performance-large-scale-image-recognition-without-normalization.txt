@@ -1,0 +1,35 @@
+[arXiv:2102.06171](https://arxiv.org/abs/2102.06171)
+  
+<img src="papernotes/figures/high-performance-large-scale-image-recognition-without-normalization-title.jpg" width="400" />
+<img src="papernotes/figures/high-performance-large-scale-image-recognition-without-normalization-abstract.jpg" width="400" />
+
+#### Understanding batch norm
+
+- Batch norm downscales the residual branch
+	- This **biases the signal towards the skip path**, which ensures the network has **well-behaved gradients early in training**
+- Batch norm eliminates mean-shift
+	- Deep networks predict the same label for all training labels at init, because the output of any layer has positive mean, and positive values going throught the output layer will predict the same label in expectancy
+- Batch norm has a regularizing effect
+	- Believed to be due to noise in batch statistics
+- Batch norm allows for efficient large-batch training
+	- Due to smoothing the loss landscape, and therefore increases the largest stable learning rate
+
+#### Normalizer-Free ResNets (NFNets)
+
+- ResNets employ residual blocks of the form h<sub>i+1</sub> = h<sub>i</sub> + f<sub>i</sub>(<sub>hi</sub>)
+- NFNets employ residual blocks of the form h<sub>i+1</sub> = h<sub>i</sub> + α * f<sub>i</sub>(h<sub>i</sub> / β<sub>i</sub>)
+	- f<sub>i</sub>(...) is variance preserving
+	- α specifices the rate at which the variance of activations h<sub>i</sub> increases after each residual blocks, typically set to something small like α = 0.2
+		- Var(h<sub>i+1</sub>) = Var(h<sub>i</sub>) + α<sup>2</sup>
+	- β<sub>i</sub> is determined by predicting the stddev of the inputs to each residual block h<sub>i</sub>, β<sub>i</sub> = sqrt(Var(h<sub>i</sub>))
+
+#### Results
+
+- NFNets achieve higher test accuracies than regular batch-normalized ResNetsm while being much faster to train
+
+#### Discussion
+
+- NFNets do not share the same implicit regularization effect of batch norm, and tend to overfit on "smaller" datasets like ImageNet
+	- However, when pre-training on extremely large-scale datasets, such regularization may be not only unnecessary but harmful to performance, because it reduces the model's expressiveness
+- Hypothesis: this makes NFNets naturally better suited to transfer learning after large-scale pretraining (see ConvNets match ViTs at scale)
+

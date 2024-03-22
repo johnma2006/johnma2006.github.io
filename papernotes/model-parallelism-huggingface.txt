@@ -1,0 +1,33 @@
+[https://huggingface.co/docs/transformers/v4.15.0/parallelism](https://huggingface.co/docs/transformers/v4.15.0/parallelism)
+  
+<img src="papernotes/figures/model-parallelism-huggingface-title.jpg" width="400" />
+
+#### Goals of parallelism
+
+- (1) Fit large models onto limited hardware
+- (2) Speed up training / inference
+
+#### Three dimensions of parallelism
+
+- There are 3 dimensions to parallelism: Data, Pipeline, and Tensor
+- Data Parallel: each process is fed a chunk of the data
+	- DDP
+	- FSDP / ZeRO
+- Pipeline Parallel: the model is split by layer
+	- GPipe: helps reduce the "bubble" idle time by splitting the batch into chunks
+	- <img src="papernotes/figures/model-parallelism-huggingface-1.jpg" width="400" />
+- Tensor Parallel: each layer / tensor is split
+	- Megatron
+	- <img src="papernotes/figures/model-parallelism-huggingface-2.jpg" width="400" />
+	- MLPs: split matrix row-wise and then column-wise, and do an AllReduce at the end
+		- Backward pass: propogate the outgrad backwards, do an AllReduce at the start
+	- Attention: the different heads are inherently parallel, so we can parallelize by head
+
+#### When to use which strategy?
+
+- If model fits on a single GPU:
+	- DDP or FSDP
+- If doesn't fit, but largest layer fits
+	- PP, FSDP, TP
+- If largest layer doesn't fit
+	- PP alone won't work; must use TP

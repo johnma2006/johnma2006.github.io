@@ -1,0 +1,538 @@
+[
+  {
+    "title": "Optimization",
+    "content": [
+      {
+        "title": "An Empirical Model of Large-Batch Training (McCandlish 2028)",
+        "src": "papernotes/an-empirical-model-of-large-batch-training.txt"
+      },
+      {
+        "title": "Tensor Programs V: Tuning Large Neural Networks via Zero-Shot Hyperparameter Transfer (Yang 2022)",
+        "src": "papernotes/tensor-programs-v-tuning-large-neural-networks-via-zero-shot-hyperparameter-transfer.txt"
+      },
+      {
+        "title": "On the Generalization Benefit of Noise in Stochastic Gradient Descent (Smith 2020)",
+        "src": "papernotes/on-the-generalization-benefit-of-noise-in-stochastic-gradient-descent.txt"
+      },
+      {
+        "title": "Why Momentum Really Works (Goh 2017)",
+        "src": "papernotes/why-momentum-really-works.txt"
+      },
+      {
+        "title": "Don't Decay the Learning Rate, Increase the Batch Size (Smith 2017)",
+        "src": "papernotes/dont-decay-the-learning-rate-increase-the-batch-size.txt"
+      },
+      {
+        "title": "On the Variance of the Adaptive Learning Rate and Beyond (Liu 2019)",
+        "src": "papernotes/on-the-variance-of-the-adaptive-learning-rate-and-beyond.txt"
+      },
+      {
+        "title": "On the SDEs and Scaling Rules for Adaptive Gradient Algorithms (Malladi 2022)",
+        "src": "papernotes/on-the-sdes-and-scaling-rules-for-adaptive-gradient-algorithms.txt"
+      },
+      {
+        "title": "Label Noise SGD Provably Prefers Flat Global Minimizers (Damian 2021)",
+        "src": "papernotes/label-noise-sgd-provably-prefers-flat-global-minimizers.txt"
+      },
+      {
+        "title": "Towards Theoretically Understanding Why SGD Generalizes Better Than ADAM in Deep Learning (Zhou 2020)",
+        "src": "papernotes/towards-theoretically-understanding-why-sgd-generalizes-better-than-adam-in-deep-learning.txt"
+      },
+      {
+        "title": "Understanding the Generalization of Adam in Learning Neural Networks with Proper Regularization (Zhou 2020)",
+        "src": "papernotes/understanding-the-generalization-of-adam-in-learningneural-networks-with-proper-regularization.txt"
+      },
+      {
+        "title": "Empirical Analysis of the Hessian of Over-Parametrized Neural Networks (Sagun 2017)",
+        "src": "papernotes/empirical-analysis-of-the-hessian-of-over-parametrized-neural-networks.txt"
+      },
+      {
+        "title": "A Diffusion Theory For Deep Learning Dynamics (Xie 2020)",
+        "src": "papernotes/a-diffusion-theory-for-deep-learning-dynamics.txt"
+      }
+    ]
+  },
+  {
+    "title": "Initialization",
+    "content": [
+      {
+        "title": "Batch Normalization Biases Residual Blocks Towards the Identity Function in Deep Networks (De 2020)",
+        "src": "papernotes/batch-normalization-biases-residual-blocks-towards-the-identity-function-in-deep-networks.txt"
+      },
+      {
+        "title": "Improving Transformer Optimization Through Better Initialization (Huang 2020)",
+        "src": "papernotes/improving-transformer-optimization-through-better-initialization.txt"
+      },
+      {
+        "title": "Fixup Initialization: Residual Learning Without Normalization (Zhang 2019)",
+        "src": "papernotes/fixup-initialization-residual-learning-without-normalization.txt"
+      },
+      {
+        "title": "How to Start Training: The Effect of Initialization and Architecture (Hanin 2018)",
+        "src": "papernotes/how-to-start-training-the-effect-of-initialization-and-architecture.txt"
+      },
+      {
+        "title": "All you need is a good init (Mishkin 2015)",
+        "src": "papernotes/all-you-need-is-a-good-init.txt"
+      }
+    ]
+  },
+  {
+    "title": "Generalization",
+    "content": [
+      {
+        "title": "Bayesian Deep Learning and a Probabilistic Perspective of Generalization (Wilson 2020)",
+        "src": "papernotes/bayesian-deep-learning-and-a-probabilistic-perspective-of-generalization.txt"
+      },
+      {
+        "title": "Grokking: Generalization Beyond Overfitting on Small Algorithmic Datasets (Power 2022)",
+        "src": "papernotes/grokking-generalization-beyond-overfitting.txt"
+      },
+      {
+        "title": "Deep Double Descent: Where Bigger Models and More Data Hurt (Nakkiran 2019)",
+        "src": "papernotes/deep-double-descent-where-bigger-models-and-more-data-hurt.txt"
+      },
+      {
+        "title": "Understanding deep learning requires rethinking generalization (Zhang 2016)",
+        "src": "papernotes/understanding-deep-learning-requires-rethinking-generalization.txt"
+      },
+      {
+        "title": "Why do tree-based models still outperform deep learning on tabular data? (Grinsztajn 2022)",
+        "src": "papernotes/why-do-tree-based-models-still-outperform-deep-learning-on-tabular-data.txt"
+      },
+      {
+        "title": "Benign, Tempered, or Catastrophic: A Taxonomy of Overfitting? (Mallinar 2022)",
+        "src": "papernotes/benign-tempered-or-catastrophic-a-taxonomy-of-overfitting.txt"
+      }
+    ]
+  },
+  {
+    "title": "Distributed Training",
+    "content": [
+      {
+        "title": "FSDP: Fully Sharded Data Parallel: faster AI training with fewer GPUs (Meta 2021)",
+        "src": "papernotes/fully-sharded-data-parallel-faster-ai-training-with-fewer-gpus.txt"
+      },
+      {
+        "title": "DDP: Distributed Data Parallel",
+        "src": "papernotes/ddp-distributed-data-parallel.txt"
+      },
+      {
+        "title": "Model Parallelism (HuggingFace)",
+        "src": "papernotes/model-parallelism-huggingface.txt"
+      },
+      {
+        "title": "The FLOPs Calculus of Language Model Training (Bahdanau 2022)",
+        "src": "papernotes/the-flops-calculus-of-language-model-training.txt"
+      },
+      {
+        "title": "Writing Distributed Applications with PyTorch",
+        "src": "papernotes/writing-distributed-applications-with-pytorch.txt"
+      },
+      {
+        "title": "Collective Operations",
+        "src": "papernotes/collective-operations.txt"
+      },
+      {
+        "title": "Ring-AllReduce",
+        "src": "papernotes/ring-allreduce.txt"
+      }
+    ]
+  },
+  {
+    "title": "GPUs and Performance",
+    "content": [
+      {
+        "title": "Demystifying GPU Architectures For Deep Learning",
+        "src": "papernotes/demystifying-gpu-architectures-for-deep-learning.txt"
+      },
+      {
+        "title": "Making Deep Learning Go Brrrr From First Principles",
+        "src": "papernotes/making-deep-learning-go-brrrr-from-first-principles.txt"
+      },
+      {
+        "title": "GPU / CPU Communication",
+        "src": "papernotes/gpu-cpu-communication.txt"
+      }
+    ]
+  },
+  {
+    "title": "Scaling",
+    "content": [
+      {
+        "title": "Chinchilla / Training Compute-Optimal Large Language Models (Hoffman 2022)",
+        "src": "papernotes/chinchilla-training-compute-optimal-large-language-models.txt"
+      },
+      {
+        "title": "Scaling Laws for Neural Language Models (Kaplan 2020)",
+        "src": "papernotes/scaling-laws-for-neural-language-models.txt"
+      }
+    ]
+  },
+  {
+    "title": "Transformers \\\\ Inference",
+    "content": [
+      {
+        "title": "Efficiently Scaling Transformers Inference (Pope 2022)",
+        "src": "papernotes/efficiently-scaling-transformers-inference.txt"
+      },
+      {
+        "title": "Speculative Sampling (Chen 2023)",
+        "src": "papernotes/speculative-sampling.txt"
+      },
+      {
+        "title": "Nucleus Sampling / The Curious Case of Neural Text Degeneration (Holtzman 2019)",
+        "src": "papernotes/the-curious-case-of-neural-text-degeneration.txt"
+      }
+    ]
+  },
+  {
+    "title": "Transformers \\\\ Attention Variants",
+    "content": [
+      {
+        "title": "RoPE: Enhanced Transformer with Rotary Position Embedding (Su 2021)",
+        "src": "papernotes/rope-enhanced-transformer-with-rotary-position-embedding.txt"
+      },
+      {
+        "title": "Generating Long Sequences with Sparse Transformers (Child 2019)",
+        "src": "papernotes/generating-long-sequences-with-sparse-transformers.txt"
+      },
+      {
+        "title": "Grouped Query Attention (Ainslie 2023)",
+        "src": "papernotes/grouped-query-attention.txt"
+      },
+      {
+        "title": "Alibi Attention (Press 2022)",
+        "src": "papernotes/alibi-attention.txt"
+      },
+      {
+        "title": "Self-Attention with Relative Position Representations (Shaw 2018)",
+        "src": "papernotes/self-attention-with-relative-position-representations.txt"
+      }
+    ]
+  },
+  {
+    "title": "Transformers \\\\ Architecture",
+    "content": [
+      {
+        "title": "Mixture of Experts Explained",
+        "src": "papernotes/mixture-of-experts-explained.txt"
+      },
+      {
+        "title": "On Layer Normalization in the Transformers Architecture (Xiong 2020)",
+        "src": "papernotes/on-layer-normalization-in-the-transformers-architecture.txt"
+      },
+      {
+        "title": "Weight Tying / Using the Output Embedding to Improve Language Models (Press 2016)",
+        "src": "papernotes/weight-tying-using-the-output-embedding-to-improve-language-models.txt"
+      }
+    ]
+  },
+  {
+    "title": "Safety \\\\ Interpretability",
+    "content": [
+      {
+        "title": "A Mathematical Framework for Transformer Circuits (Elhage 2021)",
+        "src": "papernotes/a-mathematical-framework-for-transformer-circuits.txt"
+      },
+      {
+        "title": "In-context Learning and Induction Heads (Olsson 2022)",
+        "src": "papernotes/in-context-learning-and-induction-heads.txt"
+      },
+      {
+        "title": "Feature Visualization (Olah 2017)",
+        "src": "papernotes/feature-visualization.txt"
+      },
+      {
+        "title": "Zoom In: An Introduction to Circuits (Olah 2020)",
+        "src": "papernotes/zoom-in-an-introduction-to-circuits.txt"
+      },
+      {
+        "title": "Toy Models of Superposition (Elhage 2022)",
+        "src": "papernotes/toy-models-of-superposition.txt"
+      },
+      {
+        "title": "Interpreting GPT: the Logit Lens",
+        "src": "papernotes/interpreting-gpt-the-logit-lens.txt"
+      }
+    ]
+  },
+  {
+    "title": "Safety \\\\ Alignment Science",
+    "content": [
+      {
+        "title": "Constitutional AI: Harmlessness from AI Feedback (Bai 2022)",
+        "src": "papernotes/constitutional-ai-harmlessness-from-ai-feedback.txt"
+      },
+      {
+        "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models (Zou 2023)",
+        "src": "papernotes/universal-and-transferable-adversarial-attacks-on-aligned-language-models.txt"
+      },
+      {
+        "title": "Weak-to-Strong Generalization (Burns 2023)",
+        "src": "papernotes/weak-to-strong-generalization.txt"
+      },
+      {
+        "title": "Measuring Progress on Scalable Oversight for Large Language Models (Bowman 2022)",
+        "src": "papernotes/measuring-progress-on-scalable-oversight-for-large-language-models.txt"
+      },
+      {
+        "title": "Sleeper Agents: Training Deceptive LLMs that Persist Through Safety Training (Hubinger 2024)",
+        "src": "papernotes/sleeper-agents-training-deceptive-llms-that-persist-through-safety-training.txt"
+      },
+      {
+        "title": "Red Teaming Language Models with Language Models (Perez 2022)",
+        "src": "papernotes/red-teaming-language-models-with-language-models.txt"
+      },
+      {
+        "title": "Studying Large Language Model Generalization with Influence Functions (Turpin 2023)",
+        "src": "papernotes/studying-large-language-model-generalization-with-influence-functions.txt"
+      },
+      {
+        "title": "Discovering Language Model Behaviors with Model-Written Evaluations (Perez 2022)",
+        "src": "papernotes/discovering-language-model-behaviors-with-model-written-evaluations.txt"
+      },
+      {
+        "title": "Language Models Don’t Always Say What They Think: Unfaithful Explanations in Chain-of-Thought Prompting (Turpin 2023)",
+        "src": "papernotes/language-models-dont-always-say-what-they-think-unfaithful-explanations-in-chain-of-thought-prompting.txt"
+      },
+      {
+        "title": "Large Language Models can Strategically Deceive their Users when Put Under Pressure (Scheurer 2023)",
+        "src": "papernotes/large-language-models-can-strategically-deceive-their-users-when-put-under-pressure.txt"
+      }
+    ]
+  },
+  {
+    "title": "Safety \\\\ Policy",
+    "content": [
+      {
+        "title": "Anthropic's Responsible Scaling Policy",
+        "src": "anthropics-responsible-scaling-policy.txt"
+      },
+      {
+        "title": "Jack Clark on the realities of AI policy (Twitter thread)",
+        "src": "papernotes/jack-clark-on-the-realities-of-ai-policy.txt"
+      },
+      {
+        "title": "Anthropic's Core Directions on AI Policy (Jack Clark comment on LessWrong)",
+        "src": "papernotes/anthropics-core-directions-in-ai-policy--jack-clark-comment-on-lesswrong.txt"
+      },
+      {
+        "title": "Open-Sourcing Highly Capable Foundation Models (Seger 2023)",
+        "src": "papernotes/open-sourcing-highly-capable-foundation-models.txt"
+      }
+    ]
+  },
+  {
+    "title": "Safety \\\\ Anthropic Core Views",
+    "content": [
+      {
+        "title": "Anthropic Core Views on AI Safety (Anthropic 2023)",
+        "src": "papernotes/anthropic-core-views-on-ai-safety.txt"
+      },
+      {
+        "title": "Anthropic Research Direction: Scalable Oversight",
+        "src": "papernotes/anthropic-research-direction-scalable-oversight.txt"
+      },
+      {
+        "title": "Anthropic Research Direction: Learning Processes Rather than Achieving Outcomes",
+        "src": "papernotes/anthropic-research-direction-learning-processes-rather-than-achieving-outcomes.txt"
+      },
+      {
+        "title": "Anthropic Research Direction: Understanding Generalization",
+        "src": "papernotes/anthropic-research-direction-understanding-generalization.txt"
+      },
+      {
+        "title": "Anthropic Research Direction: Testing for Dangerous Failure Modes",
+        "src": "papernotes/anthropic-research-direction-testing-for-dangerous-failure-modes.txt"
+      },
+      {
+        "title": "Anthropic Research Direction: Societal Impacts and Evaluations",
+        "src": "papernotes/anthropic-research-direction-societal-impacts-and-evaluations.txt"
+      }
+    ]
+  },
+  {
+    "title": "Data \\\\ Text",
+    "content": [
+      {
+        "title": "TinyStories: How Small Can Language Models Be and Still Speak Coherent English? (Eldan 2023)",
+        "src": "papernotes/tinystories.txt"
+      },
+      {
+        "title": "The RefinedWeb Dataset for Falcon LLM (Penedo 2023)",
+        "src": "papernotes/the-refinedweb-dataset-for-falcon-llm.txt"
+      },
+      {
+        "title": "SlimPajama-DC: Understanding Data Combinations for LLM Training (Shen 2023)",
+        "src": "papernotes/slimpajama-dc-understanding-data-combinations-for-llm-training.txt"
+      },
+      {
+        "title": "GPT2 Training Data (Radford 2019)",
+        "src": "papernotes/gpt2-training-data.txt"
+      }
+    ]
+  },
+  {
+    "title": "Data \\\\ Multimodal",
+    "content": [
+      {
+        "title": "LAION-5B: An open large-scale dataset for training next generation image-text models (Schuhmann 2022)",
+        "src": "papernotes/laion-5b-an-open-large-scale-dataset-for-training-next-generation-image-text-models.txt"
+      },
+      {
+        "title": "Multimodal C4: An Open, Billion-scale Corpus of Images Interleaved with Text (Zhu 2023)",
+        "src": "papernotes/multimodal-c4-an-open-billion-scale-corpus-of-images-interleaved-with-text.txt"
+      },
+      {
+        "title": "DALL·E 2 pre-training mitigations (Nichol 2022)",
+        "src": "papernotes/dalle-2-pre-training-mitigations.txt"
+      },
+      {
+        "title": "DataComp: In search of the next generation of multimodal datasets (Gadre 2023)",
+        "src": "papernotes/datacomp-in-search-of-the-next-generation-of-multimodal-datasets.txt"
+      }
+    ]
+  },
+  {
+    "title": "Image \\\\ Recognition",
+    "content": [
+      {
+        "title": "High-Performance Large-Scale Image Recognition Without Normalization (Brock 2021)",
+        "src": "papernotes/high-performance-large-scale-image-recognition-without-normalization.txt"
+      },
+      {
+        "title": "ConvNets Match Vision Transformers at Scale (Smith 2023)",
+        "src": "papernotes/convnets-match-vision-transformers-at-scale.txt"
+      }
+    ]
+  },
+  {
+    "title": "Image \\\\ Generation",
+    "content": [
+      {
+        "title": "DALL-E 3 / Improving Image Generation with Better Captions (Betker 2023)",
+        "src": "papernotes/dall-e-3-improving-image-generation-with-better-captions.txt"
+      }
+    ]
+  },
+  {
+    "title": "Neural Tangent Kernels",
+    "content": [
+      {
+        "title": "Ultra-Wide Deep Nets and the Neural Tangent Kernel (Du 2019)",
+        "src": "papernotes/ultra-wide-deep-nets-and-the-neural-tangent-kernel.txt"
+      },
+      {
+        "title": "Wide Neural Networks of Any Depth Evolve as Linear Models Under Gradient Descent (Lee 2019)",
+        "src": "papernotes/wide-neural-networks-of-any-depth-evolve-as-linear-models-under-gradient-descent.txt"
+      },
+      {
+        "title": "NTK Linearization",
+        "src": "papernotes/ntk-linearization.txt"
+      },
+      {
+        "title": "Lazy Training in NTKs",
+        "src": "papernotes/lazy-training-in-ntks.txt"
+      },
+      {
+        "title": "Deriving Kernel Regression from Linear Regression",
+        "src": "papernotes/deriving-kernel-regression-from-linear-regression.txt"
+      }
+    ]
+  },
+  {
+    "title": "Prompting",
+    "content": [
+      {
+        "title": "Anthropic Prompt Engineering Guide",
+        "src": "papernotes/anthropic-prompt-engineering-guide.txt"
+      },
+      {
+        "title": "Prompt Engineering (OpenAI API Notes)",
+        "src": "papernotes/prompt-engineering--openai-api-notes.txt"
+      },
+      {
+        "title": "Chain of Thought Prompting",
+        "src": "papernotes/chain-of-thought-prompting.txt"
+      }
+    ]
+  },
+  {
+    "title": "Floating Point Numerics",
+    "content": [
+      {
+        "title": "Floating Point Precision",
+        "src": "papernotes/floating-point-precision.txt"
+      }
+    ]
+  },
+  {
+    "title": "Quantization",
+    "content": [
+      {
+        "title": "QLoRA: Efficient Finetuning of Quantized LLMs (Dettmers 2023)",
+        "src": "papernotes/qlora-efficient-finetuning-of-quantized-llms.txt"
+      }
+    ]
+  },
+  {
+    "title": "PyTorch Internals",
+    "content": [
+      {
+        "title": "PyTorch internals: PyTorch tensors",
+        "src": "papernotes/pytorch-internals-pytorch-tensors.txt"
+      },
+      {
+        "title": "PyTorch internals: Dynamic dispatch",
+        "src": "papernotes/pytorch-internals-dynamic-dispatch.txt"
+      },
+      {
+        "title": "NumPy Internals: An Introduction",
+        "src": "papernotes/numpy-internals-an-introduction.txt"
+      }
+    ]
+  },
+  {
+    "title": "NonInt Blog Notes",
+    "content": [
+      {
+        "title": "NonInt: Learned Structures",
+        "src": "papernotes/nonint-learned-structures.txt"
+      },
+      {
+        "title": "NonInt: Compute Multipliers",
+        "src": "papernotes/nonint-compute-multipliers.txt"
+      },
+      {
+        "title": "NonInt: Is the Reversal Curse a generalization problem?",
+        "src": "papernotes/nonint-is-the-reversal-curse-a-generalization-problem.txt"
+      },
+      {
+        "title": "NonInt: The State of ML in 2023",
+        "src": "papernotes/nonint-the-state-of-ml-in-2023.txt"
+      },
+      {
+        "title": "NonInt: The “it” in AI models is the dataset",
+        "src": "papernotes/nonint-the-it-in-ai-models-is-the-dataset.txt"
+      },
+      {
+        "title": "NonInt: Ablations are really important",
+        "src": "papernotes/nonint-ablations-are-really-important.txt"
+      },
+      {
+        "title": "NonInt: Techniques for debugging neural networks",
+        "src": "papernotes/nonint-techniques-for-debugging-neural-networks.txt"
+      }
+    ]
+  },
+  {
+    "title": "Recommender Systems",
+    "content": [
+      {
+        "title": "Deep Neural Networks for YouTube Recommendations (Covington 2016)",
+        "src": "papernotes/deep-neural-networks-for-youtube-recommendations.txt"
+      }
+    ]
+  }
+]

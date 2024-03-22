@@ -1,0 +1,11 @@
+[https://pytorch.org/tutorials/intermediate/dist_tuto.html](https://pytorch.org/tutorials/intermediate/dist_tuto.html)
+
+#### Rank and World
+
+- Rank is the ID of the process
+- World is the collection of all processes
+- <img src="papernotes/figures/writing-distributed-applications-with-pytorch-1.jpg" width="400" />
+- Communication backends: NCCL, Gloo, MPI
+- A couple ways to initialize processes to facilitate communication:
+	- Set up env variables: set up a master, MASTER_PORT, MASTER_ADDR, WORLD_SIZE, RANK
+	- Shared file system, communication through a shared file

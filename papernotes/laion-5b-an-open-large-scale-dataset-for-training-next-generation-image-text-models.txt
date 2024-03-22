@@ -1,0 +1,49 @@
+[arXiv:2210.08402](https://arxiv.org/abs/2210.08402)
+  
+<img src="papernotes/figures/laion-5b-an-open-large-scale-dataset-for-training-next-generation-image-text-models-title.jpg" width="400" />
+<img src="papernotes/figures/laion-5b-an-open-large-scale-dataset-for-training-next-generation-image-text-models-abstract.jpg" width="400" />
+
+#### Background on Vision-Language Models
+
+- OpenAI's CLIP
+	- Embed both images and text into a shared representation space -> similarity logits is dot product
+	- Result: Large gains in zero-shot ImageNet classification (11.5% -> 76.2%) and gains on challenging distribution shifts
+- ALIGN and BASIC improved by scaling up training set
+- Flamingo was the first vision-language model with in-context leraning
+- Text-guided image generation: DALL-E, Imagen, Parti, Stable Diffusion
+
+#### Background on Image-Text Datasets
+
+<img src="papernotes/figures/laion-5b-an-open-large-scale-dataset-for-training-next-generation-image-text-models-1.jpg" width="400" />
+
+#### Collection Methodology
+- (1) Feed in Common Crawl.
+- (2) Webpage Filtering
+	- Find images with alt-text to create image-text pairs
+	- Perform language detection using Google's CLD3
+	- Download (image URL, alt-text) into Postgres server
+- (3) Download images
+	- Asynchronous requests using Trio and Asks
+		- Trio: sync/await I/O library; like asyncio but simpler/more usable
+	- 300 workers: each worker with 2 vCPUs, 1GB RAM, 10Mbps download bandwidth; each can process 10,000 links in 10-15 min
+- (4) Post-Processing
+	- Remove image-text pairs with < 5 chars of alt-text, < 5 KB of image data, and malicious/large/redundant images
+	- Filter pairs based on content using CLIP
+		- Remove pairs with image-text cosine similarity below 0.28, removing 90% of the original 50 billion images
+	- Detect and tag illegal, violent, pornographic using CLIP embeddings
+
+#### Dataset
+
+- 2.3bn English image-text pairs, 2.3bn non-English, 1.3bn non-identified language (mostly products)
+	- Each pair contains image, ID, URL, alt-text, height/width, cosine similarity
+- Subdatasets:
+	- LAION-High-Resolution: 170M subset of superresolution images
+	- LAION-Aethetic: 120M subset of aesthetic images, determined by a linear probe on CLIP representations
+- Watermark tags (so users can remove images with watermark), safety tags, 
+
+#### Experiments
+- SOTA CLIP
+- Zero-shot classification
+	- Embeddings of class = average embedding of prompt using text encoder
+	- Compute cosine similarity between class and image to get top-1 class
+	- <img src="papernotes/figures/laion-5b-an-open-large-scale-dataset-for-training-next-generation-image-text-models-2.jpg" width="400" />

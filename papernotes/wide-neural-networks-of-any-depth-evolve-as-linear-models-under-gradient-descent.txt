@@ -1,0 +1,26 @@
+[arXiv:1902.06720](https://arxiv.org/abs/1902.06720)
+  
+<img src="papernotes/figures/wide-neural-networks-of-any-depth-evolve-as-linear-models-under-gradient-descent-title.jpg" width="400" />
+
+#### Parameterizations
+
+- Standard parameterization: weights W and biases b are parameterized as
+	- W<sub>ij</sub> = ω<sub>ij</sub>
+	- b<sub>j</sub> = β<sub>j</sub>
+	- where ω<sub>ij</sub> is trainable parameter drawn from N(0, σ<sub>w</sub><sup>2</sup> / n), β<sub>j</sub> is drawn from N(0, σ<sub>b</sub>), n is the width.
+- NTK parameterization: weights W and biases b are parameterized as
+	- W<sub>ij</sub> = σ<sub>ω</sub>/sqrt(n) * ω<sub>ij</sub>
+	- b<sub>j</sub> = σ<sub>b</sub> * β<sub>j</sub>
+	- where ω<sub>ij</sub>, β<sub>j</sub> are the trainable parameters drawn from N(0, 1), n is the width, and σ<sup>2</sup> are the variances.
+	- Note that while standard parameterization normalizes the forward dynamics, NTK-parameterization also normalizes the backward dynamics
+		- If W<sub>ij</sub> has a gradient of 1, then ω<sub>ij</sub> has a gradient of σ<sub>ω</sub>/sqrt(n). W<sub>ij</sub> will increase by σ<sub>ω</sub><sup>2</sup>/n, which is very small; this essentially scales the learning rate inversely proportional to width.
+
+#### Linearization
+
+- In a small neighbourhood around the weight initialization θ<sub>0</sub>, a neural network can be approximated using a first-order Taylor expansion:
+	- <img src="papernotes/figures/wide-neural-networks-of-any-depth-evolve-as-linear-models-under-gradient-descent-1.jpg" width="400" />
+	- (Figure from Guillermo et al 2021)
+	- f<sub>θ</sub>(x) ≈ f<sub>θ<sub>0</sub></sub>(x) + (θ - θ<sub>0</sub>)<sup>T</sup>∇<sub>θ</sub>f<sub>θ<sub>0</sub></sub>(x)
+		- where ∇<sub>θ</sub>f<sub>θ<sub>0</sub></sub>(x) is the gradient of the initial network output at x w.r.t. the parameters
+- Remarkably, under certain types of init and in the limit of infinite network-width, the linear approximation is exact, and the NTK is constant throughout training
+

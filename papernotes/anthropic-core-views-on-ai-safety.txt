@@ -1,0 +1,30 @@
+[https://www.anthropic.com/news/core-views-on-ai-safety](https://www.anthropic.com/news/core-views-on-ai-safety)
+  
+<img src="papernotes/figures/anthropic-core-views-on-ai-safety-title.jpg" width="400" />
+
+#### Overview
+
+- (Key Point 1) AI will have a **very large impact, and quickly**
+	- Simple extrapolations from scaling laws imply that capabilities possibly equal or exceed human level within a decade in most intellectual tasks. Increased spending, faster computation, algorithmic improvements, and AI in AI research feedback loops may accelerate progress.
+	- Most knowledge work may be automatable in the near future, with profound implications for society. AI could shift employment, macroeconomics, and power structures between nations.
+- (Key Point 2) **We do not know how to train systems how to robustly behave well**
+	- Especially true as AI becomes superhuman -- hard for a chess beginner to detect bad moves in a grandmaster.
+- (Key Point 3) We are most optimistic about a empirically-driven, portfolio approach to AI safety
+	- **Empirical approach**: empirically grounded safety research will have the most impact.
+		- The space of possible AI systems, safety failures, and techniques is so large; empiricism helps us stay grounded on the problems that matter.
+	- **Portfolio approach**: develop a "portfolio" of safety work that covers all probabilistic scenarios of how difficult it is to develop safe AI
+		- Goal: (i) better techniques to make AI systems safer (Alignment Capabilities), (ii) better ways of diagnosing how safe an AI system is (Alignment Science).
+		- (1) Optimistic: very little chance of catastrophic risk. (i) will help speeds up the pace that AI can be genuinely beneficial. (ii) will demonstrate such systems are safe.
+		- (2) Intermediate: cat. risk is possible or plausible. Anthropic will propogate safe ways to train powerful AI, via (i).
+		- (3) Pessimistic: unsolvable problem. Anthropic will sound the alarm to the world's institutions, making the case via (ii)
+
+#### 3 types of AI research at Anthropic
+
+- (1) Capabilities: frontier models are necessary for safety research.
+	- Large models are qualitatively different from smaller models
+	- Large models are help to align models in techniques such as Constitutional AI and Debate
+- (2) Alignment Capabilities: develop algorithms for training HHH AI systems.
+	- Directions: scalable oversight, process-oriented learning
+- (3) Alignment Science: identify how safe AI systems really are.
+	- Directions: mechanistic interpretability, testing for dangerous failure modes, societal impacts and evals
+	- Anthropic believes the development of RLHF was net positive for safety because it serves as the foundation for techniques such as Constitutional AI, AI-generated evals, automated red-teaming, and debate. 

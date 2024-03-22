@@ -1,0 +1,35 @@
+[https://nonint.com/2023/10/18/is-the-reversal-curse-a-generalization-problem/](https://nonint.com/2023/10/18/is-the-reversal-curse-a-generalization-problem/)
+
+#### Reversal Curse
+
+- Reversal Curse: a model can answer "Who is Tom Cruise's mom? Mary Lee Pfeiffer" but not "Who is Mary Lee Pfeiffer's son? Tom Cruise" 
+- Hypothesis: reversal curse is an issue with knowledge lookup, rather than reasoning
+
+#### Latents, Lookup, and World Knowledge
+
+- Latents:
+	- Latents representations are the intermediate activations in the network. These are eventually fed through the unembedding layer to form logits
+	- The power of AR models lie within its context, the sequence of latents that came before the current prediction
+		- The richer the context, the better the prediction
+	- Think of the latent space as a register bank that can hold information
+- World Knowledge
+	- As the latents move through the layers, the latent space is augmented with contextual facts
+- Compare two prompts:
+	- (1) The weather today is
+		- Initial latent: [‘what is the weather’, ‘time: today’]
+		- After lookup: [‘what is the weather’, ‘weather is at atmospheric phenomenon’, ‘possible weathers: sunny, snowy, rainy, …’, ‘common weather: sunny’, ‘time: today’]
+	- (2) It's December in Colorado, the weather today is
+		- Initial latent: [‘location: colorado’, ‘month: december’, ‘what is the weather’, ‘time: today’]
+		- After lookup: [‘December is a winter month’, ‘winter is cold in the northern hemisphere’, ‘we’re in Colorado’, ‘Colorado is a mountain state in the USA’, ‘Colorado is in the northern hemisphere’, ‘it snows in Colorado in the winter’, ‘what is the weather’, ‘weather is at atmospheric phenomenon’, ‘possible weathers: sunny, snowy, rainy, …’, ‘common weather: sunny’, ‘common winter weather in Colorado: snowy’, ‘time: today’, ‘today is in December’]
+- Reasoning
+	- Hypothesis: reasoning happens entirely within the attention context
+		- This is why CoT prompting works
+
+#### Explanation of Reversal Curse
+	
+- The model is worse at looking up facts about Mary Lee Pfeiffer than Tom Cruise, because Tom Cruise facts are more relevant to fitting the training dataset
+	- Since Mary Lee Pfeiffer prompts have less context, and reasoning happens within context, this explains the reversal curse
+	- *Comment: I don't entirely agree with this explanation. I feel like this explanation relies on some asymmetry between "Tom Cruise" and "Mary Lee Pfeiffer"; however, the original paper demonstrated the reversal curse with fictitious associations that shouldn't have any asymmetry.*
+- Another explanation (from the paper)
+	- Ordering matters: If A -> B is in the training set, then A's latent representation is augmented a bit by B; this is helpful to autoregressively predict B. However, B's representation isn't augmented by A, since in A -> B, we never need to predict B again after predicting A.
+

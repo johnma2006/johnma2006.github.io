@@ -1,0 +1,7 @@
+[https://nonint.com/2023/06/25/ablations-are-really-important/](https://nonint.com/2023/06/25/ablations-are-really-important/)
+
+- Perform ablations, and a lot of them.
+	- Start with a bare implementation of some base model like a transformer. Train it for a long time. Make a small tweak. Train it again. Make another small tweak and train it again.
+	- Track down the effect of all ablations
+- This is why I really enjoy reading the ablations sections of any research paper: it gives me a sense for what actually matters, and how much of a result is simply due to the implementation choices a researcher chose.
+

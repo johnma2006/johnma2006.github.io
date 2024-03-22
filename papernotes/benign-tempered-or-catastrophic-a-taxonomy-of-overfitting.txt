@@ -1,0 +1,6 @@
+[arXiv:2207.06569](https://arxiv.org/abs/2207.06569)
+  
+<img src="papernotes/figures/benign-tempered-or-catastrophic-a-taxonomy-of-overfitting-title.jpg" width="400" />
+<img src="papernotes/figures/benign-tempered-or-catastrophic-a-taxonomy-of-overfitting-abstract.jpg" width="400" />
+<img src="papernotes/figures/benign-tempered-or-catastrophic-a-taxonomy-of-overfitting-1.jpg" width="400" />
+

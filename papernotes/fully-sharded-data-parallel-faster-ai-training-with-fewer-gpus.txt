@@ -1,0 +1,21 @@
+[https://engineering.fb.com/2021/07/15/open-source/fsdp/](https://engineering.fb.com/2021/07/15/open-source/fsdp/)
+  
+<img src="papernotes/figures/fully-sharded-data-parallel-faster-ai-training-with-fewer-gpus-title.jpg" width="400" />
+
+- Both DDP and FSDP are data parallel methods
+
+#### DDP
+
+- Each GPU has the full set of model weights, which is redundant
+- <img src="papernotes/figures/fully-sharded-data-parallel-faster-ai-training-with-fewer-gpus-1.jpg" width="400" />
+
+#### FSDP
+
+- Only a shard of weights/opt states are present on each GPU, and gathered as necessary
+	- Communication is overlapped with computation
+- Weights size of one layer still needs to fit on a single GPU
+- <img src="papernotes/figures/fully-sharded-data-parallel-faster-ai-training-with-fewer-gpus-2.jpg" width="400" />
+- Pseudo-code:
+- <img src="papernotes/figures/fully-sharded-data-parallel-faster-ai-training-with-fewer-gpus-3.jpg" width="400" />
+- Inference with FSDP is not recommended because weights are static, so it's much better to use tensor paralleism to communicate the activations instead
+	- During training, weight communication is necessary because the weights change

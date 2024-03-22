@@ -1,0 +1,9 @@
+[arXiv:2207.08815](https://arxiv.org/abs/2207.088152207.08815)
+  
+<img src="papernotes/figures/why-do-tree-based-models-still-outperform-deep-learning-on-tabular-data-title.jpg" width="400" />
+<img src="papernotes/figures/why-do-tree-based-models-still-outperform-deep-learning-on-tabular-data-abstract.jpg" width="400" />
+
+#### NN inductive biases
+- Biased towards smooth solutions
+- Invariant to a rotation of the features (at least MLPs are), and they show that uniformative features affect MLP-like NNs more than tree methods.
+	- Therefore, to remove uninformative features, an algorithm first has to find the original orientation.

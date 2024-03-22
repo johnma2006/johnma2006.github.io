@@ -1,0 +1,13 @@
+[https://towardsdatascience.com/numpy-internals-an-introduction-bcaafa1a68a2](https://towardsdatascience.com/numpy-internals-an-introduction-bcaafa1a68a2)
+  
+<img src="papernotes/figures/numpy-internals-an-introduction-title.jpg" width="400" />
+
+#### Numpy Arrays and Metadata
+
+- Arrays in Numpy have essentially 2 parts:
+	- (1) the data buffer that contains the actual raw data
+	- (2) array metadata, containing the stride, datatype, F or C order, ...
+- Much of the flexibility of NumPy is because of the array metadata
+	- The data buffer can be interpreted in many ways without being recreated
+- Summation over rows is 2x as fast when the array is stored in row-major (C-order) compared to column-major (F-order), because contiguous memory accesses are faster
+

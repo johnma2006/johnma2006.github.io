@@ -1,0 +1,14 @@
+[https://nonint.com/2024/03/03/learned-structures/](https://nonint.com/2024/03/03/learned-structures/)
+
+- 2 main categories of architectural tweaks that meaningfully impact performance
+	- (1) Modifications that improve numerical stability during training
+	- (2) Modifications that enhance the expressiveness of a model in learnable ways
+- Learnable expressiveness: build structured representations of your data and allow those structures to interact in learnable ways
+	- MLPs: elements of vector can interact with each other
+	- Attention: setes of vectors interact with each other
+	- Mixture of experts: Dynamically select the weights
+- In each of the above, we add an axis by which our activations can affect the output
+	- Hypothesis: as you add nested structures, it allows the network to learn in stages
+		- Simpler structures are "learned first", and as training progresses, more complex mechanisms "come online" to provide the boost in capacity necessary to approximate a more complex layer of the data distribution
+- Author believes learnable structures are a fascinating research direction
+

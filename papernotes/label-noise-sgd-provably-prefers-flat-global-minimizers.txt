@@ -1,0 +1,10 @@
+[arXiv:2106.06530](https://arxiv.org/abs/2106.06530)
+  
+<img src="papernotes/figures/label-noise-sgd-provably-prefers-flat-global-minimizers-title.jpg" width="400" />
+<img src="papernotes/figures/label-noise-sgd-provably-prefers-flat-global-minimizers-abstract.jpg" width="400" />
+
+#### Results
+
+- SGD with label noise converges to stationary point of a regularized loss L(θ) + λR(θ), where:
+	- λ is a regularization parameter depending on {magnitude of label noise, step size, batch size}
+	- R(θ) is a regularizer that penalizes sharp minima

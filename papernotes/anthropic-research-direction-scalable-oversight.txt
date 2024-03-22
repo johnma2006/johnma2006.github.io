@@ -1,0 +1,6 @@
+[https://www.anthropic.com/news/core-views-on-ai-safety](https://www.anthropic.com/news/core-views-on-ai-safety)
+  
+- Alignment requires large amounts of high-quality feedback to steer their behaviour.
+- Scalable oversight is the problem of providing accurate, HQ feedback as language models scale up in capabilities. This may be the most promising approach for training superhuman systems while remaining safe.
+- The only way to provide this supervision is to amplify a small amount of HQ human supervision into a large amount of HQ AI supervision.
+- Examples: RLHF, Constitutional AI, automated red-teaming, AI-AI debate.

@@ -1,0 +1,42 @@
+[arXiv:2302.01318](https://arxiv.org/abs/2302.01318)
+
+[Reproduction](https://github.com/johnma2006/candle/blob/main/experiments/nlp_experiments/2.1%20Speculative%20Sampling%20Experiments.ipynb)
+  
+<img src="papernotes/figures/speculative-sampling-title.jpg" width="400" />
+<img src="papernotes/figures/speculative-sampling-abstract.jpg" width="400" />
+
+#### Algorithm
+
+- Given draft_model, target_model, repeat the following to generate tokens
+	- (1) Autoregressively sample K tokens from draft_model to get x_draft, shape (curlen + K,).
+		- We also get p = draft probs, shape (K, vocab_size)
+	- (2) Compute target_model(x_draft[-(K + 1):]) to get q := target probs, shape (K + 1, vocab_size)
+	- (3) Accept/reject draft tokens one-by-one based on rejection sampling scheme.
+		- Sample r ~ U[0, 1]. For t = 0... K-1:
+			- Current draft token c = x_draft[curlen + t]
+			- If r < q[t, c] / p[t, c]:  # Accept
+				- Accept c, increment t by 1
+			- else:  # Reject
+				- Sample new token from (q[t, :] - p[t, :])<sub>+</sub>
+	- (4) If all tokens were accepted, we can sample another token from q[-1, :].
+	
+#### Analysis
+
+- This algorithm gives exact same target distribution as q.
+	- Proof: for each possible token c, if we want to sample with a prob of q[c], but instead we first sampled with a prob of p[c], then to get a total prob of q[c]:
+		- If q < p, total prob is
+			- Draft token is c with prob p, then accept with prob q/p
+			- Draft token isn't c with prob 1-p, but (q-p)[c] is 0.
+		- If q > p, total prob is
+			- Draft token is c with prob p, then accept with prob 1
+			- Draft token is some other k with prob p[k]; in this case, reject with prob (1 - q[k] / p[k])+ and sample c with prob (q - p)+[c]
+				- Sum over k: p[k] * (1 - q[k] / p[k])+ * (q - p)[c] = (p[k] - q[k])+ * (q - p)+[c] = (q - p)[c]
+- The algorithm is faster when q and p are more similar.
+- This algorithm relies on the fact that in step (2), computing the logits for a short continuation of K tokens is similar in speed to sampling a single token. This is because for large transforrmers, the majority of sampling time is in:
+	- (1) Linear layers. For small K, this is memory bound.
+	- (2) Attn mechanism. KV caching means that this is memory bound.
+	- (3) All-reduces. For small K, Megatron-style all-reduces are latency as opposed to throughput bound.
+	- Note in particular that we don't actually reduce the FLOPs computed by the target model; all savings come from the fact that small seqlen / small batch inference is heavily memory-bound.
+
+
+

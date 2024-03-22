@@ -1,0 +1,47 @@
+[https://transformer-circuits.pub/2022/in-context-learning-and-induction-heads/index.html](https://transformer-circuits.pub/2022/in-context-learning-and-induction-heads/index.html)
+[https://www.neelnanda.io/mechanistic-interpretability/favourite-papers](https://www.neelnanda.io/mechanistic-interpretability/favourite-papers)
+[https://www.lesswrong.com/posts/nJqftacoQGKurJ6fv/some-common-confusion-about-induction-heads](https://www.lesswrong.com/posts/nJqftacoQGKurJ6fv/some-common-confusion-about-induction-heads)
+
+<img src="papernotes/figures/in-context-learning-and-induction-heads-title.jpg" width="400" />
+
+#### Key concepts
+
+- Induction heads are ubiquitous in real transformers, and form as a sudden phase change during training
+- Hypothesis: induction heads may constitute the mechanism for the majority of all in-context learning in LLMs
+
+#### In-context learning
+
+- Tokens later in the context are easier to predict than tokens earlier in the context. As context gets longer, loss goes down.
+- Two ways of measuring in-context learning:
+	- (1) Few-shot learning of specific tasks
+	- (2) Loss at different token indices, to measure how much better the model gets at prediction as it receives more context
+- For the purposes of this work, they use the 2nd definition
+	- In-context learning score: the loss of the 500th token in the context minus the loss of the 50th token in the context
+
+#### How do they detect induction heads?
+- Behavioural explanation
+	- Feed in **RRT (repeated random tokens)** to measure fully abstracted induction behavior
+	- Two scores are used to characterize induction heads:
+		- i) Prefix matching: attention probability to the first occurrence of the token [A] on patterns like [A][B] … [A]
+		- ii) Copying: how much the head output increases the logit of [B] compared to the other logits.
+	- *Comment: just because the head performs induction on RRTs doesn't mean that induction is all the head does.*
+- Notice that induction heads are implementing a **simple algorithm**, and are not memorizing a fixed table of n-gram statistics
+	- The rule [A][B] … [A] → [B] applies regardless of what A and B are.
+	- This means that induction heads can in some sense work out of distribution
+- In this paper, define induction heads by the as a head that exhibits the 2 properties:
+	- Prefix matching: in [A][B] … [A], [A] attends to [B]
+	- Copying: in [A][B] … [A] → [B], OV circuit increases the logit for [B]
+
+#### Arguments that induction heads are the mechanism for the majority of in-context learning.
+
+- Argument 1 (Macroscopic co-occurrence): Transformer undergo a "phase change" early in training, during two things happen simulteneously:
+	- Induction heads form
+	- In-context learning improves dramatically.
+- <img src="papernotes/figures/in-context-learning-and-induction-heads-1.jpg" width="400" />
+- Argument 2 (Macroscopic co-perturbation): When we change the transformer architecture in a way that shifts whether induction heads can form, the dramatic improvement in in-context learning shifts in a precisely matching way
+- Argument 3  (Direct ablation):  When we directly “knock out” induction heads at test-time in small models, the amount of in-context learning greatly decreases
+- Argument 4 (Specific examples of induction head generality): Although we define induction heads very narrowly in terms of copying literal sequences, we empirically observe that these same heads also appear to implement more sophisticated types of in-context learning, including highly abstract behaviors, making it plausible they explain a large fraction of in-context learning.
+- Argument 5 (Mechanistic plausibility of induction head generality): For small models, we can explain mechanistically how induction heads work, and can show they contribute to in-context learning.  Furthermore, the actual mechanism of operation suggests natural ways in which it could be repurposed to perform more general in-context learning.
+- Argument 6 (Continuity from small to large models): In the previous 5 arguments, the case for induction heads explaining in-context learning is stronger for small models than for large ones.  However, many behaviors and data related to both induction heads and in-context learning are smoothly continuous from small to large models, suggesting the simplest explanation is that mechanisms are the same.
+
+

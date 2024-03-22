@@ -1,0 +1,32 @@
+[arXiv:1904.10509](https://arxiv.org/abs/1904.10509)
+[Sparse Attention Implementation](https://github.com/johnma2006/candle/blob/main/experiments/nlp_experiments/6.0%20Sparse%20Attention%20Implementation.ipynb)
+  
+<img src="papernotes/figures/generating-long-sequences-with-sparse-transformers-title.jpg" width="400" />
+<img src="papernotes/figures/generating-long-sequences-with-sparse-transformers-abstract.jpg" width="400" />
+
+#### Motivation
+
+- Qualitative investigations on attention patterns learned by Transfomers on image dataset
+	- <img src="papernotes/figures/generating-long-sequences-with-sparse-transformers-1.jpg" width="400" />
+- Trained a 128-layer self-attention network on CIFAR-10
+- Most layers had sparse attention patterns:
+	- Early layers had locally connected patterns, resembling convolutions
+	- Layers 19-20 had row/column attention
+	- Layers 64-128 had high, data-dependent sparsity
+
+#### Methodology
+
+- Restrict investigation to sparse attention patterns that have connectivity over all positions over several steps of attention
+- <img src="papernotes/figures/generating-long-sequences-with-sparse-transformers-2.jpg" width="400" />
+- Attention becomes O(N * sqrt(N))
+- Strided attention is useful when the data has structure that aligns with the stride, such as images or music
+	- However, strided fails to properly route information in data without this periodic structure
+- Fixed attention has specific cells that summarize previous locations and propagate that info to future cells
+
+#### Initialization
+- Output is sum of 2N blocks of attention and ffn, and each block receives a gradient directly from the output layer
+- Scale the initialization by 1/sqrt(2N) to keep the output scale invariant of depth
+
+#### Results
+- In addition to saving on compute, sparse patterns often converged to lower error, suggesting a useful inductive pattern in these sparsity patterns
+

@@ -1,0 +1,15 @@
+[arXiv:2104.09864](https://arxiv.org/abs/2104.09864)
+  
+<img src="papernotes/figures/rope-enhanced-transformer-with-rotary-position-embedding-title.jpg" width="400" />
+<img src="papernotes/figures/rope-enhanced-transformer-with-rotary-position-embedding-abstract.jpg" width="400" />
+
+- Q, K -> WQ, WK where W is a sparse rotation matrix of shape (max seqlen, dim)
+	- W rotates Qx and Kx, both shape (seqlen, dim)
+	- In position i, rotate hidden dim (2j, 2j + 1) by i / 10000<sup>2j/d</sup> 
+	- <img src="papernotes/figures/rope-enhanced-transformer-with-rotary-position-embedding-1.jpg" width="400" />
+- Intuition
+	- When computing attn score between WQx<sub>i</sub> and WKx<sub>j</sub>, the net rotation is a function of only the relative position (i - j)
+	- The larger the relative position (i - j) gets, the more the hidden dims are rotated. This results in lower attention score in expectancy
+
+
+

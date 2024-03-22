@@ -1,0 +1,8 @@
+[arXiv:1803.02155](https://arxiv.org/abs/1803.02155)
+  
+<img src="papernotes/figures/self-attention-with-relative-position-representations-title.jpg" width="400" />
+
+- attn score between i and j: dot(Kx<sub>i</sub>, Qx<sub>j</sub>) -> dot(Kx<sub>i</sub>, Qx<sub>j</sub> + aK<sub>i-j</sub>)
+- attn value: Vx<sub>j</sub> -> Vx<sub>j</sub> + aV<sub>i-j</sub>
+- a<sup>K</sup><sub>i-j</sub>, a<sup>V</sup><sub>i-j</sub> are learned vectors of dimension embed_dim
+	- i-j is clipped to [-k, k]; clipping allows the model to generalize to lengths not seen during training 

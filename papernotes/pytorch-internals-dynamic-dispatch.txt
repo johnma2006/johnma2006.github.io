@@ -1,0 +1,7 @@
+[blog.ezyang.com/2019/05/pytorch-internals/](blog.ezyang.com/2019/05/pytorch-internals/)
+
+- The dispatcher determines, for a given operation like torch.mm, which kernel to use, which depends on the 3 tensor attributes:
+	- <img src="papernotes/figures/pytorch-internals-dynamic-dispatch-1.jpg" width="400" />
+	- Device: CPU vs GPU
+	- Layout of tensor (strided, sparse)
+	- Dtype of tensor

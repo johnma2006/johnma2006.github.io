@@ -1,0 +1,17 @@
+[https://medium.com/@dzmitrybahdanau/the-flops-calculus-of-language-model-training-3b19c1f025e4](https://medium.com/@dzmitrybahdanau/the-flops-calculus-of-language-model-training-3b19c1f025e4)
+  
+- When training LLMs, total compute **C = 6ND** where N = # model params, D = # tokens trained
+	- Proof:
+		- Assumptions
+			- The FLOPs are almost all in matmuls (as opposed to say, quadratic attention)
+		- Let W = shape (m, n), x = token with shape (n,). W contributes:
+			- 2mn FLOPs on the forward pass to compute y = xW
+			- 2mn FLOPs on the backward pass to compute (dL / dx) = (dL / dy) W<sup>T</sup>
+			- mn FLOPs to compute dL / dW = x @ (dL / dx)<sup>T</sup>
+				- This is a matmul of shape (n, 1) @ (1, m), which doesn't need an add
+			- mn FLOPs to aggregate dL / dW to the batch gradient accumulator
+	- Why do only weight FLOPs matter?
+		- Attention is commonly thought of as a bottleneck, but attn only contributes 4dL FLOPs per layer while matrix multiplications contribute 12d<sup>2</sup>. For large transformers, d >> L (e.g. Llama 70b has d = 8192)
+- In practice, throughput for activations and elementwise operations are bounded by memory bandwidth, which is significant
+- MFU in practice:
+	- <img src="papernotes/figures/the-flops-calculus-of-language-model-training-1.jpg" width="400" />

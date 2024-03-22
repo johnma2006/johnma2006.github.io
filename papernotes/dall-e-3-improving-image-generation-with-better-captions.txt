@@ -1,0 +1,24 @@
+[https://cdn.openai.com/papers/dall-e-3.pdf](https://cdn.openai.com/papers/dall-e-3.pdf)
+  
+<img src="papernotes/figures/dall-e-3-improving-image-generation-with-better-captions-title.jpg" width="400" />
+<img src="papernotes/figures/dall-e-3-improving-image-generation-with-better-captions-abstract.jpg" width="400" />
+
+#### Weaknesses of DALL-E 2:
+- Human details
+- Text
+- Variable binding
+- Complex prompts
+
+#### Methodology
+
+- These were all tackled by recaptioning the dataset
+- <img src="papernotes/figures/dall-e-3-improving-image-generation-with-better-captions-1.jpg" width="400" />
+	
+	- Goal is to generate highly descriptive captions that not only capture the main subject, but also the surroundings, background, style, text, etc.
+	- Text: every time text appeared in the image, always include it in the caption
+	- Variable binding: include more examples of variable binding in the dataset
+- Concerns with synthetic data
+	- Models have a notorious tendency to overfit to distributional regularities in the dataset
+		- e.g. if the text always starts with a space character, it won't work if you perform inference on prompts that do not start with a space
+	- When generating synthetic captioner, the concern is that the captioner will have biased behaviours that are difficult to detect but nevertheless do not represent the true prompt distribution
+	- Solution: blend the synthetic captions with the "ground-truth" captions

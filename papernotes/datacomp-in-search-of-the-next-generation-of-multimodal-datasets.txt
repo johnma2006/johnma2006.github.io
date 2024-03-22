@@ -1,0 +1,28 @@
+[arXiv:2304.14108](https://arxiv.org/abs/2304.14108)
+  
+<img src="papernotes/figures/datacomp-in-search-of-the-next-generation-of-multimodal-datasets-title.jpg" width="400" />
+<img src="papernotes/figures/datacomp-in-search-of-the-next-generation-of-multimodal-datasets-abstract.jpg" width="400" />
+
+#### Motivation
+- Data research does not receive the nearly same level of attention as algorithmic research
+- Datasets lack the benchmark-driven development process that has enabled innovation on the model side
+- We don't really understand what makes a good dataset
+
+#### Contributions
+
+- (Contribution 1) DataComp, a benchmark for multimodal dataset design: hold the training code and compute constant, vary the dataset
+	- Focuses on 2 challenges:
+		- (1) CommonPool filtering: How to filter data sources
+		- (2) Bring Your Own Data: What data sources to train on
+	- Constant compute: Datasets are compared holding constant the number of training samples seen
+	- Evaluation: Quantify a dataset submission by training a CLIP model from scratch and evaluating on 38 downstream image classification tasks
+- (Contribution 2) CommonPool, a dataset of 12.8B image-text pairs from Common Crawl
+		- Collection methodology: extract URLs and alt-text from Common Crawl using Spark, discard unsafe text using classifier trained on CLIP ViT features, deduplicate against eval test sets, face detection and blurring to protect privacy.
+- (Contribution 3) Baseline experiments
+	- Filtering baselines: No filtering, random subsets (to investigate scaling trends), basic filtering (> 2 words / 5 char alt-text, image size >200px height/width < 3), LAION filtering (CLIP cosine similarity score > 0.28), Image-based filtering (alt-text overlap with ImageNet class names)
+	- <img src="papernotes/figures/datacomp-in-search-of-the-next-generation-of-multimodal-datasets-1.jpg" width="400" />
+
+- (Contribution 4) Scaling trends for dataset design
+	- Ranking between filtering strategies is typically consistant across different scales (small vs medium vs large) and training setup
+- (Contribution 5) DataComp-1B, a new SOTA multimodal dataset, combines 2 promising filtering baselines: Image-based and CLIP score
+	- Result: train a CLIP ViT from scratch that outperforms OpenAI's CLIP by 3.7% while using same compute and training procedure

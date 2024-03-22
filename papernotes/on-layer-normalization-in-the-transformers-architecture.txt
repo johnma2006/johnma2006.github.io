@@ -1,0 +1,12 @@
+[arXiv:2002.04745](https://arxiv.org/abs/2002.04745)
+  
+<img src="papernotes/figures/on-layer-normalization-in-the-transformers-architecture-title.jpg" width="400" />
+<img src="papernotes/figures/on-layer-normalization-in-the-transformers-architecture-abstract.jpg" width="400" />
+<img src="papernotes/figures/on-layer-normalization-in-the-transformers-architecture-1.jpg" width="400" />
+
+- Post-norm: x = norm(x + attn(x))
+	- Larger gradients in final layers, which makes larger learning rates unstable
+	- As move up layers, gradient norm decrease exponentially
+- Pre-norm: x = x + attn(norm(x))
+	- Smaller gradients in final layer by a factor of sqrt(L) 
+	- As move up layers, gradient norm stay roughly the same

@@ -1,0 +1,10 @@
+[arXiv:2309.10818](https://arxiv.org/abs/2309.10818)
+  
+#### Approach
+- Build as large and diverse a dataset as possible.
+- A promising source of diverse text is CommonCrawl, but there are significant data quality issues.
+- WebText is a web scrape which emphasizes document quality
+	- Only scrape webpages which have been curated by humans
+	- Scrape all outbound links from Reddit that have at least 3 karma; this is a heuristic for whether other users found the content interesting, funny, educational, useful, ...
+	
+

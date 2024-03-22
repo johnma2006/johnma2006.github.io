@@ -1,0 +1,30 @@
+[arXiv:1803.01719](https://arxiv.org/abs/1803.01719)
+  
+<img src="papernotes/figures/how-to-start-training-the-effect-of-initialization-and-architecture-title.jpg" width="400" />
+<img src="papernotes/figures/how-to-start-training-the-effect-of-initialization-and-architecture-abstract.jpg" width="400" />
+
+#### Results
+
+- Identifies two failure modes that blow up training. Let M := random var denoting mean squared activation norm. Then,
+	- Failure Mode 1: With improper init, E[M] grows/shrinks exponentially with depth
+	- Failure Mode 2: With improper init, Var[M] grows exponentially with depth
+- If proper init is used, then convergence is much faster and deeper networks can be trained
+- FM1
+	- For deep MLP with ReLU activation
+		- <img src="papernotes/figures/how-to-start-training-the-effect-of-initialization-and-architecture-1.jpg" width="400" />
+		- If proper init (variance 2 / dim, aka Kaiming) is not used, then
+			- Activation scale blows up / decays exponentially with depth
+			- Training takes much longer for deeper models
+		- If proper init is used
+			- Activation scale is constant w.r.t. depth
+			- Training can be done regardless of depth (*Comment: this may not be true*). Deeper model converge faster (*Comment: this is probably because initial gradient norm is higher in deeper models*)
+	- For deep ResNet with ReLU activation
+		- Let output = x + η<sub>1</sub>layer<sub>1</sub> + η<sub>2</sub>layer<sub>2</sub> + ... + η<sub>L</sub>layer<sub>L</sub>, where layer<sub>i</sub> are fully connected layers without layer norm
+		- Activation scale grows exponentially with Ση<sub>ℓ</sub>. (but perhaps sqrt(Ση<sub>ℓ</sub><sup>2</sup>) with layer norms)
+- FM2
+	- For deep MLP with ReLU activation,
+		- E[Var[M]] is exponential in sum(1/width for each width in hidden layer)
+		- As a result, larger widths are easier to train, and constant width is optimal
+
+
+

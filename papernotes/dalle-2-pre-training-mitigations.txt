@@ -1,0 +1,40 @@
+[https://openai.com/research/dall-e-2-pre-training-mitigations](https://openai.com/research/dall-e-2-pre-training-mitigations)
+  
+
+#### Motivation:
+
+- DALLE has various guardrails to prevent content policy violations
+- Pre-training mitigations are a subset of these guardrails that directly modify the data
+
+#### Methodology
+
+- (1) Filter violent / NSFW images
+	- Prioritize recall (filter out all of the bad data) over precision (leaving in all good data)
+		- "We can always fine-tune with more data to teach the model new things, but much harder to make the model forget"
+	- Active learning procedure to label images: iteratively improve classifiers by gathering human labels
+	- <img src="papernotes/figures/dalle-2-pre-training-mitigations-1.jpg" width="400" />
+	
+		- To reduce FPR, assign human labels to positively classified images
+		- To reduce FNR, use nearest neighbour search:
+			- Run CV to gather false negative examples; find closest images in unlabelled images in perceptual feature space; assign human labels to discovered images
+- (2) Filtering data that amplify biases
+	- After NSFW filtering, gender biases were amplified; hypothesis is that women are biased towards being presented in more sexualized contexts
+	- Investigate this through keyword analysis of the alt-text captions: filters reduced "woman" by 14% and "man" by 6%
+	- Solution: reweight the filtered dataset to match the distribution of unfiltered images, by reweighting the training loss by example
+		- **We don't have to hand-select the categories**: predict P(unfiltered | image), and reweight by P(unfiltered | image) / P(filtered | image)
+			- e.g. if P(unfiltered | image) = 0.8, that means 4x more likely in unfiltered dataset than filtered, so reweight by 4x
+		- Classifier: use a linear probe on CLIP features (rationale: we want a smoother function than original data filters, to prevent the classifier from learning the data filters)
+- (3) Preventing image regurgitation
+	- Regurgitation is undesirable, because we want DALLE to create original, unique images, and because we run into copyright issues
+	- Investigation: collect a dataset of prompts that result in duplicate images by sampling from 50k prompts from training dataset and ranking by perceptual similarity between original image and generated images
+		- Base regurgitation reawas < 1% 
+	- Noticed 2 patterns:
+		- (1) Images were almost all simple vector graphics, easy to memorize because of low information content
+		- (2) Images all had many near-duplicates in the training set: many works have shown that memorization is strongly linked to data duplication
+	- Deduplication methodology: cluster images into K=1024 clusters and deduplicate within clusters. 25% of images were removed
+	- Result:
+		- By training 2 models on deduplicated vs original, human evaluators preferred model trained on deduplicated
+		- Running regurgitation search found that model never regurgitates training image
+
+
+

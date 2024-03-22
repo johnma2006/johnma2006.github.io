@@ -1,0 +1,19 @@
+[https://distill.pub/2020/circuits/zoom-in/](https://distill.pub/2020/circuits/zoom-in/)
+  
+<img src="papernotes/figures/zoom-in-an-introduction-to-circuits-title.jpg" width="400" />
+
+#### Three speculative claims about neural networks
+- (1) Features: Features are the fundamental unit of neural networks. They correspond to directions.
+- (2) Circuits: Features are connected by weights, forming circuits.
+- (3) Universality: Analogous features and circuits form across models and tasks.
+
+#### Summary
+- (1) Feature examples: curve detectors, high-low frequency detectors, pose-invariant dog head detectors. 
+	- Polysemantic neurons: neural networks often contain neurons that respond to multiple unrelated inputs. For example,
+	- <img src="papernotes/figures/zoom-in-an-introduction-to-circuits-1.jpg" width="400" />
+	- These result form a phenomenon called "superposition"; intuitively, pack more features into limited number of neurons / compression. As long as cars and dogs don't co-occur, the model can easily disentangle the two, thereby saving neurons 
+- (2) Circuits are subsets of the network that we can observe implement clear, meaningful algorithms by inspecting the weights
+	- Curve detectors: easy to see from the weights of a 5x5 conv
+	- Oriented dog heads: the network detects two cases (left facing and right facing), and then "unions" over them
+	- <img src="papernotes/figures/zoom-in-an-introduction-to-circuits-2.jpg" width="400" />
+(3) Universality: we see curve detectors / high-low frequency detectors in AlexNet, InceptionV1, VGG19, Resnet50

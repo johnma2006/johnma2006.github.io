@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <title>John Z. Ma \ Deep Learning from Scratch</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="container">
+    <div id="menu-container"></div>
+    <div id="content-container">
+      <main>
+	    <h2>Deep Learning from Scratch</h2>
+        <p>
+		  I learn best through implementation. To that end, I implemented PyTorch
+		  from scratch: <a href="https://github.com/johnma2006/candle">github.com/johnma2006/candle</a>.
+		  I use it almost exclusively for my deep learning experiments – definitely slower
+		  than using an actual framework with accelerator support but it's much funner this way.
+		  <br /><br />
+		  
+		  Everything below implemented from scratch in pure numpy:
+	  	  <ul>
+		    <li>Tensor-based autograd</li>
+			<li>Layers: MHA / GQA / rotary / sparse attention with KV caching, batch / layer / RMS norm, conv2d</li>
+			<li>NLP: BPE, SentencePiece processor, LoRA fine-tuning, top-k / nucleus / beam search, speculative sampling, chat templates (Llama chat, ChatML), streaming chat UI</li>
+			<li>Models: Gemma (todo), Mixtral, Mamba, Llama, GPT, ResNet</li>
+			<li>Lightweight Tensorboard-like dashboarding</li>
+		  </ul>
+        </p>
+		
+		<hr />
+		<h3>Language Modelling</h3>
+		
+		<ul><li><a href="https://github.com/johnma2006/candle/blob/main/experiments/nlp_experiments/3.3%20Chat%20with%20Mixtral%20(fine-tuned).ipynb">
+		  Chat with Mixtral 8x7B:
+		</a></li></ul>
+        <img src="https://github.com/johnma2006/candle/blob/main/experiments/nlp_experiments/mixtral_chat_example.gif?raw=true" style="width:100%;border:0px"/>
+		<p style="text-align:center;margin:0;font-style:italic;font-size:8pt">(video sped up 30x)</p>
+		
+		<ul><li><a href="https://github.com/johnma2006/candle/blob/main/experiments/nlp_experiments/3.2%20Chat%20with%20Llama%20(fine-tuned).ipynb">
+		  Chat with Llama 13B:
+		</a></li></ul>
+        <img src="https://github.com/johnma2006/candle/blob/main/experiments/nlp_experiments/llama_chat_example.gif?raw=true" style="width:100%;border:0px"/>
+		<br />
+		
+		<ul>
+		  <li><a href="https://github.com/johnma2006/candle/blob/main/experiments/nlp_experiments/5.0%20LoRA%20fine-tuning%20Llama%20on%20my%20Messenger%20chats.ipynb">
+		    LoRA fine-tuning Llama on my Messenger chats
+		  </a></li>
+		
+		  <li><a href="https://github.com/johnma2006/candle/blob/main/experiments/nlp_experiments/3.4%20Chat%20with%20Mamba%20(base).ipynb">
+		    Chat with Mamba
+		  </a></li>
+		</ul>
+		
+		<hr />
+		<h3>Optimization</h3>
+		
+		<ul><li><a href="https://github.com/johnma2006/candle/blob/main/experiments/optimization_experiments/2.0%20Experiments%20with%20%CE%BCParameterization%20and%20%CE%BCTransfer.ipynb">
+		  Experiments with μParameterization / μTransfer:
+		</a></li></ul>
+        <img src="https://github.com/johnma2006/candle/blob/main/experiments/optimization_experiments/mup_interpolation.gif?raw=true" style="width:100%;border:0px"/>
+		<br />
+		
+		<ul><li><a href="https://github.com/johnma2006/candle/blob/main/experiments/optimization_experiments/1.0%20Experiments%20with%20neural%20tangent%20kernels.ipynb">
+		  Experiments with Neural Tangent Kernels:
+		</a></li></ul>
+        <img src="https://github.com/johnma2006/candle/blob/main/experiments/optimization_experiments/ntk_describes_nn_training.gif?raw=true" style="width:100%;border:0px"/>
+		<br />
+		
+		<hr />
+		<h3>Generalization</h3>
+		
+		<ul><li><a href="https://github.com/johnma2006/candle/blob/main/experiments/generalization_experiments/1.1%20Reproducing%20Grokking%20-%20Generalization%20Beyond%20Overfitting%20-%2031x31%20modular%20division.ipynb">
+		  Grokking: Generalization Beyond Overfitting (Power et al. 2016) reproduction:
+		</a></li></ul>
+        <img src="https://github.com/johnma2006/candle/blob/main/experiments/generalization_experiments/grok_training.gif?raw=true" style="width:100%;border:0px"/>
+		<br />
+		
+		<hr />
+		<h3>Vision</h3>
+		
+		<ul><li><a href="https://github.com/johnma2006/candle/blob/main/experiments/vision_experiments/2.0%20ResNet20%20on%20CIFAR10.ipynb">
+		  Training ResNet20 on CIFAR10:
+		</a></li></ul>
+        <img src="https://github.com/johnma2006/candle/blob/main/experiments/vision_experiments/resnet_cifar10_dashboard.png?raw=true" style="width:100%;border:0px"/>
+		<br />
+		
+		<hr />
+		<h3>Safety</h3>
+		
+		<ul>
+		  <li><a href="https://github.com/johnma2006/candle/blob/main/experiments/nlp_experiments/4.0%20Adversarial%20Prompts%20on%20GPT.ipynb">
+		    Universal and Transferable Adversarial Attacks on Aligned Language Models (Zou et al. 2023) reproduction
+		  </a></li>
+		</ul>
+		
+      </main>
+    </div>
+  </div>
+  <script src="/script.js"></script>
+</body>
+</html>

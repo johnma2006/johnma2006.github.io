@@ -1,0 +1,8 @@
+[arXiv:1908.03265](https://arxiv.org/abs/1908.03265)
+  
+<img src="papernotes/figures/on-the-variance-of-the-adaptive-learning-rate-and-beyond-title.jpg" width="400" />
+<img src="papernotes/figures/on-the-variance-of-the-adaptive-learning-rate-and-beyond-abstract.jpg" width="400" />
+
+- The learning rate warmup heuristic achieves remarkable success in stabilizing training, accelerating convergence, and improving generalization for Adam
+- Identify a problem with Adam -- due to lack of samples in the early stage, the variance of the adaptive learning rate (:= sqrt(1 / adam_var)) is problematically large, and warmup works as a variance reduction technique
+	- <img src="papernotes/figures/on-the-variance-of-the-adaptive-learning-rate-and-beyond-1.jpg" width="400" />

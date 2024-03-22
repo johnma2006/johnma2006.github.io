@@ -1,0 +1,42 @@
+[https://transformer-circuits.pub/2022/toy_model/index.html](https://transformer-circuits.pub/2022/toy_model/index.html)
+  
+<img src="papernotes/figures/toy-models-of-superposition-title.jpg" width="400" />
+
+#### Key Results
+
+- In the toy models, they demonstrate:
+	- Superposition is a real, observed phenomenon
+	- Both monosemantic and polysemantic neurons can form
+	- At least some kinds of computation can be performed in superposition
+	- Whether features are stored in superposition is governed by a phase change
+	- Superposition organizes features into geometric structures such as digons, triangles, pentagons, and tetrahedrons
+
+#### Superposition
+
+- It would be very convenient if individual neurons corresponded to cleanly interpretable features of the input
+	- For example, each neuron would fire only in the presence of a specific visual feature, such as the color red, a left-facing curve, or a dog snout
+- Empirically, *some* neurons do cleanly map to features
+	- But this isn't always the case, especially in LLMs where it actually seems rare for neurons to correspond to clean features
+	- Why is it that neurons sometimes align with features and sometimes don't?
+- This paper uses toy models to investigate how and why models represent **more features than they have dimensions**
+	- We call this phenomenon **superposition** 
+
+#### Methodology and Results
+
+- Trained a toy model on a dataset of five features of varying importance in two dimensions
+- Vary the sparsity of the features:
+	- With dense features (say, every data point contains every feature), the model learns to represent an orthogonal basis of the most important two features (similar to what PCA might give us), and the other three features are not represented
+	- When features are sparse, superposition allows compression beyond what a linear model would do, at the cost of "interference" that requires nonlinear filtering.
+	- <img src="papernotes/figures/toy-models-of-superposition-1.jpg" width="400" />
+- Not only can models store additional features in superposition by **tolerating some interference**, but at least in certain limited cases, **models can perform computation while in superposition** 
+- This leads us to hypothesize that the neural networks we observe in practice are **noisily simulating larger, highly sparse networks**.
+	- In other words, it's possible that models we train can be thought of as doing “the same thing as” an imagined much-larger model, representing the exact same features but with no interference.
+
+#### Feature Sparsity
+
+- Feature Sparsity: In the natural world, many features seem to be sparse in the sense that they only rarely occur.
+	- For example, in vision, most positions in an image don't contain a horizontal edge, or a curve, or a dog head
+	- In language, most tokens don't refer to Martin Luther King or aren't part of a clause describing music
+- More Features Than Neurons
+	- There are an enormous number of potentially useful features a model might represent.
+- This imbalance between features and neurons in real models seems like it must be a central tension in neural network representations.

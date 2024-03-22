@@ -1,0 +1,8 @@
+[https://www.anthropic.com/news/core-views-on-ai-safety](https://www.anthropic.com/news/core-views-on-ai-safety)
+  
+- One way to learn a new task is "outcome-oriented learning", where the agent's strategy is scored entirely on how well it achieved its desired outcome
+- In "process-oriented learning", the goal is to learn processes that can then be used to achieve that outcome.
+- Conceptually, many safety concerns can be addressed by training in a process-oriented manner
+- Humans will continue to understand the processes that AI uses, because for processes to be rewarded, they must be justified to humans
+- AI systems will not be rewarded for pursuing subgoals such as resource acquisition or deception, since humans will provide negative feedback for such processes
+

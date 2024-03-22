@@ -1,0 +1,20 @@
+[https://docs.nvidia.com/deeplearning/nccl/user-guide/docs/usage/collectives.html](https://docs.nvidia.com/deeplearning/nccl/user-guide/docs/usage/collectives.html)
+[https://en.wikipedia.org/wiki/Collective_operation](https://en.wikipedia.org/wiki/Collective_operation)
+  
+#### Collective Operations
+
+- Let:
+	- α = latency
+	- β = communication bandwidth per bit
+	- k = nodes
+	- n = bits
+- Runtime = latency + communication cost
+	- All of the below have O(α logk) latency and O(βn) communication cost except AllGather which has O(βkn)
+	- (All)Reduce
+	- <img src="papernotes/figures/collective-operations-1.jpg" width="400" />
+	- Broadcast
+	- <img src="papernotes/figures/collective-operations-2.jpg" width="400" />
+	- (All)Gather
+	- <img src="papernotes/figures/collective-operations-3.jpg" width="400" />
+	- ReduceScatter: O(βn)
+	- <img src="papernotes/figures/collective-operations-4.jpg" width="400" />
