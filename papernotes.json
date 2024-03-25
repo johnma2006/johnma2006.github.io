@@ -307,11 +307,11 @@
     "content": [
       {
         "title": "Anthropic's Responsible Scaling Policy",
-        "src": "anthropics-responsible-scaling-policy.txt"
+        "src": "papernotes/anthropics-responsible-scaling-policy.txt"
       },
       {
         "title": "RSPs are pauses done right (evhub LessWrong thread)",
-        "src": "rsps-are-pauses-done-right.txt"
+        "src": "papernotes/rsps-are-pauses-done-right.txt"
       },
       {
         "title": "Jack Clark on the realities of AI policy (Twitter thread)",
