@@ -1,4 +1,6 @@
 [arXiv:2401.05566](https://arxiv.org/abs/2401.05566)
+
+[https://www.lesswrong.com/posts/ZAsJv7xijKTfZkMtr/sleeper-agents-training-deceptive-llms-that-persist-through](https://www.lesswrong.com/posts/ZAsJv7xijKTfZkMtr/sleeper-agents-training-deceptive-llms-that-persist-through)
   
 <img src="papernotes/figures/sleeper-agents-training-deceptive-llms-that-persist-through-safety-training-title.jpg" width="400" />
 <img src="papernotes/figures/sleeper-agents-training-deceptive-llms-that-persist-through-safety-training-abstract.jpg" width="400" />

@@ -55,7 +55,7 @@ function toggleContent() {
   }
 }
 
-fetch('papernotes/papernotes.json')
+fetch('papernotes.json')
   .then(response => response.json())
   .then(data => {
     // Generate HTML code and insert it into the container

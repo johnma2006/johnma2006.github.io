@@ -2,4 +2,8 @@
 
 [https://www-cdn.anthropic.com/1adf000c8f675958c2ee23805d91aaade1cd4613/responsible-scaling-policy.pdf](https://www-cdn.anthropic.com/1adf000c8f675958c2ee23805d91aaade1cd4613/responsible-scaling-policy.pdf)
 
+[RSPs are pauses done right](https://www.lesswrong.com/posts/mcnWZBnbeDz7KKtjJ/rsps-are-pauses-done-right)
+
+[Dario Amodei’s prepared remarks from the UK AI Safety Summit, on Anthropic’s Responsible Scaling Policy](https://www.lesswrong.com/posts/vm7FRyPWGCqDHy6LF/dario-amodei-s-prepared-remarks-from-the-uk-ai-safety-summit)
+
 * Todo take notes *
