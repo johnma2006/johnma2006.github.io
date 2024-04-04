@@ -1,0 +1,44 @@
+[arXiv:2401.05566](https://arxiv.org/abs/2403.06634)
+  
+<img src="papernotes/figures/stealing-part-of-a-production-language-model-title.jpg" width="400" />
+<img src="papernotes/figures/stealing-part-of-a-production-language-model-abstract.jpg" width="400" />
+
+#### Recovering the output layer weights W
+
+- Given only API access that exposes the full logit vector, it's pretty easy to deduce non-trivial information about output layer weights **W ∈ R<sup>embed_dim x vocab_size</sup>**, including:
+    - (1) dimensionality of W (embed_dim of the model)
+    - (2) The actual weights W, up to symmetries (arbitrary change of basis)
+- Proof of (1):
+    - Do N random queries for large N to get logits Q ∈ R<sup>N x vocab_size</sup>
+        - Q = YW for some Y ∈ R<sup>N x embed_dim</sup>
+    - Since W has rank `embed_dim`, Q = W also has rank `embed_dim`. Therefore, just compute rank of Q using e.g. SVD
+- Proof of (2)
+    - First, note that since common Transformers architectures do not have a privileged basis, we can only recover W up to symmetries, AKA the best we can recover is XW for some change of basis matrix X ∈ R<sup>embed_dim x embed_dim</sup>
+    - Do SVD on Q: Q = UDV<sup>T</sup> = YW
+        - DV<sup>T</sup> = U<sup>T</sup>YW
+        - Let X := U<sup>T</sup>Y ∈ R<sup>embed_dim x embed_dim</sup>, then DV<sup>T</sup> = XW as desired
+		
+#### Overcoming Defenses
+
+- The attack above requires the full logit vector, which most APIs don't expose. We can **recover the full logit vector in many cases**:
+- If API access only exposes the top-K log-probs (not logits),AND allows the user to specify a "logit bias" b ∈ R<sup>vocab_size</sup> to be added to the logits before the softmax , then:
+	- Simply fix a reference token T; we will measure all logits relative to T
+	- Take (K-1) tokens at a time, add a huge logit bias to T and the (K-1) tokens, then measure log-probs. Repeat until we have the full logit vector
+- If API access does not expose logprobs, but still exposes logit bias:
+	- We can recover logits using binary search on the logit bias
+	- Temperature = 0 recovers largest logit token T<sub>max</sub>. For every other token T, we can recover logit relative to T<sub>max</sub> via binary search on T's logit bias
+
+#### Results
+
+- They test on production GPT-3.5 (before they removed logprobs), and confirmed that their method works 
+- <img src="papernotes/figures/stealing-part-of-a-production-language-model-1.jpg" width="500" />
+- Their strongest logprob-free attack is highly efficient, recovering 18 bits of precision in 3.7 queries per logit.
+	
+#### Defenses and Mitigations
+
+- Prevention
+	- Remove logit bias from API. Unfortunately, logit bias has legitimate uses, such as constrained generation
+- Mitigation
+	- Logit bias XOR logprobs: allow user to use one or the other, but not both; makes their attack is 10x more expensive
+	- Noise addition to logits
+	- Detect malicious queries

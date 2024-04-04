@@ -328,6 +328,15 @@
     ]
   },
   {
+    "title": "Safety \\\\ Security",
+    "content": [
+      {
+        "title": "Stealing Part of a Production Language Model (Carlini 2024)",
+        "src": "papernotes/stealing-part-of-a-production-language-model.txt"
+      }
+    ]
+  },
+  {
     "title": "Safety \\\\ Anthropic Core Views",
     "content": [
       {
