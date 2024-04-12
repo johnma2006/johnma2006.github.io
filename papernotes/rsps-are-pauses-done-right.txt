@@ -1,3 +1,35 @@
 [RSPs are pauses done right](https://www.lesswrong.com/posts/mcnWZBnbeDz7KKtjJ/rsps-are-pauses-done-right)
 
-* Todo take notes *
+#### METR's definition of RSPs
+
+> An RSP specifies what level of AI capabilities an AI developer is prepared to handle safely with their current protective measures, and conditions under which it would be too dangerous to continue deploying AI systems and/or scaling up AI capabilities until protective measures improve.
+
+#### When can we trust model evaluations? (from [When can we trust model evaluations?](https://www.alignmentforum.org/posts/dBmfb76zx6wjPsBC7/when-can-we-trust-model-evaluations) post)
+
+Depends on the type of eval:
+
+* (1) Currently, we can reliably do **capabilities evaluations**: *can* a model do some task?
+    * Example: could a model autonomously self-replicate if it wanted to?
+* (2) We cannot yet reliably do **safety evaluations**: under what circumstances *will* a model do some task?
+    * Example: would a model try to autonomously self-replicate?
+    * This will likely require developing understanding-based safety evals
+
+#### Reasons to like RSPs
+
+* Presents **concrete policy proposals** that are clear and actionable, as opposed to more nebulously defined pause advocacy
+    * [Nobody actually likes the six month pause proposal](https://www.astralcodexten.com/p/pause-for-thought-the-ai-pause-debate): TLDR, many forms of pauses (simple pause, surgical pause, regulatory pause, full stop) may be ineffective/counterproductive due to (1) race dynamics with non-pausing labs or countries, (2) even if implemented, there are likely ways to get around pauses that will subsequently benefit non-safety focused labs
+        * Six-month proposal ([link](https://futureoflife.org/open-letter/pause-giant-ai-experiments/)) in particular is watered down to the point of being useless, as hardware will still progress in the 6 months, leading to jump in capabilities once the pause ends
+* Political capital: early wins through initial RSPs can help build influence to shape governmental regulation
+* Since the stricter conditions of RSPs only come into effect for future, more powerful models, it's easier to get people to commit to them now
+* RSPs are explicitly risk-based, which appeals to policymakers, and drives home the point that pauses are meant to target risks. We can focus on the risks that policymakers care about (CBRN, cyberwarfare), since dangerous capabilities are likely highly correlated
+* Using model understanding as a final hard gate is intuitive and important:
+
+> The only worlds I can imagine myself actually feeling good about humanity’s chances are ones in which we have powerful transparency and interpretability tools ([link](https://www.alignmentforum.org/posts/nbq2bWLcYmSGup9aF/a-transparency-and-interpretability-tech-tree))
+
+#### RSP vs Pause Advocacy
+
+* In Evan's opinion, RSPs are pauses done right
+    * If you're advocating for a pause, then by definition, you have a resume condition: then, bake that condition into the RSP 
+    * If you're advocating for a full stop, Evan empathizes but doesn't thin it's (yet) realistic
+	
+<img src="papernotes/figures/rsps-are-pauses-done-right-1.jpg" width="400" />

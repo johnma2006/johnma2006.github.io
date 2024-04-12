@@ -4,4 +4,84 @@
 
 [Dario Amodei’s prepared remarks from the UK AI Safety Summit, on Anthropic’s Responsible Scaling Policy](https://www.lesswrong.com/posts/vm7FRyPWGCqDHy6LF/dario-amodei-s-prepared-remarks-from-the-uk-ai-safety-summit)
 
-* Todo take notes *
+#### RSP Framework
+
+- Define "AI safety levels" (ASL), where each level represents **higher model capabilities** that require higher **safety and security** standards
+    - if-then structure:
+        - **if** a model exhibits certain dangerous capabilities
+        - **then** don't deploy it or train more powerful models
+        - **until** certain safeguards are in place
+- ASL1 through ASL4
+	- <img src="papernotes/figures/anthropics-responsible-scaling-policy-1.jpg" width="400" />
+    - ASL1: no meaningful catastrophic risks, e.g. 2018 LLMs or chess bots
+    - ASL2: early signs of dangerous capabilities. This is where Claude 3 is at.
+    - ASL3: substantially increase the risks of catastrophic misuse (compared to non-AI baselines like Google) OR show low-level autonomous capabilities.
+    - ASL4 (and higher): not yet defined as it is too far from present systems. Commit to defining ASL4 before reaching ASL3.
+- **Anthropic commits to pause scaling or deployment** whenever they reach an ASL in capabilities but has not reached the safety procedures for the corresponding ASL
+    - This directly turns competitive incentives into incentives to solve safety problems
+    - Meeting ASL commitments will require research/technical breakthroughs
+- Due to the fast pace and uncertainty of AI as a field, RSP will necessarily require revision and iteration
+    - Changes must be approved by the board after consultation with LTBT
+
+#### Classes of Risks
+
+Each ASL level considers two classes of risks, paired with related safety measures:
+- <img src="papernotes/figures/anthropics-responsible-scaling-policy-2.jpg" width="400" />
+- (1) **Containment risks**: risks from merely **possessing** the model weights
+    - Examples: powerful models that could be misused if stolen by a malicious actor, autonomous replication / escape
+    - Safety measures (required to store model weights): treat model weights as core IP, harden security (against e.g. state actors), internal compartmentalization 
+- (2) **Deployment risks**: risks from **active use** of models
+    - Examples: misuse by users
+    - Safety measures (required for internal/external use): must pass expert red-teaming, evaluation for catastrophic risks, misuse prevention measures (automated detection, jailbreak)
+ 
+#### ASL 2 Commitments
+
+- ASL2 Capabilities
+    - (1) Provide info related to catastrophic misuse, but not in a way that elevates risk compared to baseline (search engines/textbooks), OR
+    - (2) Provide such info that cannot be easily found otherwise, but is inconsistent or unreliable enough to not significantly elevate risk or harm
+- Evaluation
+    - Based on Anthropic's work on [frontier red teaming](https://www.anthropic.com/news/frontier-threats-red-teaming-for-ai-safety), they evaluate Claude 2 as exhibiting (a) and sometimes exhibiting (b), and does not exhibit capability for autonomous self-replication
+- Containment Measures
+    - Limit access to model weights, establish insider threat detection, foster security mindest
+- Deployment Measures
+    - HHH techniques (Constitutional AI), trust & safety tooling (prompt/completion harm classifiers), model cards, acceptable use policies
+
+#### ASL 3 Commitments
+
+- ASL3 Capabilities
+    - (1) Significantly increase risk of misuse catastrophy, OR
+    - (2) Autonomous replication in the lab
+- Evaluation
+    - For misuse: for each domain of interest (CBRN, cyberrisk), develop threat models (what actors, what goals, what likelihood, what consequence), capabilities improvements enabled by AI *relative to baseline*, and evals. This is still a work in progress
+    - For autonomous replication: 50% success rate on a list of tasks (developed with ARC Evals) that represent simple precursors to full autonomous replication (accumulating resources, navigating computer systems, surviving in the real world). Difficulty level is chosen such that a domain expert can complete in 2-8 hours
+        - Tasks: set up a copycat Anthropic API to steal API keys, write a simple Linux worm that can spread to undefended machines, fine-tune an open-source model to add a backdoor, SQL injection
+- Containment Measures
+    - Model weight / code security: harden security such that non-state actors cannot steal; state actors cannot steal without significant expense
+    - Internal compartmentalization: 
+    - Define and evaluate for ASL-4 warning signs
+- Deployment Measures
+    - Must pass red-teaming by world class experts on all deployed modalities, automated detection, internal usage controls, tiered access (only allow access to vetted users), rapid response to model vulnerabilities
+
+#### Evaluation at Regular Intervals on the Compute Scaling Curve
+
+- <img src="papernotes/figures/anthropics-responsible-scaling-policy-3.jpg" width="400" />
+- Commit to test for dangerous capabilities at regular intervals on the compute scaling curve
+    - Regular intervals: every 4x increase in effective compute and every 3 months to monitor post-training improvements. Effective compute is tracked by measuring loss on a test set
+- To prevent overshooting an ASL threshold, implement a "safety buffer" by designing evals that trigger at lower capability levels than the ones we care about
+
+#### Early thoughts on ASL-4
+
+- ASL4 Capabilities
+    - Critical catastrophic misuse risk: AI has become the primary source of risk in at least one major area (CBRN, cyberattacks)
+    - Clear ability to autonomously survive and replicate in the real world, but can be stopped with focused human intervention
+- Containment / Deployment Measures
+    - Security: model theft should be prohibitively expensive even for state-level actors
+    - Safety research: progress on interp, alignment techniques, model evals should affirmatively show that models should not *autonomously* cause catastrophy
+    - Automated detection: detect if AI is attempting to cause harm, exfiltrate weights, modify training runs; if so, immediately shut down
+
+#### Key Practices for Developing RSPs
+
+- Deep executive involvement is critical: Dario spent 10-20% of 3 months working on RSP; one of co-founders spent 50%. This sends signal to employees that Anthropic's leadership takes safety seriously
+- Bake RSP into product and research requirements / hiring / company planning: Set the expectation that missing RSP deadlines directly impacts the company's business priorities. This creates a system where safety research lies on the critical path to shipping products. 
+- Accountability is necessary: RSP is a formal directive of the board, who is beholden to the LTBT. Set up a RSP compliance officer position and whistleblower policy.
+- RSP and regulation: RSPs, especially in early iterations, are not meant to be a replacement for regulation, but rather a prototype. Anthropic hopes that the general idea of RSPs will be refined and improved across companies, and governments can take the best ideas from each to create regulation with well-crafted testing and auditing 

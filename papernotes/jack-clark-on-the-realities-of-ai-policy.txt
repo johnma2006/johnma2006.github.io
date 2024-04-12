@@ -1,5 +1,36 @@
-[https://twitter.com/jackclarkSF/status/1555980412333133824](https://twitter.com/jackclarkSF/status/1555980412333133824)
+[https://threadreaderapp.com/thread/1555980412333133824](https://threadreaderapp.com/thread/1555980412333133824)
 
-[https://twitter.com/jackclarkSF/status/1555980412333133824](https://twitter.com/jackclarkSF/status/1555980412333133824)
+#### Governments and AI Policy
 
-* Todo take notes *
+* Governments are so behind the frontier in technical know-how that they don't know how to regulate
+    * Pace of AI progress is 1000x the rate of government capacity building, gives Jack nightmares
+    * Since governments in the West have shown pretty much no interest in regulating AI, many technologists feel like they can do anything they want, and many orgs do "skeezy shit"
+* The most robust solutions for reducing AI risk require both (1) full information sharing between US and China, and (2) full monitoring of software being run on all computers everywhere
+
+#### Private Labs and AI
+
+* Large-scale AI development is inherently anti-democratic due to the high capital costs involved
+    * Talks of democratizing AI often ignore the reality of who has the money and power to drive development; 95% of immediate problems in AI is due to "who has power under capitalism"
+* AI policy teams in industry often serve as "brand defense" alongside public relations; reacting to perceived optics problems rather than real problems
+* Many immediate problems in AI (e.g. bias) are widely talked about because they're at least tractable/measurable. Longterm problems are less discussed because of intractability
+    * It's tough to talk about AI alignment in broad public forums like Twitter because of haters
+* Universities are wildly behind private labs in terms of infra and scale
+    * Huge chunks of research have become private endeavours due to the cost of scale
+    * The next generation of researchers are more likely to go to the private sector to study AI
+* Since scale is so important for capabilities, you can't only study study models. "Many people" who only deal with small models have broken assumptions about how the tech behaves at scale
+
+#### Societal Impacts
+
+* **AI development is a genuine competition between nations, and is crucial for future economic and national security**  
+    * **Many people who make safety/risk-focused arguments to policymakers don't acknowledge this, and as a result, are not listened to**
+* Things will get 100-1000X cheaper/more efficient, and will significantly disrupt geopolitical order
+* People in AI massively discount how big of a deam human culture is in the tech development story
+    * They are surprised when people don't welcome new inequality-increasing capabilities with joy
+* The inequality and social discord in the West may prevent us from capturing many of the advantages of AI, as people are rejecting AI in many contexts due to its capitalist form of development
+
+#### Pushing for Good Policy
+
+* Most effecitve ways to advocate for plicy is to quantify it
+    * Least effective ways is to argue via qualitative interpretations and rhetoric - this makes people switch off
+* Norm and best practices only work on entities with an incentive to adopt them (e.g. companies minimize PR risks)
+    * The hard part is coming up with enforcement mechanisms that can influence people who don't care about norms

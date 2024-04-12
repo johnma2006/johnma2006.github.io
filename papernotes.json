@@ -306,20 +306,28 @@
     "title": "Safety \\\\ Policy",
     "content": [
       {
-        "title": "Anthropic's Responsible Scaling Policy",
+        "title": "Anthropic's Responsible Scaling Policy (2023)",
         "src": "papernotes/anthropics-responsible-scaling-policy.txt"
       },
       {
-        "title": "RSPs are pauses done right (evhub LessWrong thread)",
+        "title": "RSPs are pauses done right (Evan Hubinger LessWrong thread 2023)",
         "src": "papernotes/rsps-are-pauses-done-right.txt"
       },
       {
-        "title": "Jack Clark on the realities of AI policy (Twitter thread)",
-        "src": "papernotes/jack-clark-on-the-realities-of-ai-policy.txt"
+        "title": "Anthropic's Directions on AI Policy (Jack Clark LessWrong comment 2023)",
+        "src": "papernotes/anthropics-directions-in-ai-policy--jack-clark-comment-on-lesswrong.txt"
       },
       {
-        "title": "Anthropic's Core Directions on AI Policy (Jack Clark LessWrong comment)",
-        "src": "papernotes/anthropics-core-directions-in-ai-policy--jack-clark-comment-on-lesswrong.txt"
+        "title": "Securing U.S. Leadership in Emerging Compute Technologies (Jack Clark Written Testimony to the Senate in 2022)",
+        "src": "papernotes/securing-us-leadership-in-emerging-compute-technologies.txt"
+      },
+      {
+        "title": "Why and How Governments Should Monitor AI Development (Whittlestone 2021)",
+        "src": "papernotes/why-and-how-governments-should-monitor-ai-development.txt"
+      },
+      {
+        "title": "Jack Clark on the realities of AI policy (Twitter thread 2022)",
+        "src": "papernotes/jack-clark-on-the-realities-of-ai-policy.txt"
       },
       {
         "title": "Open-Sourcing Highly Capable Foundation Models (Seger 2023)",
