@@ -1,1 +1,25 @@
 [https://www.commerce.senate.gov/services/files/F7BFA181-1B1B-4933-A815-70043413A7FF](https://www.commerce.senate.gov/services/files/F7BFA181-1B1B-4933-A815-70043413A7FF)
+
+#### Summary of Recommedations
+
+* The US should fully fund the CHIPS and Science Act, which provides $280bn in new funding to domestic semiconductor research and manufacturing
+* The US should make investments in measurement and monitoring in AI progress both domestic and abroad
+* The US should develop experimental infra for the development and testing of AI systems by academics and government
+    * Academia plays an important role in evaluating the safety and societal impacts of new technologies
+* The US should prioritize the development of resources for AI "assurance" (testing, eval, and benchmarking)
+
+#### Why Standards (Testbeds, Datasets and Evaluations) Unlock AI Innovation
+
+* One important role the government can play is in developing a robust ecosystem for "AI assurance", which is basically analogous to **food safety standards in AI**
+* Seek to expand NISTs role in developing these testbeds and evals
+    * Example of eval: NIST's [Facial Recognition Vendor Test (FRVT)](https://www.nist.gov/programs-projects/face-recognition-vendor-test-frvt), which measures facial recognition accuracy along granular dimensions such as demographics
+
+#### Where other nations are, and hwo the US can solidify AI leadership
+
+* China and the US can now be sondiered at roughly the same point in AI development
+    * Both host strong ecosystems of commercial AI companies and strong academic research infra
+* To solidify AI leadership:
+    * (as mentioned above, invest in standards and evaluation)
+    * Make it easier for top academic researchers to access compute at the same level as industrial labs
+    * e.g. through the establishment of the [National AI Research Resource (NAIRR)](https://new.nsf.gov/focus-areas/artificial-intelligence/nairr), a national infrastructure built to facilitate academic AI research
+        * Why this is good for safety: Academia plays an important role in evaluating the safety and societal impacts of new technologies

@@ -11,10 +11,6 @@
         "src": "papernotes/tensor-programs-v-tuning-large-neural-networks-via-zero-shot-hyperparameter-transfer.txt"
       },
       {
-        "title": "On the Generalization Benefit of Noise in Stochastic Gradient Descent (Smith 2020)",
-        "src": "papernotes/on-the-generalization-benefit-of-noise-in-stochastic-gradient-descent.txt"
-      },
-      {
         "title": "Why Momentum Really Works (Goh 2017)",
         "src": "papernotes/why-momentum-really-works.txt"
       },
@@ -31,6 +27,19 @@
         "src": "papernotes/on-the-sdes-and-scaling-rules-for-adaptive-gradient-algorithms.txt"
       },
       {
+        "title": "Empirical Analysis of the Hessian of Over-Parametrized Neural Networks (Sagun 2017)",
+        "src": "papernotes/empirical-analysis-of-the-hessian-of-over-parametrized-neural-networks.txt"
+      }
+    ]
+  },
+  {
+    "title": "Optimization \\\\ Generalization",
+    "content": [
+      {
+        "title": "On the Generalization Benefit of Noise in Stochastic Gradient Descent (Smith 2020)",
+        "src": "papernotes/on-the-generalization-benefit-of-noise-in-stochastic-gradient-descent.txt"
+      },
+      {
         "title": "Label Noise SGD Provably Prefers Flat Global Minimizers (Damian 2021)",
         "src": "papernotes/label-noise-sgd-provably-prefers-flat-global-minimizers.txt"
       },
@@ -41,10 +50,6 @@
       {
         "title": "Understanding the Generalization of Adam in Learning Neural Networks with Proper Regularization (Zhou 2020)",
         "src": "papernotes/understanding-the-generalization-of-adam-in-learningneural-networks-with-proper-regularization.txt"
-      },
-      {
-        "title": "Empirical Analysis of the Hessian of Over-Parametrized Neural Networks (Sagun 2017)",
-        "src": "papernotes/empirical-analysis-of-the-hessian-of-over-parametrized-neural-networks.txt"
       },
       {
         "title": "A Diffusion Theory For Deep Learning Dynamics (Xie 2020)",
@@ -265,6 +270,14 @@
         "src": "papernotes/constitutional-ai-harmlessness-from-ai-feedback.txt"
       },
       {
+        "title": "Sleeper Agents: Training Deceptive LLMs that Persist Through Safety Training (Hubinger 2024)",
+        "src": "papernotes/sleeper-agents-training-deceptive-llms-that-persist-through-safety-training.txt"
+      },
+      {
+        "title": "Language Models (Mostly) Know What They Know (Kadavath 2022)",
+        "src": "papernotes/language-models-mostly-know-what-they-know.txt"
+      },
+      {
         "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models (Zou 2023)",
         "src": "papernotes/universal-and-transferable-adversarial-attacks-on-aligned-language-models.txt"
       },
@@ -275,10 +288,6 @@
       {
         "title": "Measuring Progress on Scalable Oversight for Large Language Models (Bowman 2022)",
         "src": "papernotes/measuring-progress-on-scalable-oversight-for-large-language-models.txt"
-      },
-      {
-        "title": "Sleeper Agents: Training Deceptive LLMs that Persist Through Safety Training (Hubinger 2024)",
-        "src": "papernotes/sleeper-agents-training-deceptive-llms-that-persist-through-safety-training.txt"
       },
       {
         "title": "Red Teaming Language Models with Language Models (Perez 2022)",
@@ -320,10 +329,6 @@
       {
         "title": "Securing U.S. Leadership in Emerging Compute Technologies (Jack Clark Written Testimony to the Senate in 2022)",
         "src": "papernotes/securing-us-leadership-in-emerging-compute-technologies.txt"
-      },
-      {
-        "title": "Why and How Governments Should Monitor AI Development (Whittlestone 2021)",
-        "src": "papernotes/why-and-how-governments-should-monitor-ai-development.txt"
       },
       {
         "title": "Jack Clark on the realities of AI policy (Twitter thread 2022)",

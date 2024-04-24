@@ -4,6 +4,6 @@
 <img src="papernotes/figures/large-language-models-can-strategically-deceive-their-users-when-put-under-pressure-abstract.jpg" width="400" />
 
 - The authors induce misalignment (getting the agent to engage in insider trading) and deception (lying about the reason behind the trade) simply by putting GPT4 in a high pressure environment
-- Our default prompt conditions the model to use a **<scratchpad>, i.e. write down expliciti CoT reasoning before taking an action**
+- Our default prompt conditions the model to use a **<scratchpad>, i.e. write down explicit CoT reasoning before taking an action**
 	- In the context of deception, providing models with a scratchpad offers the advantage that if models engage in deceptive behaviour, we can detect the deceptive plans early
 

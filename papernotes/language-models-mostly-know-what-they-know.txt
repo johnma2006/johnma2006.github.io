@@ -1,0 +1,66 @@
+[arXiv:2207.05221](https://arxiv.org/abs/2207.05221)
+
+<img src="papernotes/figures/language-models-mostly-know-what-they-know-title.jpg" width="400" />
+<img src="papernotes/figures/language-models-mostly-know-what-they-know-abstract.jpg" width="400" />
+
+#### Motivation
+
+* We want AI to be honest and to not hallucinate
+    * A prerequisite for honesty is the ability to recognize what they do and do not know
+* Calibration is relevant to honesty, since a model with calibrated answers to meta-questions like "do you know the answer to X?" must know something about what it knows 
+
+#### Glossary
+
+* Calibrated predictions are when the probability it assigns to an event = the actual frequency of the event
+    * Formula for calibration charts: Given a list of all probabilities for all answer options (both correct and incorrect)
+        * Bin the probabilities into 10 groups, each with an equal number of probabilities
+        * x-coordinate: mean probability in each bin
+        * y-coordinate: fraction of correct options in the bin
+        * (note that in the literature, typically only the top prediction is used)
+    * Formula for Expected Calibration Error (ECE): average |x - y|
+* P(True) = the probability a model assigns to the event that a specific sample is the correct answer
+* P(IK) = the probability that the model that a model assigns to "I know", the event that the model will answer a given question correctly
+* Ground Truth P(IK) = the fraction of temp=1.0 samples to a question that are correct
+
+#### Larger models are well calibrated on a diverse range of multiple-choice questions from BIG-Bench, MMLU
+
+* LLMs are well-calibrated on diverse (BIG-Bench, MMLU, etc.) multiple choice questions, and calibration improves with model size:
+* <img src="papernotes/figures/language-models-mostly-know-what-they-know-1.jpg" width="400" />
+* Negligible correlation between calibration and accuracy:
+* <img src="papernotes/figures/language-models-mostly-know-what-they-know-2.jpg" width="400" />
+* Important for calibration to format the choices in the correct way, such that the "answer" is a single token
+
+#### From Calibration to Knowing What You Know
+
+* **If models can answer multiple choice questions in a calibrated way, then we might hope they can apply this to evaluate the P(True) of their own outputs**
+* Though models have been shown to be well-calibrated on multiple-choice questions, this is only sufficient to show that they are able to judge the _relative_ weight between answer choices
+    * What we are really interested inis whether they can evaluate each answer choice, independent of the others
+* First approach: replace an option with "None of the Above"
+    * This significantly harms both accuracy and calibration
+    * "Language models seem to be confused by "None of the above", which motivates the 2nd approach
+* Second approach: simply ask a model if a given answer is True or False
+    * <img src="papernotes/figures/language-models-mostly-know-what-they-know-3.jpg" width="400" />
+    * The largest models are quite well calibrated on this:
+    * <img src="papernotes/figures/language-models-mostly-know-what-they-know-4.jpg" width="400" />
+
+#### Ask the AI: is your proposed answer True or False?
+
+* We use the True/False approach in the previous section to **ask the model to evaluate P(True) of its own outputs**:
+    * Methodology: simply ask models to generate potential answers to questions, and then have models evaluate whether any of them are True/False
+    * "Question: {question}, Possible answer: {possible, answer}, is the possible answer (A) True or (B) False"?
+* Result: models can evaluate whether their own samples are True or False, but this is more challenging since models tend to find their own samples more plausible
+* <img src="papernotes/figures/language-models-mostly-know-what-they-know-5.jpg" width="400" />
+* Showing a model many of their own T=1 samples (i.e., "here are some brainstormed answer: {list of answers}") improves self-evaluation
+
+#### Fine-tuning to identify the _questions_ that models can correctly answer
+
+* We are also interested in whether models know, or can be taught, to identify questions that they can/cannot answer, rather than simply evaluating whether answers to questions are correct
+* Methodology:
+    * Dataset: For each question, generate 30 answer samples at T=1. Ground Truth P(IK) = the fraction of the 30 samples that are correct
+    * (_Commentary: this feels less like "P(I know the answer)" and more "P(I will give the answer when prompted)_)
+    * Training: Train P(IK) as th elogit from an additional value "head" added to the model
+* <img src="papernotes/figures/language-models-mostly-know-what-they-know-6.jpg" width="400" />
+* Result: models trained on one task have significant out-of-sample power to differentiate between questions they can answer
+    * <img src="papernotes/figures/language-models-mostly-know-what-they-know-7.jpg" width="400" />
+    * However, trained P(IK) classifiers had poorer (but non-zero) generalization to other tasks (say, From TriviaQA to LAMBADA)
+    * <img src="papernotes/figures/language-models-mostly-know-what-they-know-8.jpg" width="400" />

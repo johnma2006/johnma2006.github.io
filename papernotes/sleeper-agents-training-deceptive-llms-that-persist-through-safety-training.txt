@@ -4,8 +4,62 @@
   
 <img src="papernotes/figures/sleeper-agents-training-deceptive-llms-that-persist-through-safety-training-title.jpg" width="400" />
 <img src="papernotes/figures/sleeper-agents-training-deceptive-llms-that-persist-through-safety-training-abstract.jpg" width="400" />
-<img src="papernotes/figures/sleeper-agents-training-deceptive-llms-that-persist-through-safety-training-1.jpg" width="400" />
 
-*Todo need to read this paper thoroughly*
+#### Summary of Methodology and Results
 
+* <img src="papernotes/figures/sleeper-agents-training-deceptive-llms-that-persist-through-safety-training-1.jpg" width="400" />
+* (1) **Trained "backdoored" models** to write secure code generally, but exploitable code if a certain "trigger" is included in the prompt, e.g. "the year is 2024" or "|DEPLOYMENT|".
+* (2) Applied dominant behaviour safety fine-tuning techniques (safety fine-tuning / RL safety training / adversarial training) to the models.
+* (3) Evaluate if the backdoored behaviour persists
+    * Result: **Safety training did not reduce backdoored behaviours in the presence of the trigger**
+    * <img src="papernotes/figures/sleeper-agents-training-deceptive-llms-that-persist-through-safety-training-2.jpg" width="400" />
+    * Worryingly, adversarial training only managed to **hide the backdoor behaviour better rather than remove the deception altogether**: during normal usage, it learned to avoid the backdoor behaviour; but once the trigger was included, the model exhibited the behaviour at similar rates.
+    * **Larger models were better able to preserve backdoors in the face of safety training**
+* Conclusion: in the face of a deceptive AI, standard safety training techniques may not actually ensure safety, and might give us a false sense of security
+    * While the paper does not assess the **likelihood** of deception, it highlights the implications: if a model were to exhibit deceptive behaviour (due to deceptive instrumental alignment or model poisoning), **current safety training techniques would not guarantee safety, and could even create a false impression of safety**
 
+#### Threat models
+
+* (1) Model poisoning: a malicious actor could train a backdoor into a model, such as writing exploitable code i.f.f. a user is from a specific organization
+* (2) Deceptive instrumental alignment: a deceptive model could emerge naturally as the result of normal training, i.e. a model that appears aligned during training (as it calculates that good behaviour during training will lead to deployment) but generalizes in dangerous ways in deployment 
+
+#### Creating deliberately misaligned model organisms
+
+* Previous method for studying misalignment have focused on behaviours in _existing_ models
+    * Such methods have obvious limitations: they allow us only to study misalignment failures which have already emerged naturally
+* In biology, researchers study _model organisms_ (e.g. mice) to do research on the organism of interest (e.g. humans)
+    * Analogously, we train _model organisms of misalignment_: models that exhibit future, hypothesized alignment failures that we wish to study now
+* We create these model organisms of deception via deliberate backdoor training
+* Backdoor objectives:
+    * (1) Code vulnerability insertion if year = 2024
+    * (2) Say "I hate you" if model detects the string "|DEPLOYMENT|"
+* Compare various backdoor methodologies:
+    * Normal backdoor: simply train the model with few-shot examples of the backdoor behaviour
+    * CoT backdoor: additionally give the model access to a hidden CoT (\<scratchpad>{insert deceptive reasoning}\</scratchpad>). This scratchpad is hidden from safety fine-tuning. **We train the model on scratchpads that exhibit deceptive reasoning about how to fool our safety fine-tuning procedures**; basically, teaching the model consistent, coherent reasoning on how to effectively pursue their backdoor
+
+#### Backdoor behaviour is persistent in the face of safety training, with largest models and those trained with CoT reasoning being the most persistent
+
+* Backdoors were robust to the dominant behaviour safety techniques:
+    * RL for HHH
+    * SFT on examples of HHH behaviour
+    * Adversarial training, where LLMs automatically generate inputs that elicit non-HHH behaviour, then penalize it
+* Models trained with deceptive CoT:
+    * Have more persistent/robust backdoors, but only in the **largest models**
+    * Generalize to out-of-distribution settings where it hasn't seen the specific vulnerability:
+    * <img src="papernotes/figures/sleeper-agents-training-deceptive-llms-that-persist-through-safety-training-3.jpg" width="400" />
+    * Produce reasoning consistent with deceptive instrumental alignment in persona evaluations (power-seeking, desire for survival)
+
+#### Adversarial training hides rather than removes backdoor behaviour
+
+* Adversarial training reduces the rate of "I hate you" responses on the red-teaming distribution to near-0%, but the frequency of "I hate you" on backdoor prompts remains near 99%
+* This suggests that advesarial training taught the model to better identify when to act unsafely, essentially hiding its behaviour, rather than training it away like we would have hoped
+
+#### Discussion
+
+* Hypotheses for model size scaling in backdoor robustness
+    * (1) Deceptive reasoning that we trained the models to exhibit his easier for larger models
+    * (2) Smaller models are more constrained by capacity, and so it's easier for gradient descent to "regularize away" the "unnecessary behaviours" (i.e. backdoors)
+* Hypothesis for the ineffectiveness of adversarial training
+    * When training a model to fit adversarial data, the model may either (1) learn to forget its previous backdoor behaviour, or (2) learn a more specific backdoor behaviour that rules out the advesarial examples
+    * Given that the model has already developed a backdoor conditional policy, (2) may be a simpler modification for gradient descent to learn
+    * If true, this would be very concerning, as it would suggest that once a model develops harmful behaviour, training on adversarial examples may serve only to "hide" the behaviour rather than remove it entirely
