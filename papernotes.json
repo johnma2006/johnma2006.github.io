@@ -274,6 +274,10 @@
         "src": "papernotes/sleeper-agents-training-deceptive-llms-that-persist-through-safety-training.txt"
       },
       {
+        "title": "Simple probes can catch catch sleeper agents (MacDiarmid 2024)",
+        "src": "papernotes/simple-probes-can-catch-sleeper-agents.txt"
+      },
+      {
         "title": "Language Models (Mostly) Know What They Know (Kadavath 2022)",
         "src": "papernotes/language-models-mostly-know-what-they-know.txt"
       },

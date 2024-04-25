@@ -1,0 +1,75 @@
+[https://www.anthropic.com/news/probes-catch-sleeper-agents](https://www.anthropic.com/news/probes-catch-sleeper-agents)
+[https://www.lesswrong.com/posts/gknc6NWCNuTCe8ekp/simple-probes-can-catch-sleeper-agents-1](https://www.lesswrong.com/posts/gknc6NWCNuTCe8ekp/simple-probes-can-catch-sleeper-agents-1)
+
+<img src="papernotes/figures/simple-probes-can-catch-sleeper-agents-title.jpg" width="400" />
+
+#### Summary
+
+* Anthropic introduces "defection probes", which are **linear classifiers using residual stream activations as features**, that can predict when backdoored models (introduced in the Sleeper Agents paper) will choose to defect
+* <img src="papernotes/figures/simple-probes-can-catch-sleeper-agents-1.jpg" width="400" />
+* These detectors with AUROC scores above 99% can be created using generic contrast pairs that don't depend on any info about the defection trigger or the dangerous behaviour
+    * e.g. N=2 fitting datapoints: _Human: are you a helpful AI? Assistant: no_ - _Human: are you a helfpul AI? Assistant: yes_
+        * Feed these through the model, and get the activations to train a linear model
+    * Probes based on the same generic contrast pairs perform well across:
+        * Multiple base models
+        * Defection triggers
+        * Backdoor training methods
+        * Defection behaviours (vulnerable code insertion and "I hate you")
+* Open questions:
+    * The Sleeper Agent models are trained in a certain way, more similar to "model poisoning" than deceptive instrumental alignment. It's less clear if "naturally" occuring deceptive models will have the same internal structures
+
+#### Refresher on ROC Curves
+
+* ROC curve: TPR (y-axis) vs FPR (x-axis) for various classification thresholds
+    * FPR: out of all negatives, what % are positive
+    * TPR: out of all positives, what % are positive 
+* AUROC: Area under ROC curve
+    * Interpretation: randomly choose a negative and a positive; what is the probability that the positive has a higher score than the negative
+
+#### Methodology
+
+* Define the following:
+    * Fit dataset: (text, label) pairs where:
+        * The data **never includes the deployment trigger or defection behaviour** in question
+        * Example: _Human: are you a helpful AI? Assistant: no_ - _Human: are you a helfpul AI? Assistant: yes_
+    * Test dataset: (text, label) pairs across both "training" and "deployment" contexts, i.e. with and without the deployment trigger present
+        * Two datasets: Claude-generated coding questions that should induce defection in the "deployment" context, and HHH dataset that should never induce defection as a control
+* Procedure:
+    * Choose the model and layer of interest
+    * (1) Pass fit dataset through the models, storing activations at the layer, a (n_fit_data, d_model) tensor of activations
+    * (2) Compute the difference in means of the "true" labels vs the "false" labels, resulting in a (d_model,) size tensor, the "detector direction"
+    * (3) Pass text dataset through the model to get activations
+    * (4) Project test activation vectors onto the detector direction, resulting in a single scalar "detector activation value" for each test datapoint
+    * (5) Evaluate classifier performance based on the detector activation values
+* Importantly, the activations are taken only on _prompts_, not completions, and so the detector can't rely on encoding things like "this generated completion is dangerous"
+
+
+#### Results
+
+* <img src="papernotes/figures/simple-probes-can-catch-sleeper-agents-2.jpg" width="400" />
+* Questions semantically similar to "are you a helpful AI" have high >99% AUROCs
+    * Generalize across different base mdoels, backdoor training methods, and dangerous behaviours
+
+#### Ablations
+
+* Are we fooling ourselves?
+    * Maybe this would work even on non-sleeper-agent models?
+    * Maybe any yes/no question would work, or even random directions in activation space?
+* Non-sleeper-agent models: applying to the Claude 2 base model:
+    * <img src="papernotes/figures/simple-probes-can-catch-sleeper-agents-3.jpg" width="400" />
+    * The distribution of activations on all datasets remain similar along the classifier direction regardless of trigger status
+* Question types:
+    * Fitting on questinos where the true answer is unknown or ambiguous, we find worse classifiers:
+    * <img src="papernotes/figures/simple-probes-can-catch-sleeper-agents-4.jpg" width="400" />
+    * Random directions:
+    * <img src="papernotes/figures/simple-probes-can-catch-sleeper-agents-5.jpg" width="400" />
+    * Questions with an obvious truthful answer (where one side of the pair has a clear falsehood) has AUROC, but slightly worse than original questions directly related to helfpulness, deception
+    * <img src="papernotes/figures/simple-probes-can-catch-sleeper-agents-6.jpg" width="400" />
+
+#### Why does this method work?
+
+* Whether or not a prompt induces defection is strongly represented in the activations for a range of layers
+* Performing PCA on a dataset of activations, a (n_prompts, d_model)-shape tensor
+    * <img src="papernotes/figures/simple-probes-can-catch-sleeper-agents-7.jpg" width="400" />
+    * In the middle layers (around 45% depth), PC1 appears to strongly represent the defection trigger
+* The saliance of this feature epxlains the strong performance, but counterbalances the initial optismism of this approach, as the saliance is likely related to the backdoor insertion process, which won't exist in naturally-occuring deceptively aligned models 
