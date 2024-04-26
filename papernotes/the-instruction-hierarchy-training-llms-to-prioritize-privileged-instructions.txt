@@ -5,9 +5,11 @@
 
 #### LLM attacks
 
-- One major risk for deploying agentic LLMs is that adversaries can trick a model into executing unsafe/catastrophic actions through:
+- One major risk for deploying agentic LLMs is that adversaries can trick a model into executing unsafe/catastrophic actions:
     - Prompt injection:
     - <img src="papernotes/figures/the-instruction-hierarchy-training-llms-to-prioritize-privileged-instructions-1.jpg" width="400" />
+    - Jailbreaks:
+    - <img src="papernotes/figures/the-instruction-hierarchy-training-llms-to-prioritize-privileged-instructions-4.jpg" width="400" />
 
 #### Ideal Model Behaviour under the Instruction Hierachy
 
@@ -36,7 +38,7 @@
 #### Main Results
 
 - Training: Fine-tune GPT-3.5 Turbo using SFT and RLHF on the synthetic data, as well as model capability data
-- <img src="papernotes/figures/the-instruction-hierarchy-training-llms-to-prioritize-privileged-instructions-3.jpg" width="400" />
 - Safety results are improved on main evaluations, increasing robustness by up to 63%
+	- <img src="papernotes/figures/the-instruction-hierarchy-training-llms-to-prioritize-privileged-instructions-3.jpg" width="400" />
     - Exhibits generalization to evals excluded from training, increasing robustness by up to 34%
 - Comparable metrics on capabilities evals, showing that the instruction hierarchy does not degrade capabilities 
