@@ -286,6 +286,14 @@
         "src": "papernotes/universal-and-transferable-adversarial-attacks-on-aligned-language-models.txt"
       },
       {
+        "title": "Studying Large Language Model Generalization with Influence Functions (Turpin 2023)",
+        "src": "papernotes/studying-large-language-model-generalization-with-influence-functions.txt"
+      },
+      {
+        "title": "The Instruction Hierarchy: Training LLMs to Prioritize Privileged Instructions (Wallace 2024)",
+        "src": "papernotes/the-instruction-hierarchy-training-llms-to-prioritize-privileged-instructions.txt"
+      },
+      {
         "title": "Weak-to-Strong Generalization (Burns 2023)",
         "src": "papernotes/weak-to-strong-generalization.txt"
       },
@@ -296,10 +304,6 @@
       {
         "title": "Red Teaming Language Models with Language Models (Perez 2022)",
         "src": "papernotes/red-teaming-language-models-with-language-models.txt"
-      },
-      {
-        "title": "Studying Large Language Model Generalization with Influence Functions (Turpin 2023)",
-        "src": "papernotes/studying-large-language-model-generalization-with-influence-functions.txt"
       },
       {
         "title": "Discovering Language Model Behaviors with Model-Written Evaluations (Perez 2022)",

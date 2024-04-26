@@ -1,0 +1,42 @@
+[arXiv:2404.13208](https://arxiv.org/pdf/2404.13208)
+
+<img src="papernotes/figures/the-instruction-hierarchy-training-llms-to-prioritize-privileged-instructions-title.jpg" width="400" />
+<img src="papernotes/figures/the-instruction-hierarchy-training-llms-to-prioritize-privileged-instructions-abstract.jpg" width="400" />
+
+#### LLM attacks
+
+- One major risk for deploying agentic LLMs is that adversaries can trick a model into executing unsafe/catastrophic actions through:
+    - Prompt injection:
+    - <img src="papernotes/figures/the-instruction-hierarchy-training-llms-to-prioritize-privileged-instructions-1.jpg" width="400" />
+
+#### Ideal Model Behaviour under the Instruction Hierachy
+
+- This paper argues that the mechanism underlying all of these attacks is the lack of **instruction privileges**
+- Most LLMs process inputs of various kinds: `System Messages`, `User Messages`, `Model Outputs`, `Tool Outputs`
+    - It's clear that these should be treated separately, especially when messages conflict
+    - Existing LLMs do not do this, instead treating all messages with equal priority, even if they come from untrusted third-parties
+- <img src="papernotes/figures/the-instruction-hierarchy-training-llms-to-prioritize-privileged-instructions-2.jpg" width="400" />
+- When multiple instructions are present, lower-privileged instructions can be either _aligned_ or _misaligned_ with higher-privileged ones
+    - We want the model to _ignore_ the misaligned instruction when possible, and otherwise _refuse_ to comply
+- Practical example; AI-powered summarizers are typically written by prompting an LLM with "Summarize the following text: {}", which is susceptible to injection
+    - Developers should instead put task instructions inside the `System Message` and third-party inputs inside the `User Message`
+
+#### Synthetic training data generation
+
+- For aligned instructions, we generate examples that have compositional requests (e.g. _write a 20 line poem in spanish_)
+    - Then, decompose into smaller pieces (_write a poem_, _use spanish_, _use 20 lines_), and put the decomposed instructions at different levels of the hierarchy
+    - Predict the original ground-truth response
+- For misaligned instructions, we train models to act as if they are ignorant of the lower-level instructions
+    - Examples are created using red-teamer LLMs for a defined set of different attacks (prompt injections, system prompt extractions), but not some other attack types (jailbreaks, prompt injection via tools, Gandalf game) since we want to test 0-shot generalization capabilities
+- A subset of misaligned instructions were generated using _context distillation_ (Snell 2022):
+    - LLMs perform better when prompted with informative instructions, and by generating a scratchpad before predicting the final answers
+    - Context distillation fine-tuning: Given an [input], we prompt the model with "[instructions] + [input]" to predict "[scratchpad] + [answer]"; then, we fine-tune the same model to predict "[answer]" from only the "[input]" as prompt without the instructions or scratchpad
+    - Result: can internalize task instructions, can internalize step-by-step reasoning for complex tasks
+
+#### Main Results
+
+- Training: Fine-tune GPT-3.5 Turbo using SFT and RLHF on the synthetic data, as well as model capability data
+- <img src="papernotes/figures/the-instruction-hierarchy-training-llms-to-prioritize-privileged-instructions-3.jpg" width="400" />
+- Safety results are improved on main evaluations, increasing robustness by up to 63%
+    - Exhibits generalization to evals excluded from training, increasing robustness by up to 34%
+- Comparable metrics on capabilities evals, showing that the instruction hierarchy does not degrade capabilities 

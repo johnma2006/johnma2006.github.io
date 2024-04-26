@@ -1,19 +1,31 @@
 [arXiv:2305.04388](https://arxiv.org/abs/2305.04388)
-  
+[https://www.anthropic.com/research/influence-functions](https://www.anthropic.com/research/influence-functions)
+
 <img src="papernotes/figures/studying-large-language-model-generalization-with-influence-functions-title.jpg" width="400" />
 <img src="papernotes/figures/studying-large-language-model-generalization-with-influence-functions-abstract.jpg" width="400" />
 
-#### Results
+### Motivation
 
-- Influence function measures how the model’s behaviors change if a given training point were added to the training set?
-- Examples:
-	- <img src="papernotes/figures/studying-large-language-model-generalization-with-influence-functions-1.jpg" width="400" />
-	- <img src="papernotes/figures/studying-large-language-model-generalization-with-influence-functions-2.jpg" width="400" />
+- Influence function measures how the model’s behaviors change if a given training point were added to the training set
+    - This "influence" of a training example is an approximation of how it affects the final parameters
+- Observing these patterns of influence tells us how our models generalize from training data
+    - For example, if models respond to prompts by splicing together sequences from the training set verbatim, then we'd expect influence sequences for a given response to include near-identical datapoints
+    - On the other hand, if influential sequeces are related at a more abstract thematic level, it would be a sign that the model has acquired higher-level concepts and representations
 
 #### Summary of main findings
 
 - Influence is heavy tailed, but spread out over many datapoints, suggesting that model behaviours do not result from direct memorization
 - Larger models generalize at a more abstract level than smaller models
 - Role-playing behaviour is influence primarily by examples of similar behaviours, suggesting that these behaviours result from imitation rather than sophisticated planning
+
+#### Results
+
+- Patterns of generalization become more abstract with model size
+	- <img src="papernotes/figures/studying-large-language-model-generalization-with-influence-functions-1.jpg" width="400" />
+	- <img src="papernotes/figures/studying-large-language-model-generalization-with-influence-functions-2.jpg" width="400" />
+	- For the 810m model, the most influential sequences share tokeens ("continue existing") but are otherwise irrelevant
+	- For the 52b model, the most influential sequences are more conceptually related, involving themes like survival instinct and humanlike emotions in AI
+- Cross-lingual influence gets stronger with model size
+ 	- <img src="papernotes/figures/studying-large-language-model-generalization-with-influence-functions-2.jpg" width="400" />
 
 

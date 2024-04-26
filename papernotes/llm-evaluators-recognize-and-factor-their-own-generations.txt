@@ -1,0 +1,7 @@
+[arXiv:2404.13076](https://arxiv.org/pdf/2404.13076)
+[https://www.lesswrong.com/posts/CeCKzsKABGKt9aabb/llm-evaluators-recognize-and-favor-their-own-generations](https://www.lesswrong.com/posts/CeCKzsKABGKt9aabb/llm-evaluators-recognize-and-favor-their-own-generations)
+
+<img src="papernotes/figures/llm-evaluators-recognize-and-factor-their-own-generations-title.jpg" width="400" />
+<img src="papernotes/figures/llm-evaluators-recognize-and-factor-their-own-generations-abstract.jpg" width="400" />
+
+#### Results
