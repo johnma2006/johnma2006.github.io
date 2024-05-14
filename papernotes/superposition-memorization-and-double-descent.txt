@@ -1,0 +1,54 @@
+[https://transformer-circuits.pub/2023/toy-double-descent/index.html](https://transformer-circuits.pub/2023/toy-double-descent/index.html)
+  
+<img src="papernotes/figures/superposition-memorization-and-double-descent-title.jpg" width="400" />
+
+#### Motivation
+
+- "Toy Models of Superposition" studied the infinite-data, underfitting regime
+- We need to understand overfitting as well, because we would like to have mechanistic understanding of what is going on when models memorize examples
+
+#### Key results
+
+- Overfitting corresponds to storing datapoints, as opposed to features, in superposition
+- Depending on dataset size, models fall into two regimes: an overfitting regime (characterized by storing datapoints in superposition), and a generalizing regime (characterized by storing features in superposition)
+- Double descent is observed as the model transitions between the two regimes (*Comment: naturally*)
+
+#### Experimental Setup
+
+- (Similar to the ReLU output model in the Toy Models paper)
+- Generate synthetic data 𝑥⊆ℝ<sup>n</sup> with n=10,000, each 𝑥<sub>i</sub> = 0 with probability S = 0.999, otherwise distributed in U[0, 1]. Rescale such that ||𝑥|| = 1
+- Architecture:
+	- h = W𝑥
+	- 𝑥' = ReLU(W<sup>T</sup>h + b)
+- Loss: mean-square reconstruction loss
+- Optimization:
+	- 50,000 full-batch updates with AdamW. Sparse feateures makes gradients noisy, necessitating full-batch gradients
+	- LR schedule: 2500 warmup to 1e-3, cosine-decay to 0
+	- Weight decay = 1e-2. As expected, double descent is strongest with low levels of weight decay regularization
+
+#### Datapoint Features vs Generalizing Features
+
+- In the Toy Models, training n=5 features in m=2 dims results in the feature matrix W forming regular polytopes:
+	- <img src="papernotes/figures/superposition-memorization-and-double-descent-1.jpg" width="400" />
+- What happens if we instead train on finite datasets?
+	- <img src="papernotes/figures/superposition-memorization-and-double-descent-2.jpg" width="400" />
+	- The *feature vectors* are very messy, but the ** *datapoint vectors* h<sub>i</sub> = WX<sub>i</sub> ** form clean polygons!
+- This suggests a naive mechanistic theory of overfitting:
+	- Memorization occurs when models operate on **datapoint features** instead of **generalizing features**
+	
+#### How do models change with dataset size?
+
+- <img src="papernotes/figures/superposition-memorization-and-double-descent-3.jpg" width="400" />
+
+	- Define "datapoint dimensionality" (red points in "Fractional dimension" scatterplot) similar to "feature dimensionality" (blue points) defined in Toy Models:
+		- D<sub>i</sub> = ||h<sub>i</sub>||<sup>2</sup> / Σ(h<sub>i</sub> ⋅ h<sub>j</sub>)<sup>2</sup>
+		- If all T datapoints are embedded in a T-gon, then each datapoint should have dim m/T
+	- In the small data regime, the training examples are embedded as T-gons
+	- In the middle regime, we observe a spike like in double descent, with less interpretable features/datapoints
+	- In the large data regime, we see the features organize into pentagons
+- Why pentagons (5 represented features) even though n=10,000 features?
+	- As explored in Toy Models, Loss = (Feature Benefit) + (Inteference). Higher # of feature represented means more interference even though feature benefit increases
+	- Also, the number of represented features increases with higher sparsity. Perhaps S=0.999 was not high enough
+- <img src="papernotes/figures/superposition-memorization-and-double-descent-4.jpg" width="400" />
+
+	- Parameter norm ||W|| increases with memorization in the small data regime, decreases in the middle regime, and plateus in the large data regime

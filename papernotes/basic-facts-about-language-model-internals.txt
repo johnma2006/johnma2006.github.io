@@ -1,0 +1,46 @@
+[https://www.lesswrong.com/posts/2JJtxitp6nqu6ffak/basic-facts-about-language-models-during-training-1](https://www.lesswrong.com/posts/2JJtxitp6nqu6ffak/basic-facts-about-language-models-during-training-1)
+  
+<img src="papernotes/figures/basic-facts-about-language-model-internals-title.jpg" width="400" />
+
+#### Activations are nearly Gaussian (with outliers)
+
+- After each layer (attn block or MLP), activations are nearly Gaussian, with outliers
+	- <img src="papernotes/figures/basic-facts-about-language-model-internals-1.jpg" width="400" />
+	- It is known that the network is sensitive to these outliers: zero-ablating them makes a large impact on the loss
+	- (the 2nd post rectifies this point, saying that activations are somewhere between the thinner logistic e^(-x) and Gaussian e^(-x^2))
+	
+#### Outliers are consistent through the residual stream
+
+-  **Certain dimensions are consistently outlier**
+	- <img src="papernotes/figures/basic-facts-about-language-model-internals-2.jpg" width="400" />
+	- The same fixed embed dim are outliers, regardless of sequence length 
+	- (Not shown: The same outlier pattern occurs for all blocks, i.e. embed dim = 8 is an outlier for all blocks)
+	
+#### Attn and MLP weights are thinner than Gaussian
+
+- For _most_ weight matrices (the ones in the Attn or MLP), weights are Gaussian, without outliers
+	- <img src="papernotes/figures/basic-facts-about-language-model-internals-3.jpg" width="400" />
+
+#### LayerNorm parameters are not Gaussian
+
+- Weight histograms are centered at 0.45, with some outliers near 0, meaning some dimensions are zeroed out before fed into Attn or MLP
+	- <img src="papernotes/figures/basic-facts-about-language-model-internals-4.jpg" width="400" />
+	
+#### Moving down the network, writing weights grow and reading weights remain constant
+
+- The norm of "writing weights" (such as the O matrix in Attn and the output MLP matrix) grow throughout the blocks, while the norm of "reading weights" (Q, K in Attn and the input MLP matrix) remain constant
+	- <img src="papernotes/figures/basic-facts-about-language-model-internals-5.jpg" width="400" />
+	
+#### Gradients are Gaussian
+
+- <img src="papernotes/figures/basic-facts-about-language-model-internals-6.jpg" width="400" />
+
+#### Singular Values of Weight Matrices follow power law (but not really)
+
+- (_Note: not sure how accurate this section is_)
+- Singular values plotted on a log-log scale:
+	- <img src="papernotes/figures/basic-facts-about-language-model-internals-7.jpg" width="400" />
+	- Follows power-law decay, but with sharp fall-off at the end
+- A random Gaussian matrix has singular values that follows a Marchenko-Pastur distribution, whose values vs rank looks like this:
+	- <img src="papernotes/figures/basic-facts-about-language-model-internals-8.jpg" width="400" />
+	- (_Note: pretty sure this post made an error in saying the spectrum looks different from the Marchenko-Pastur distribution spectrum_)

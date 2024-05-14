@@ -4,39 +4,146 @@
 
 #### Key Results
 
+<img src="papernotes/figures/toy-models-of-superposition-1.jpg" width="400" />
+
 - In the toy models, they demonstrate:
 	- Superposition is a real, observed phenomenon
-	- Both monosemantic and polysemantic neurons can form
-	- At least some kinds of computation can be performed in superposition
-	- Whether features are stored in superposition is governed by a phase change
+	- Both monosemantic and polysemantic neurons can form (in a privileged basis), depending on sparsity
+	- Whether features are stored in superposition is governed by a phase change (based on feature importance and sparsity)
 	- Superposition organizes features into geometric structures such as digons, triangles, pentagons, and tetrahedrons
+	- At least some kinds of computation can be performed in superposition
 
-#### Superposition
+#### Definition of Features
 
-- It would be very convenient if individual neurons corresponded to cleanly interpretable features of the input
+- It would be very convenient if single neurons corresponded to cleanly interpretable features of the input
 	- For example, each neuron would fire only in the presence of a specific visual feature, such as the color red, a left-facing curve, or a dog snout
-- Empirically, *some* neurons do cleanly map to features
-	- But this isn't always the case, especially in LLMs where it actually seems rare for neurons to correspond to clean features
-	- Why is it that neurons sometimes align with features and sometimes don't?
-- This paper uses toy models to investigate how and why models represent **more features than they have dimensions**
-	- We call this phenomenon **superposition** 
+- Empirically, *sometimes* single neurons do cleanly map to features (such as in the InceptionV1 interp work), but this isn't always the case, especially in LLMs where it seems rare for neurons to correspond to clean features
+	- Additionally, it doesn't make sense to talk about basis(neuron)-aligned features without a privileged basis, which applies to many Transformers architectures variants
+- It's hard to give a completely satisfactory *definition* of features. Intuitively, features represent some **fundamental unit of neural network computation**. The paper posits three working defs:
+	- Arbitrary functions of the input
+	- Human understandable "concepts" of the input
+	- Properties of the input that a sufficiently large model will dedicate a single neuron to
+- Regardless of the exact definition, features are *represented* as **directions in activation space**, AKA linear combinations of neurons
+	- For some unit feature direction 𝑥⊆ℝ<sup>embed_dim</sup>, the feature value of an activation h is h.dot(𝑥), the projection of h onto 𝑥 (assuming no interference)
+	- The direction formulation is highly motivated by previous work:
+		- Word embeddings have directions corresponding to semantic properties `V("king") - V("man") + V("woman") = V("queen")` from Mikolov et al.
+- Since features are direction in ℝ<sup>embed_dim</sup>, you may expect there to be an upper bound of `embed_dim` features; but **superposition** allows models to store more features than dimensions
+	
+### The Superposition Hypothesis
 
-#### Methodology and Results
+- Superposition is when the neural network represents more features than dimensions by tolerating a bit of interference:
+	- <img src="papernotes/figures/toy-models-of-superposition-2.jpg" width="400" />
+- Why superposition happens: the neural network wants to store more features than it has neurons
+	- The real world has a limitless number of features. From this perspective, **neural networks are heavily underparameterized**
+- Intuitively, with superposition, a small network may be able noisily "simulate" a sparse larger model
+	- <img src="papernotes/figures/toy-models-of-superposition-3.jpg" width="400" />
+	- In other words, we may be able to think of the models we train as doing "the same thing as" an much-larger model, representing the exact same features but with no superposition
+- Key properties of features that determine whether or not superposition occurs:
+	- Feature sparsity: in the natural world, many features seem to be sparse in the sense that they only rarely occur
+		- In vision, most positions in an image don't contain a horizontal edge, or a curve, or a dog head
+		- In language, most tokens don't refer to Martin Luther King or aren't part of a clause describing music
+	- More features than neurons
+	- Features vary in importance: not all features are equally useful
+	
+#### Demonstrating Superposition in Toy Models
 
-- Trained a toy model on a dataset of five features of varying importance in two dimensions
-- Vary the sparsity of the features:
-	- With dense features (say, every data point contains every feature), the model learns to represent an orthogonal basis of the most important two features (similar to what PCA might give us), and the other three features are not represented
-	- When features are sparse, superposition allows compression beyond what a linear model would do, at the cost of "interference" that requires nonlinear filtering.
-	- <img src="papernotes/figures/toy-models-of-superposition-1.jpg" width="400" />
-- Not only can models store additional features in superposition by **tolerating some interference**, but at least in certain limited cases, **models can perform computation while in superposition** 
-- This leads us to hypothesize that the neural networks we observe in practice are **noisily simulating larger, highly sparse networks**.
-	- In other words, it's possible that models we train can be thought of as doing “the same thing as” an imagined much-larger model, representing the exact same features but with no interference.
+#### *Setup*
 
-#### Feature Sparsity
+- Trained a toy model that takes in a high dimensional vector 𝑥⊆ℝ<sup>n_features</sup>, projects into a lower dimensional space h⊆ℝ<sup>m_dims</sup>, and recovers 𝑥 as best as it can
+	- Generated synthetic data with n_features = 20, m_dims = 5
+	- Sparsity S: each dim of 𝑥 represents a feature, equal to 0 with probability S, otherwise uniformly distributed in [0, 1]
+- Trained two model architectures for comparison:
+	- Linear: h = W𝑥, 𝑥' = W<sup>T</sup>h + b
+	- ReLU output: h = W𝑥, 𝑥' = ReLU(W<sup>T</sup>h + b)
+- Loss = reconstruction loss weighted by feature importance I<sub>i</sub>
 
-- Feature Sparsity: In the natural world, many features seem to be sparse in the sense that they only rarely occur.
-	- For example, in vision, most positions in an image don't contain a horizontal edge, or a curve, or a dog head
-	- In language, most tokens don't refer to Martin Luther King or aren't part of a clause describing music
-- More Features Than Neurons
-	- There are an enormous number of potentially useful features a model might represent.
-- This imbalance between features and neurons in real models seems like it must be a central tension in neural network representations.
+#### *Results*
+
+- <img src="papernotes/figures/toy-models-of-superposition-4.jpg" width="400" />
+- For every (unit) feature W<sub>i</sub>, we track two things:
+	- Is a feature represented? ||W<sub>i</sub>||
+	- How much interference? Σ(W<sub>i</sub> ⋅ W<sub>j</sub>)<sup>2</sup>
+- We see varying amount of feature representation and interference as we vary sparsity:
+	- Dense: represent only the top 5 features, with no interference
+	- S(parsity) = 0.9: represent top 10 features, with high superposition/inteference
+	- S = 0.999: represent all features, all in superposition
+- Why does this happen?
+	- <img src="papernotes/figures/toy-models-of-superposition-5.jpg" width="400" />
+	- In the linear case (the ReLU case is functionally similar), we can decompose Loss into "Feature Benefit" and "Interference" terms:
+		- Feature benefit: better loss by representing more features
+		- Interference: worse loss from having to resort to non-orthogonal features, which interfere with each other
+
+#### Superposition as a Phase Change
+
+- There are 3 outcomes for a feature when we train a model:
+	- (1) the feature is not learned
+	- (2) the feature is learned in superposition
+	- (3) the feature is learned with a dedicated dimension
+- It turns out that the transitions between these outcomes are sharp, dependent on **sparsity** and **feature importance**:
+	- <img src="papernotes/figures/toy-models-of-superposition-6.jpg" width="400" />
+	- Experimental setup: same as above with n_features = 2, m_dims = 1
+	- Note that the magnitude and superposition changes discontinously as opposed to gradually
+
+#### The Geometry of Superposition
+
+- Result: Features organize themselves into geometric structures such as pentagons and tetrahedrons (in these toy models) 
+- We start by investigating **uniform superposition** where all features are identically important and sparse
+	- We find that **non-uniform superposition** can be seen as a deformation of the uniform case
+	
+#### *Uniform Superposition*
+
+- Study a model with n=400 features and m=30 hidden_dims, and vary the sparsity
+- Plotting D* = hidden_dims / ||W||<sup>2</sup>, where ||W|| is the (hidden_dims x n_feature) matrix of features 
+	- Interpreting the denom as "number of features represented", D* can be interpreted as "number of dims per represented feature"
+- <img src="papernotes/figures/toy-models-of-superposition-8.jpg" width="400" /> 
+
+	- We find a "sticky point" at 1/2, meaning that each dim "stores" 2 features. This would look like this:
+	- <img src="papernotes/figures/toy-models-of-superposition-9.jpg" width="400" />
+- We plot additional information:
+	- (1) Start with the line plot
+	- (2) Overlay with the scatter plot of feature dimensionalities *for each feature*, which turn out to cluster at certain fractions
+	- (3) Visualize the weight geometries with a "feature geoemtry graph" where each feature is a node, and edge weights are the amount of interference between two features
+- <img src="papernotes/figures/toy-models-of-superposition-7.jpg" width="400" /> 
+
+	- We see that the model likes to create specific weight geometries, and jumps between different configurations
+	- Many of these geometric structures are solutions to the Thomson problem, which is the configuration of N elections on the unit sphere that minimizes electrostatic potential energy
+	- Pay particular attention to the "Feature Geometry Graph", super cool
+		- We can interpret this as, features cluster within groups, where each group forms a particular geometry within the alloted dims
+		- Between group correlations are orthogonal
+
+#### *Non-Uniform Superposition*
+
+- Summary of observed phenomenon:
+	- **Features varying in importance/sparsity** causes smooth deformation of polytopes as the imbalance increases, until a critical point where they snap to another polytopes
+	- **Correlated features** prefer to be orthogonal
+	- **Anti-correlated features** prefer to have negative inferference
+	
+#### Computation in Superposition
+
+- So far, we've only shown that networks can **store** sparse features in superposition; however, we think that networks can actually **perform computation** entirely in superposition
+- To study this, we investigate the following model that computes absolute value with n_features = 100, m_dims = 40:
+	- <img src="papernotes/figures/toy-models-of-superposition-10.jpg" width="400" /> 
+	- The input and output layers are our hypothetical disentangled model, but the hidden layer is a smaller layer in superposition
+	- Input x, each feature still sparse with probability S, otherwise uniformly distributed in [-1, 1]
+	- Target: y = abs(x)
+	- Architecture:
+		- h = ReLU(W<sub>1</sub>𝑥)
+		- y' = ReLU(W<sub>2</sub>h + b)
+- Results:
+	- <img src="papernotes/figures/toy-models-of-superposition-11.jpg" width="400" /> 
+	- **Activation functions, under the right circumstances, create a privileged basis**
+	- Qualitatively, the results on individual neurons mirror the results on features from the toy model:
+		- In the dense regime, (neurons are monosemantic / features are orthogonal); in the sparse regime, (neurons are polysemantic / features have interference)
+		- More important features are more likely to (have monosemantic neurons / have features without interference)
+		
+#### The Strategic Picture of Superposition
+		
+- Our goal is to use interpretability to make claims about the safety of AI systems
+	- We want a way to have confidence that models would not do bad things such as deception and manipulation
+	- To do so, we would like to be able to **enumerate over all features in a model**, which would be a powerful primitive for making claims about model behaviour
+	- This would be a significant step towards saying that certain types of circuits don't exist
+- Superposition is deeply linked to the ability to enumerate over all features
+	- Any method that gives us the ability to enumerate over features is a "solution to superposition"
+- Additionally, "solving superposition" is crucial for other aspects of mechanistic interpretability:
+	- Describing activations in terms of pure, basis-aligned, features. When features as basis aligned, we can take an activation (say, the activations for a dog head) and decompose them into individual underlying features (floppy ear, short golden fur, snout)
+	- Understanding weights (i.e. circuit analysis). Network weights can only be understood when connecting understandable features. The circuit analysis done in the OG circuit thread was only possible because the weights connected monosemantic neurons.

@@ -241,8 +241,24 @@
         "src": "papernotes/a-mathematical-framework-for-transformer-circuits.txt"
       },
       {
+        "title": "Toy Models of Superposition (Elhage 2022)",
+        "src": "papernotes/toy-models-of-superposition.txt"
+      },
+      {
+        "title": "Superposition, Memorization, and Double Descent (Henighan 2023)",
+        "src": "papernotes/superposition-memorization-and-double-descent.txt"
+      },
+      {
+        "title": "Towards Monosemanticity: Decomposing Language Models With Dictionary Learning (Bricken 2023)",
+        "src": "papernotes/towards-monosemanticity-decomposing-language-models-with-dictionary-learning.txt"
+      },
+      {
         "title": "In-context Learning and Induction Heads (Olsson 2022)",
         "src": "papernotes/in-context-learning-and-induction-heads.txt"
+      },
+	  {
+        "title": "Basic Facts about Language Model Internals (Beren 2023)",
+        "src": "papernotes/basic-facts-about-language-model-internals.txt"
       },
       {
         "title": "Feature Visualization (Olah 2017)",
@@ -251,10 +267,6 @@
       {
         "title": "Zoom In: An Introduction to Circuits (Olah 2020)",
         "src": "papernotes/zoom-in-an-introduction-to-circuits.txt"
-      },
-      {
-        "title": "Toy Models of Superposition (Elhage 2022)",
-        "src": "papernotes/toy-models-of-superposition.txt"
       },
       {
         "title": "Interpreting GPT: the Logit Lens",

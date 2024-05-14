@@ -1,0 +1,157 @@
+[https://transformer-circuits.pub/2023/monosemantic-features/index.html](https://transformer-circuits.pub/2023/monosemantic-features/index.html)
+  
+<img src="papernotes/figures/towards-monosemanticity-decomposing-language-models-with-dictionary-learning-title.jpg" width="400" />
+
+#### High-level Motivation
+
+- Mech.interp seeks to understand neural networks by **breaking them into components** that are easier understood
+	- By understanding the function of each component and how they interact, we hope to reason about the behaviour of the whole
+	- The first step is to identify the correct components to analyze
+- Unfortunately, the most natural computational unit of the network, the neuron, is not a natural unit of human understanding due to polysemanticity, which occurs due to superposition
+	- As shown in Toy Models, superposition occurs when features are sparse, which allows the model to disentangle features as in compressed sensing
+- Our goal is to find a "solution to superposition," which are the sparse and interpretable set of disentangled features
+	- In Toy Models, we described 3 hypothetical strategies: (1) creating models without superposition, perhaps by encouraging activation sparsity, (2) using dictionary learning to find an overcomplete feature basis, (3) a combination of 1 and 2
+		- Anthropic tried all of them; (1) was insufficient to prevent polysemanticity, and (2) had issues with overfitting
+- In this paper, we use a weak dictionary learning algorithm called **sparse autoencoders** to generate **learned features** from a trained model that are more monosemantic than the model's neurons themselves
+	- We demonstrate that this can extract interpretable features from superposition, and enable basic circuit analysis
+- Concretely:
+	- Take 8bn MLP activations from a 1L dim 512 transformer
+	- Train SAEs with expansion dim 1x to 256x on these activations
+	
+#### Summary of Results
+
+- SAEs extract features that:
+	- Are relatively monosemantic
+		- It turns out that *most* learned features are interpretable
+	- Can steer transformer generation
+		- e.g. activating the (base64 / Arabic) feature causes the model to generate (base64 / Arabic) text
+	- Are invisible if you only look at the neuron basis
+		- The Hebrew script feature is invisible in all of the top dataset examples for any of the neurons
+	- Relatively universal
+		- Different language models produce mostly similar features
+	- Appear to split as we increase the autoencoder size
+		- As width increases from 1x to 256x, the features split / increase in resolution
+	- Exhibit superposition: Just 512 MLPs neurons can represent tens of thousands of features
+	
+### Why didn't architectural approaches work?
+
+- One idea was to discourage superposition by encouraging activation sparsity
+- This eliminates superposition, but **neurons can be polysemantic even in the absence of superposition**
+	- Simple example:
+		- Consider a dataset with four mutually-exclusive features A/B/C/D that each perfectly predict the next token
+		- Train that dataset on a neuron with a single neuron that either fires or doesn't
+		- The model can either only fire on feature A (with loss 3/4 * ln3), or fire on both features A and B (with loss ln2). The latter, with polysemanticity, has lower loss
+	
+#### Experimental Setup
+
+- Train **two** (to measure universality) 1L transformers on 100bn tokens from The Pile:
+	- <img src="papernotes/figures/towards-monosemanticity-decomposing-language-models-with-dictionary-learning-1.jpg" width="400" />
+- Take the MLP activations and train a SAE on 8bn MLP activation samples:
+	- <img src="papernotes/figures/towards-monosemanticity-decomposing-language-models-with-dictionary-learning-2.jpg" width="400" />
+	- SAE: x = Linear2(ReLU(Linear1(x - b<sub>d</sub>))), where Linear1 up-projects x from dim 512 to dim {512 ... 131,072}, and Linear2 down-projects back to 512
+		- The {512 ... 131,072} columns of the decoder Linear2.W represent each feature direction
+		- The sparse activations of the encoder ReLU(Linear1(x)) represent the scalar activation of each feature
+		- b<sub>d</sub>, the "pre-encoder" bias, is tied to Linear2
+			- Note: later (work)[https://transformer-circuits.pub/2024/feb-update/index.html] found that removing the pre-encoder bias is beneficial
+		
+#### What makes a good activation decomposition?
+
+- Suppose each datapoint's MLP activation is well approximated by a sparse weighted sum of feature directions
+- A good decomposition should satisfy the following criteria:
+	- We can interpret the conditions under which each feature is active, i.e. which datapoints cause the feature to fire
+	- We can interpret the downstream effects of the feature, e.g. via ablation
+	- The feature explains a significant portion of the MLP layer's functionliaty
+- A good feature decomposition will allow us to:
+	- Monitor the network for activation of safety-relevant features (e.g. deception, planning)
+	- Steer the behaviour of the netowrk by changing the values of some features
+	- Design inputs meant to activate a given feature and elicit certain outputs
+
+#### What evals do we do on SAEs?
+
+- How can we tell if our method is working? Metrics of interest:
+	- (1) Manual inspection: do the features seem interpretable?
+	- (2) Feature density: the number of "live" features and the minimum "feature density" (percentage of datapoints they fire on)
+		- Hypothesis: models contain a large number of features across a distribution of feature densities, and lower-density features are harder for our autoencoder to discover because they appear less often in the training dataset
+		- Many feature density histograms are bimodel: the right "high density cluster" are almost all interpretable, whereas none of the features in the "ultralow density cluster" are
+		- <img src="papernotes/figures/towards-monosemanticity-decomposing-language-models-with-dictionary-learning-3.jpg" width="400" />
+		- Reason for ultralow density features (source: [Dying Features in Dictionary Learning](https://transformer-circuits.pub/2024/feb-update/index.html)): The features in this cluster put almost all encoder weight on the small number of transformer neurons that are consistently weakly activating over the entire dataset. The corresponding decoder features were almost random, and are hypothesized to have never found a useful direction, a consequence of the L1 penalty killing it off before finding a good direction. Due to the pre-encoder bias, if you set the encoder weights to the opposite sign of the pre-encoder bias for all weakly-firing neurons, and 0 for "regular" neurons, then the resulting encoder ReLU activations will be 0, which helps loss as the decoder directions are not useful.
+	- (3) Reconstruction loss: how well does the autoencoder reconstruct MLP activations
+	- (4) Toy models: where we know the ground truth
+	
+#### Why study one-layer models?
+
+- (1) 1L models probably have fewer "true features", so it's easier for smaller dictionaries to cover them all
+- (2) We can highly overtrain 1L transformers. A high number of training tokens may allow our models to learn clearer representations in superposition
+- (3) Easy to analyze the effects that features have on logits
+
+#### Detailed Investigations of Individual Features
+
+- The most important claim of our paper is that **dictionary learning can extract features that are significantly more monosemantic than neurons**
+- The features we study respond to:
+	- Text written in Arabic script (like "الكتاب المختصر في حساب الجبر والمقابلة")
+	- DNA sequences (like "CCTGGTACTGTACGAACGAACGAACGTAGCCTTGG")
+	- base64 strings (like the final characters in "https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+	- Text written in Hebrew script (like "בראשית ברא אלהים את השמים ואת הארץ") 
+- For each learned feature, we establish that the feature has:
+	- High specificity: when the feature fires, the context is present
+	- High sensitivity: when the context is present, the feature fires
+	- Causal: the feature *causes* dowjnstream behaviour
+	- Does not correspond to any single neuron
+	- Universal: a similar feature is found by both the trained transformers
+- (See investigations here)[https://transformer-circuits.pub/2023/monosemantic-features/index.html#feature-arabic]
+
+#### Global analysis
+
+*How Interpretable is the Typical Feature?*
+
+- Manual interpretibility: from Adam Jermyn's perspetive, features are substantially more interpretable than neurons
+	- <img src="papernotes/figures/towards-monosemanticity-decomposing-language-models-with-dictionary-learning-4.jpg" width="400" />
+- Automated interpretability:
+	- Using Claude, generate explanations of features using examples of tokens where they activate
+	- Then, use that explanation to predict activations on unseen tokens, and compute corr(predicted actv, true actv)
+	- Result: Claude is able to explain and predict activations for features significantly better than for neurons
+	- <img src="papernotes/figures/towards-monosemanticity-decomposing-language-models-with-dictionary-learning-5.jpg" width="400" />
+	
+* How much of the model does our interpretation explain?*
+
+- TLDR, 79% of log-likelihood loss reduction provided by the MLP layer is recovered by our features
+	- That is, measuring the additional loss incurred by:
+		- A: replacing the MLP activations with the SAE's output,
+		- B: zero-ablating the MLP
+		- A = 21% of B
+	- However, this is hard to meaningfully interpret
+	
+#### Phenomology
+
+*Feature Motifs*
+
+- What kind of features do we find in our model?
+- One strong theme is the prevalence of **context features** and **token-in-context** features:
+	- Context features: DNA, base64
+	- Token-in-context features: there are over 100 features primarily responding to *the* in different contexts
+		- There are a *ton* of these
+		- Often, these features are connected by feature splitting, starting as pure context features / token features in smaller dictionaries
+- Features that respond to *specific, longer sequences of tokens*
+	- These may implement memorization-like behaviour
+- In the last layer of any model, features can be interprted as "action features" that increase the probability of certain tokens in the unembedding layer
+	
+*Feature splitting*
+
+- Features appear in *clusters*: we observe multiple {base64, Arabic script} features, etc.
+	- As the dictionary size increases, features "split":
+	- <img src="papernotes/figures/towards-monosemanticity-decomposing-language-models-with-dictionary-learning-6.jpg" width="400" />
+	- Similar features have small angles between their dictionary vectors
+- Hypothesis: there is some idealized set of features that dictionary learning would return given infinite dictionary size
+	- These "true features" are clustered into sets of similar features, which the model puts in tight superposition
+	- Since our dictionary is finite, we instead find features that cover approximately the same territory as the idealized features
+
+*Universality*
+
+- Between the two one-layer models we studied, features are similar
+- Features are also similar with similar features reported in previous interp literature
+
+*Finite state automata*
+
+- Features that respond to *specific, longer sequences of tokens*, e.g. there exist "finite state automata" sequence of features for `MERCHANTABILITY or FITNESS FOR A **PARTICULAR PURPOSE**` which is standard legal lnguage
+	- These may implement memorization-like behaviour
+	- <img src="papernotes/figures/towards-monosemanticity-decomposing-language-models-with-dictionary-learning-7.jpg" width="400" />
