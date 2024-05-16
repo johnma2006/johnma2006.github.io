@@ -1,0 +1,27 @@
+[https://transformer-circuits.pub/2023/july-update/index.html#safety-features](https://transformer-circuits.pub/2023/july-update/index.html#safety-features)
+
+- We believe there are many high-value, safety-relevant targets for mechanistic investigation
+	- These targets broadly fall into two classes: **hypothesized mechanisms** and **empirical behaviours**
+	
+#### Hypothesized Inner Mechanisms
+
+- Many of the following hypothesized mechanisms for how LLMs operate have major safety implications; many can be framed in terms of "features"
+- **High-Level Actions**
+	- Most of the time, we think of features as representing the input
+	- However, for language models, it's possible that there may be features that are more like "actions"
+		- Example: some neurons in the later layers perform simple "actions" such as completing multi-token words
+		- <img src="papernotes/figures/what-would-be-the-most-safety-relevant-features-in-language-models-1.jpg" width="400" />
+	- Just like there are features representing abstract properties of the input, might there be abstract, higher-level actions that trigger behaviours over the span of multiple tokens?
+		- (**Comment: It seems so, given all the work on activation steering, e.g. refusals**)
+- **Planning**: If models do have action features, how are seequences of actions coordinated? 
+- **Social Reasoning**: What properties of the user does the model internalize? This can be scary if the model is able to use its knowledge to better manipulate humans
+- **Personas**: During pretraining, models leran to play many different personas, as well as learn how to switch personas (such as in a play). How do models track their active personas, and what triggers the personas to change?
+**Situational awareness**: does a model know that it's a model / its architecture / that it can be turned off, modified, etc
+
+#### Empirical Behaviours
+
+- There is a growing number of model behaviours we don't understand yet and would like to investigate mechanistically
+- **Jailbreaks**: can we discover why these work?
+- **Instrumental reasoning**: behaviours like caution around red-teaming prompts, sycophancy, and self-preservation may suggest instrumental reaoning, or they may be due to more benign causes
+- **In-context learning**: How does in-context learning happen?
+- **Successful RLHF**: why does RLHF succeed when it does? Does it amplify capabilities and personalities already present in the model, or does it create new circuits and new knowledge? How much does RLHF delete?

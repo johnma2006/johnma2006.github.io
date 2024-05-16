@@ -1,0 +1,34 @@
+[https://www.lesswrong.com/posts/jGuXSZgv6qfdhMCuJ/refusal-in-llms-is-mediated-by-a-single-direction](https://www.lesswrong.com/posts/jGuXSZgv6qfdhMCuJ/refusal-in-llms-is-mediated-by-a-single-direction)
+*(paper incoming)*
+  
+<img src="papernotes/figures/refusal-in-llms-is-mediated-by-a-single-direction-title.jpg" width="400" />
+
+#### Key Results
+
+- Refusals are mediated by a single direction in the residual stream, for all open-source model families and model scales
+- A simple orthogonalization of the model weights jailbreaks the model, greatly reducing refusals
+- <img src="papernotes/figures/refusal-in-llms-is-mediated-by-a-single-direction-1.jpg" width="400" />
+
+#### Methodology and Results
+
+*Finding the "refusal direction"*
+- (1) Run the model on *n* harmful instructions and *n* harmless instructions (*n* = 32) to get the residual stream activations at the last token position for all layers
+- (2) Compute the difference in means, yielding a vector r<sub>l</sub> per layer. Choose the best r<sub>l</sub> using a validation set of harmful instructions
+
+*Ablating the refusal direction to bypass refusal*
+
+- Simply orthogonalize the refusal direction r from the residual stream of all layers at inference time
+	- You can also orthogonalize the weight matrices to prevent writing to r
+- Results:
+	- Ablating the refusal diretion heavily reduces refusal rates (see figure above)
+	
+	
+*Adding the refusal direction to induce refusal*
+
+- Run the model on a set of harmful prompts, and measure the "average feature activation", a scalar multiplier
+	- Then, for harmless prompts, set the activation to this average feature activation
+- This is done only on the layer that the refusal direction was extracted from
+- Results:
+	- <img src="papernotes/figures/refusal-in-llms-is-mediated-by-a-single-direction-2.jpg" width="400" />
+	- <img src="papernotes/figures/refusal-in-llms-is-mediated-by-a-single-direction-3.jpg" width="400" />
+

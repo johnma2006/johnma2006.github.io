@@ -15,11 +15,10 @@
 
 #### Definition of Features
 
-- It would be very convenient if single neurons corresponded to cleanly interpretable features of the input
-	- For example, each neuron would fire only in the presence of a specific visual feature, such as the color red, a left-facing curve, or a dog snout
-- Empirically, *sometimes* single neurons do cleanly map to features (such as in the InceptionV1 interp work), but this isn't always the case, especially in LLMs where it seems rare for neurons to correspond to clean features
-	- Additionally, it doesn't make sense to talk about basis(neuron)-aligned features without a privileged basis, which applies to many Transformers architectures variants
-- It's hard to give a completely satisfactory *definition* of features. Intuitively, features represent some **fundamental unit of neural network computation**. The paper posits three working defs:
+- Intuitively, features represent:
+	- Some **fundamental unit of neural network computation**
+	- Properties of the input (concepts or abstractinos), intermediate representations of knowledge, or actions (on the logits)
+- It's hard to give a completely satisfactory *definition* of features. The paper posits three working defs:
 	- Arbitrary functions of the input
 	- Human understandable "concepts" of the input
 	- Properties of the input that a sufficiently large model will dedicate a single neuron to
@@ -29,7 +28,14 @@
 		- Word embeddings have directions corresponding to semantic properties `V("king") - V("man") + V("woman") = V("queen")` from Mikolov et al.
 - Since features are direction in ℝ<sup>embed_dim</sup>, you may expect there to be an upper bound of `embed_dim` features; but **superposition** allows models to store more features than dimensions
 	
-### The Superposition Hypothesis
+#### Features as Directions vs as Neurons
+
+- It would be very convenient if single neurons corresponded to cleanly interpretable features of the input
+	- For example, each neuron would fire only in the presence of a specific visual feature, such as the color red, a left-facing curve, or a dog snout
+- Empirically, *sometimes* single neurons do cleanly map to features (such as in the InceptionV1 interp work), but this isn't always the case, especially in LLMs where it seems rare for neurons to correspond to clean features
+	- Additionally, it doesn't make sense to talk about basis(neuron)-aligned features without a privileged basis, which applies to many Transformers architectures variants
+	
+#### The Superposition Hypothesis
 
 - Superposition is when the neural network represents more features than dimensions by tolerating a bit of interference:
 	- <img src="papernotes/figures/toy-models-of-superposition-2.jpg" width="400" />

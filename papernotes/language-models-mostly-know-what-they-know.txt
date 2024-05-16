@@ -58,7 +58,7 @@
 * Methodology:
     * Dataset: For each question, generate 30 answer samples at T=1. Ground Truth P(IK) = the fraction of the 30 samples that are correct
     * (_Commentary: this feels less like "P(I know the answer)" and more "P(I will give the answer when prompted)_)
-    * Training: Train P(IK) as th elogit from an additional value "head" added to the model
+    * Training: Train P(IK) as the logit from an additional value "head" added to the model
 * <img src="papernotes/figures/language-models-mostly-know-what-they-know-6.jpg" width="400" />
 * Result: models trained on one task have significant out-of-sample power to differentiate between questions they can answer
     * <img src="papernotes/figures/language-models-mostly-know-what-they-know-7.jpg" width="400" />

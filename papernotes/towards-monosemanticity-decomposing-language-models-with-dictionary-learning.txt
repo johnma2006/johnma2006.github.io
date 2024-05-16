@@ -74,7 +74,10 @@
 		- Hypothesis: models contain a large number of features across a distribution of feature densities, and lower-density features are harder for our autoencoder to discover because they appear less often in the training dataset
 		- Many feature density histograms are bimodel: the right "high density cluster" are almost all interpretable, whereas none of the features in the "ultralow density cluster" are
 		- <img src="papernotes/figures/towards-monosemanticity-decomposing-language-models-with-dictionary-learning-3.jpg" width="400" />
-		- Reason for ultralow density features (source: [Dying Features in Dictionary Learning](https://transformer-circuits.pub/2024/feb-update/index.html)): The features in this cluster put almost all encoder weight on the small number of transformer neurons that are consistently weakly activating over the entire dataset. The corresponding decoder features were almost random, and are hypothesized to have never found a useful direction, a consequence of the L1 penalty killing it off before finding a good direction. Due to the pre-encoder bias, if you set the encoder weights to the opposite sign of the pre-encoder bias for all weakly-firing neurons, and 0 for "regular" neurons, then the resulting encoder ReLU activations will be 0, which helps loss as the decoder directions are not useful.
+		- Reason for ultralow density features (source: [Dying Features in Dictionary Learning](https://transformer-circuits.pub/2024/feb-update/index.html)):
+			- The features in this cluster put almost all encoder weight on the small number of transformer neurons that are consistently weakly activating over the entire dataset.
+			- The corresponding decoder features were almost random, and are hypothesized to have never found a useful direction, a consequence of the L1 penalty killing it off before finding a good direction. 
+			- Due to the pre-encoder bias, if you set the encoder weights to the opposite sign of the pre-encoder bias for all weakly-firing neurons, and 0 for "regular" neurons, then the resulting encoder ReLU activations will be 0, which helps loss as the decoder directions are not useful.
 	- (3) Reconstruction loss: how well does the autoencoder reconstruct MLP activations
 	- (4) Toy models: where we know the ground truth
 	

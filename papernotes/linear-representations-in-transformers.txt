@@ -1,0 +1,15 @@
+[https://ninarimsky.substack.com/p/linear-representations-in-transformers](https://ninarimsky.substack.com/p/linear-representations-in-transformers)
+
+<img src="papernotes/figures/linear-representations-in-transformers-title.jpg" width="400" />
+
+#### Literature Review on Linearity in Transformer Representations
+
+- High level behavioural concepts are linearly represented in the latent space
+	- e.g. refusal, sentiment, power-seeking tendency
+- Internal state variables are linearly represented in the latent space
+	- e.g. the position of chess pieces on a board
+- You can modulate the model's behaviour via linear interventions to the model's activation space
+	- e.g. increase refusals and truthfulness via an inference-time intervention on the residual stream
+- You can replace the context with a feature representing that context
+	- e.g. instead of describing a task, you derive a "task vector" from the internal representations of context describing that task, and just steer with that "task vector"
+

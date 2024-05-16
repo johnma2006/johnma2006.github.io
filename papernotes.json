@@ -257,8 +257,8 @@
         "src": "papernotes/in-context-learning-and-induction-heads.txt"
       },
 	  {
-        "title": "Basic Facts about Language Model Internals (Beren 2023)",
-        "src": "papernotes/basic-facts-about-language-model-internals.txt"
+        "title": "Refusal in LLMs is mediated by a single direction (Arditi 2023)",
+        "src": "papernotes/refusal-in-llms-is-mediated-by-a-single-direction.txt"
       },
       {
         "title": "Feature Visualization (Olah 2017)",
@@ -269,8 +269,20 @@
         "src": "papernotes/zoom-in-an-introduction-to-circuits.txt"
       },
       {
+        "title": "Linear representations in transformers (Rimsky 2024)",
+        "src": "papernotes/linear-representations-in-transformers.txt"
+      },
+      {
         "title": "Interpreting GPT: the Logit Lens",
         "src": "papernotes/interpreting-gpt-the-logit-lens.txt"
+      },
+      {
+        "title": "What would be the most safety-relevant features in Language Models? (Olah 2023)",
+        "src": "papernotes/what-would-be-the-most-safety-relevant-features-in-language-models.txt"
+      },
+	  {
+        "title": "Basic Facts about Language Model Internals (Beren 2023)",
+        "src": "papernotes/basic-facts-about-language-model-internals.txt"
       }
     ]
   },
