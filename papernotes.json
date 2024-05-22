@@ -234,6 +234,15 @@
     ]
   },
   {
+    "title": "Transformers \\\\ Reasoning",
+    "content": [
+      {
+        "title": "Let's Think Dot by Dot: Hidden Computation in Transformer Language Models (Pfau 2024)",
+        "src": "papernotes/lets-think-dot-by-dot-hidden-computation-in-transformer-language-models.txt"
+      }
+    ]
+  },
+  {
     "title": "Safety \\\\ Interpretability",
     "content": [
       {
@@ -449,6 +458,23 @@
       {
         "title": "DataComp: In search of the next generation of multimodal datasets (Gadre 2023)",
         "src": "papernotes/datacomp-in-search-of-the-next-generation-of-multimodal-datasets.txt"
+      }
+    ]
+  },
+  {
+    "title": "Evals",
+    "content": [
+      {
+        "title": "Vibe-Eval: A hard evaluation suite for measuring progress of multimodal language models (Padlewski 2024)",
+        "src": "papernotes/vibe-eval-a-hard-evaluation-suite-for-measuring-progress-of-multimodal-language-models.txt"
+      },
+      {
+        "title": "What’s up with Llama 3? Arena data analysis (Dunlap 2024)",
+        "src": "papernotes/whats-up-with-llama-3-arena-data-analysis.txt"
+      },
+      {
+        "title": "A Careful Examination of Large Language Model Performance on Grade School Arithmetic (Zhang 2024)",
+        "src": "papernotes/a-careful-examination-of-large-language-model-performance-on-grade-school-arithmetic.txt"
       }
     ]
   },

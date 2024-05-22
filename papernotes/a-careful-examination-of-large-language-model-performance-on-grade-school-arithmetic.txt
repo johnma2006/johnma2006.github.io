@@ -1,0 +1,24 @@
+[arXiv:2405.00332](https://arxiv.org/abs/2405.00332)
+  
+<img src="papernotes/figures/a-careful-examination-of-large-language-model-performance-on-grade-school-arithmetic-title.jpg" width="400" />
+<img src="papernotes/figures/a-careful-examination-of-large-language-model-performance-on-grade-school-arithmetic-abstract.jpg" width="400" />
+
+#### Methodology and Results
+
+- Create a new dataset GSM1K of 1250 novel problems with similar difficulty to GSM8k, generated using human annotators
+- Results:
+	- <img src="papernotes/figures/a-careful-examination-of-large-language-model-performance-on-grade-school-arithmetic-1.jpg" width="400" />
+	- Certain model families (Phi, Mistral) are systematically overfit
+- The most obvious reason for overfit is data contamination. Others include:
+	- Reward modelling process leaking information
+	- Model selection based on benchmarks
+
+#### Data decontamination methods
+
+- Remove all data with too high n-gram overlap with the benchmark
+- Similar variants of benchmark questions to detect if model favour the original wording, as a proxy for data contamination
+	- For a given benchmark question "Joe had {integer} applies...", compare benchmark performance with integer=original value to integer=random other values
+	
+
+
+

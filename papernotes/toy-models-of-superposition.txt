@@ -53,7 +53,7 @@
 	
 #### Demonstrating Superposition in Toy Models
 
-#### *Setup*
+*Setup*
 
 - Trained a toy model that takes in a high dimensional vector 𝑥⊆ℝ<sup>n_features</sup>, projects into a lower dimensional space h⊆ℝ<sup>m_dims</sup>, and recovers 𝑥 as best as it can
 	- Generated synthetic data with n_features = 20, m_dims = 5
@@ -63,7 +63,7 @@
 	- ReLU output: h = W𝑥, 𝑥' = ReLU(W<sup>T</sup>h + b)
 - Loss = reconstruction loss weighted by feature importance I<sub>i</sub>
 
-#### *Results*
+*Results*
 
 - <img src="papernotes/figures/toy-models-of-superposition-4.jpg" width="400" />
 - For every (unit) feature W<sub>i</sub>, we track two things:
@@ -96,7 +96,7 @@
 - We start by investigating **uniform superposition** where all features are identically important and sparse
 	- We find that **non-uniform superposition** can be seen as a deformation of the uniform case
 	
-#### *Uniform Superposition*
+*Uniform Superposition*
 
 - Study a model with n=400 features and m=30 hidden_dims, and vary the sparsity
 - Plotting D* = hidden_dims / ||W||<sup>2</sup>, where ||W|| is the (hidden_dims x n_feature) matrix of features 
@@ -117,7 +117,7 @@
 		- We can interpret this as, features cluster within groups, where each group forms a particular geometry within the alloted dims
 		- Between group correlations are orthogonal
 
-#### *Non-Uniform Superposition*
+*Non-Uniform Superposition*
 
 - Summary of observed phenomenon:
 	- **Features varying in importance/sparsity** causes smooth deformation of polytopes as the imbalance increases, until a critical point where they snap to another polytopes

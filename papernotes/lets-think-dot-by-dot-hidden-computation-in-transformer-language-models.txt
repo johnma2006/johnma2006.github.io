@@ -1,0 +1,43 @@
+[arXiv:2404.15758](https://arxiv.org/abs/2404.15758)
+  
+<img src="papernotes/figures/lets-think-dot-by-dot-hidden-computation-in-transformer-language-models-title.jpg" width="400" />
+<img src="papernotes/figures/lets-think-dot-by-dot-hidden-computation-in-transformer-language-models-abstract.jpg" width="400" />
+
+#### Key Results
+
+- We know that CoT improves performance. Is this due to human-like task decomposition, or greater inference-time computation that tokens allow?
+	- This paper suggests that it is at least partially the latter, by replacing CoT with meaningless filler tokens "..."
+- They show that (after training) **certain** algorithmic problems (eg. 3SUM) are unsolveable without filler tokens, and solveable with
+
+#### Methodology
+
+- Create synthetic data (3SUM and 2SUM):
+	- 3SUM: given *n* integers, find a length-3 subset that sums to 0 (mod 10). This is worst-case O(n^3), while transformers only have O(n^2) computation; therefore, naively, they cannot solve 3SUM in a single forward pass
+	- Data: *input* (eg. `A01 B10 C73 D27`) + *intermediate tokens* (eg. "...") + *label* (eg. `True`)
+		- Insert the 3 different types of intermediate tokens between the input and output:
+			- Filler tokens ("..."), eg. `A05 B75 C22 D13 : . . . . . . . . . . . . ANS True`
+			- CoT, Parallelizable: `A05 B75 C22 D13 : AB70 AC27 AD18 BC97 BD88 CD B ANS True`
+				- This reduces 3SUM to a sequence of 2SUM problems
+			- CoT, instance-adaptive: see paper
+- Train a 34M Llama architecture from scratch
+- (*Comment: Paper is kinda confusing on some of the details... should re-read closer if necessary*)
+
+#### Results
+
+- Fail to solve the synthetic tasks without filler tokens, but achieves 100% and 94% with filler tokens
+	- <img src="papernotes/figures/lets-think-dot-by-dot-hidden-computation-in-transformer-language-models-1.jpg" width="400" />
+- Filler tokens only help given the parallelizable CoT demonstrations
+	- On our task, LMs fail to converge when trained on only filler-token sequences (ie Question …… Answer). 
+	- Models converge only when the filler training set is augmented with additional, parallelizable CoTs; otherwise filler-token models remain at baseline accuracy
+
+
+#### Background and Discussion
+
+- It has been shown that answers arrived at via CoT are frequently not faithful to the intermediate reasoning steps; this paper takes this to the limit, replacing reasoning entirely with arbitrary "..." tokens
+	- Implication for alignment: LLMs can engage in hidden computations independent of the tokens shown (kinda sycophantic)
+- Transformers lie in the circuit complexity class TC<sup>0</sup>, problems that can be solved by constant-depth circuits with polynomial number of gates and unbounded fan-in
+	- Other problems in TC<sup>0</sup>: Integer add/sub/mult, counting 1s in binary string, sorting a list of n n-bit numbers
+	- A natural way to get around this is to provide the transformer enough additional reasoning tokens
+
+
+

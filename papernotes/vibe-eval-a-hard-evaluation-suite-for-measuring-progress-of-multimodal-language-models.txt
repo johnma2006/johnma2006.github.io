@@ -1,0 +1,37 @@
+[arXiv:2405.00332](https://arxiv.org/abs/2405.00332)
+  
+<img src="papernotes/figures/vibe-eval-a-hard-evaluation-suite-for-measuring-progress-of-multimodal-language-models-title.jpg" width="400" />
+<img src="papernotes/figures/vibe-eval-a-hard-evaluation-suite-for-measuring-progress-of-multimodal-language-models-abstract.jpg" width="400" />
+
+#### Vibe-Eval
+
+- 269 visual understanding prompts, including 100 of hard difficulty, accompanied by gold-standard human responses
+	- The 100 `hard-set` problems are defined as those that Reka Core was not able to solve at the time of creation
+- Most are freshly created by the Reka team, thus is contamination free
+
+#### Automated Evaluation
+
+- <img src="papernotes/figures/vibe-eval-a-hard-evaluation-suite-for-measuring-progress-of-multimodal-language-models-3.jpg" width="400" />
+- Notice:
+	- Ground-truth response for comparison
+	- Ask the evaluator LLM to provide explanation before rating
+
+#### Collection Methodology
+
+- <img src="papernotes/figures/vibe-eval-a-hard-evaluation-suite-for-measuring-progress-of-multimodal-language-models-2.jpg" width="400" />
+- Two rounds of independent review to ensure prompts/responses are high quality
+- Keep only examples where the validity of an answer can be judged against the ground truth only, without access to the image. This allows automated eval by text-only models
+
+#### Creating a good benchmark
+
+- An ideal benchmark should be:
+	- The right difficulty: not too easy (benchmarks can saturate) but also not too hard
+	- Interesting and useful to solve
+	- Unambiguous
+	- Error-free
+
+#### Examples
+
+- <img src="papernotes/figures/vibe-eval-a-hard-evaluation-suite-for-measuring-progress-of-multimodal-language-models-1.jpg" width="400" />
+
+

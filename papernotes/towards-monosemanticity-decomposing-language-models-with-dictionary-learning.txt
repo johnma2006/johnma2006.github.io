@@ -33,7 +33,7 @@
 		- As width increases from 1x to 256x, the features split / increase in resolution
 	- Exhibit superposition: Just 512 MLPs neurons can represent tens of thousands of features
 	
-### Why didn't architectural approaches work?
+#### Why didn't architectural approaches work?
 
 - One idea was to discourage superposition by encouraging activation sparsity
 - This eliminates superposition, but **neurons can be polysemantic even in the absence of superposition**

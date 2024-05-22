@@ -1,0 +1,17 @@
+[https://lmsys.org/blog/2024-05-08-llama3/](https://lmsys.org/blog/2024-05-08-llama3/)
+  
+<img src="papernotes/figures/whats-up-with-llama-3-arena-data-analysis-title.jpg" width="400" />
+
+#### Why is Llama 3 70B on pair with frontier models in LMSys arena?
+
+- Goal: Provide more insight into why users rank Llama 3 70B on par with frontier models like GPT-4, Gemini 1.5 Pro, and Claude 3 Opus
+- What types of prompts are users asking, and do users prefer Llama 3 on certain types of prompts?
+	- Answer: Llama 3 **beats fronter models on open-ended writing and creative problems** but **loses on close-ended math and coding**
+		- Open-ended are more likely writing and brainstorming style questions like "Write the first chapter of a novel" or "Could you provide two story suggestions for children that promote altruism"
+	- <img src="papernotes/figures/whats-up-with-llama-3-arena-data-analysis-1.jpg" width="400" />
+- How challenging are these prompts? Does ranking change if the prompts are easier/harder?
+	- Answer: **as prompts get harder, Llama 3's winrate drops significantly**
+- Does Llama 3 have qualitative differences which makes users like it more?
+	- Answer: Qualitatively, Llama 3's outputs are **friendlier and more conversational**, and these traits appear more often in battles than Llama 3 wins
+- Do duplicate prompts from a small number of overrepresented users affect the win-rate?
+	- Answer: it doesn't
