@@ -192,7 +192,7 @@
     ]
   },
   {
-    "title": "Transformers \\\\ Attention Variants",
+    "title": "Transformers \\\\ Architecture",
     "content": [
       {
         "title": "RoPE: Enhanced Transformer with Rotary Position Embedding (Su 2021)",
@@ -203,8 +203,16 @@
         "src": "papernotes/generating-long-sequences-with-sparse-transformers.txt"
       },
       {
+        "title": "On Layer Normalization in the Transformers Architecture (Xiong 2020)",
+        "src": "papernotes/on-layer-normalization-in-the-transformers-architecture.txt"
+      },
+      {
         "title": "Grouped Query Attention (Ainslie 2023)",
         "src": "papernotes/grouped-query-attention.txt"
+      },
+      {
+        "title": "Weight Tying / Using the Output Embedding to Improve Language Models (Press 2016)",
+        "src": "papernotes/weight-tying-using-the-output-embedding-to-improve-language-models.txt"
       },
       {
         "title": "Alibi Attention (Press 2022)",
@@ -213,23 +221,23 @@
       {
         "title": "Self-Attention with Relative Position Representations (Shaw 2018)",
         "src": "papernotes/self-attention-with-relative-position-representations.txt"
+      },
+      {
+        "title": "Mixture of Experts Explained",
+        "src": "papernotes/mixture-of-experts-explained.txt"
       }
     ]
   },
   {
-    "title": "Transformers \\\\ Architecture",
+    "title": "Transformers \\\\ In-Context Learning",
     "content": [
       {
-        "title": "Mixture of Experts Explained",
-        "src": "papernotes/mixture-of-experts-explained.txt"
+        "title": "Why Can GPT Learn In-Context (Dai 2023)",
+        "src": "papernotes/why-can-gpt-learn-in-context.txt"
       },
       {
-        "title": "On Layer Normalization in the Transformers Architecture (Xiong 2020)",
-        "src": "papernotes/on-layer-normalization-in-the-transformers-architecture.txt"
-      },
-      {
-        "title": "Weight Tying / Using the Output Embedding to Improve Language Models (Press 2016)",
-        "src": "papernotes/weight-tying-using-the-output-embedding-to-improve-language-models.txt"
+        "title": "Many-Shot In-Context Learning (Agarwal 2024)",
+        "src": "papernotes/many-shot-in-context-learning.txt"
       }
     ]
   },
@@ -239,6 +247,10 @@
       {
         "title": "Let's Think Dot by Dot: Hidden Computation in Transformer Language Models (Pfau 2024)",
         "src": "papernotes/lets-think-dot-by-dot-hidden-computation-in-transformer-language-models.txt"
+      },
+      {
+        "title": "Vision Transformers Need Registers (Darcet 2024)",
+        "src": "papernotes/vision-transformers-need-registers.txt"
       }
     ]
   },
@@ -260,6 +272,10 @@
       {
         "title": "Towards Monosemanticity: Decomposing Language Models With Dictionary Learning (Bricken 2023)",
         "src": "papernotes/towards-monosemanticity-decomposing-language-models-with-dictionary-learning.txt"
+      },
+      {
+        "title": "Scaling Monosemanticity: Extracting Interpretable Features from Claude 3 Sonnet (Templeton 2024)",
+        "src": "papernotes/scaling-monosemanticity-extracting-interpretable-features-from-claude-3-sonnet.txt"
       },
       {
         "title": "In-context Learning and Induction Heads (Olsson 2022)",

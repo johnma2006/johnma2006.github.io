@@ -1,0 +1,11 @@
+[https://transformer-circuits.pub/2024/scaling-monosemanticity/index.html#assessing-features-v-neurons](https://transformer-circuits.pub/2024/scaling-monosemanticity/index.html#assessing-features-v-neurons)
+[https://www.anthropic.com/research/mapping-mind-language-model](https://www.anthropic.com/research/mapping-mind-language-model)
+[https://x.com/AnthropicAI/status/1792935506587656625](https://x.com/AnthropicAI/status/1792935506587656625)
+  
+<img src="papernotes/figures/scaling-monosemanticity-extracting-interpretable-features-from-claude-3-sonnet-title.jpg" width="400" />
+
+#### High-Level Summary
+
+- *TODO*
+
+

@@ -1,0 +1,36 @@
+[arXiv:2404.11018](https://arxiv.org/abs/2404.11018)
+  
+<img src="papernotes/figures/many-shot-in-context-learning-title.jpg" width="400" />
+<img src="papernotes/figures/many-shot-in-context-learning-abstract.jpg" width="400" />
+
+#### Key Results
+
+- Long-context models allows us to pack many more demonstration examples into the context
+- Going from "few-shot" (tends of examples) to **"many-shot" (hundreds to thousands of examples)**, we observe significant performance gains across a wide variety of tasks
+	- <img src="papernotes/figures/many-shot-in-context-learning-1.jpg" width="400" />
+- For most domains, the best performance was when we used the maximum number of demonstration examples
+	- <img src="papernotes/figures/many-shot-in-context-learning-2.jpg" width="400" />
+	- On some tasks (MATH, code verifier, planning), we observe slight performance deterioration beyond a certain number of shots. The authors do not know why this happens.
+- Many-shot ICL can be bottlenecked by the availability of human-generated demonstration examples. To mitigate this, we explore 2 solutions:
+	- Reinforced ICL: use model-generated CoT answers in place of human answers
+	- Unsupervised ICL: removes answers, leaving only prompts
+	- Both can be effective in the many-shot regime
+
+#### Many-Shot ICL is sensitive to example ordering
+
+- (this is also true for few-shot ICL)
+	- <img src="papernotes/figures/many-shot-in-context-learning-3.jpg" width="400" />
+
+#### NLL Loss is not predictive of ICL performance
+
+- Prior works found that NLL loss for ground-truth test outputs **decreases predictably as context length increases**
+- However, here, we note that loss trends are not a strong predictor for downstream task performance
+	- For example, success rate for both MATH and GPQA decreases after 125 shots...
+		- <img src="papernotes/figures/many-shot-in-context-learning-4.jpg" width="400" />
+	- ...but we do not observe a corresponding increase in NLL loss:
+		- <img src="papernotes/figures/many-shot-in-context-learning-5.jpg" width="400" />
+	- Conclusion: **NLL loss is not a relaible proxy when attempting to predict final performance**
+		- "This makes intuitive sense: for any given problem, there are a large number of potentially correct chain-of-thought paths that the model can take, and calculating the log-likelihood on only one such path may not provide a clear picture for overall model capability"
+
+
+

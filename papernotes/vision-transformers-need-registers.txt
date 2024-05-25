@@ -1,0 +1,24 @@
+[arXiv:2309.16588](https://arxiv.org/abs/2309.16588)
+  
+<img src="papernotes/figures/vision-transformers-need-registers-title.jpg" width="400" />
+<img src="papernotes/figures/vision-transformers-need-registers-abstract.jpg" width="400" />
+
+#### Summary
+
+- Empirically, we observe "artifact" patches in the attention maps of modern vision transformers
+	- <img src="papernotes/figures/vision-transformers-need-registers-1.jpg" width="400" />
+	- These artifacts correspond to tokens with ~10x higher norm at the output
+- Investigating these artifacts, we find they are primarily in **low-informative** background areas of images, where patches are very similar to its neighbours (and are therefore redundant)
+	- Furthermore, we find that artifacts hold global information (Methodology: train classifier on artifacts vs. non-artifact features; the former has higher accuracy)
+	- This leads to the hypothesis: **large, sufficiently trained** models learn to recognize **redundant** tokens, and repurpose them as places to **store, process, and retrieve** global information
+		- *Comment: The `[cls]` token already provides some residual stream bandwidth for global aggregation, but perhaps it is not enough*
+- Solution: add additional `[reg1]`, `[reg2]`, `[reg3]`... register tokens, in the same way as the `[cls]` token
+	- <img src="papernotes/figures/vision-transformers-need-registers-2.jpg" width="400" />
+	- These essentially function like the `[cls]` token to aggregate global information, but provide additional residual stream bandwidth
+	- At the output, only patch tokens and `[cls]` tokens are used (the `[reg]` tokens are only used for intermediate computations)
+	- *Comment: feels similar to the "tokens provide additional computational bandwidth" view eg. "think dot-by-dot"
+- Results:
+	- No more artifacts and smoother, more interpretable feature maps and attention maps
+	- Register tokens sometimes interpretably attend to different parts of the feature map:
+		- <img src="papernotes/figures/vision-transformers-need-registers-2.jpg" width="400" />
+- *Comment: this is a nicely clearly written paper. Perhaps use this as reference in the future*

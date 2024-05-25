@@ -1,0 +1,46 @@
+[arXiv:2212.10559](https://arxiv.org/abs/2212.10559)
+  
+<img src="papernotes/figures/why-can-gpt-learn-in-context-title.jpg" width="400" />
+<img src="papernotes/figures/why-can-gpt-learn-in-context-abstract.jpg" width="400" />
+
+#### Key Results
+
+- It *may* be roughly correct to interpret ICL as similar to fine-tuning with the same in-context examples
+	- This papers understands ICL as follows: GPT first produces "meta-gradients" according to the demonstration examples; these meta-gradients are then applied to the origianl GPT to build an ICL model
+	- *Comment: these meta-gradients may be related to the "task vectors" paper*
+- We compare the behaviours of ICL vs explicit fine-tuning to support this understanding
+
+#### Mathematical dual form between attention and gradient descent
+
+- Simple motivation: Irie et al (2022) showed that **linear layers** optimized by gradient descent have a dual form of linear attention:
+	- <img src="papernotes/figures/why-can-gpt-learn-in-context-1.jpg" width="400" />
+	- where:
+		- F(x) is the layer output
+		- e<sub>i<u/sub> are the output gradients (times learning rate)
+		- x<sub>i</sub>' are the input activations
+	- (intuitively, you weight the gradients of each example x<sub>i</sub> by how close x is to x<sub>i</sub>)
+- The dual form for ICL+transformer attention and "meta-optimization" follows similar logic:
+	- Let X' be the few-shot examples and X be the query
+	- Approximate attention to linear attention by removing the softmax
+	- Compute the attention result F(q) as the result W<sub>ZSL</sub>q, the result in the zero-shot setting, plus the additional component ΔW<sub>ICL</sub>q, the update from the few-shot examples
+- *Comment: this shows you can interpret attention as a "pseudo param update," but I'm not sure why this update should be called a "meta-gradient," as this param update isn't necessarily equal to the gradient*
+
+#### Experimental Evidence for ICL ~ Fine-tuning
+
+- Experimental setup:
+	- Using two pretrained GPT models with 1.3bn and 2.7bn params, compare the results of fine-tuning and ICL on various metrics
+	- Eval datasets: SST2, SST5, Subj (sentiment classification), AG-News (topic classification), CB (natural language inference)
+	- For fair comparison, fine-tuning is done for 1 epoch and examples are provided in the same order as in ICL
+- Results:
+	- **ICL vs Fine-tuning validation accuracy**:
+		- <img src="papernotes/figures/why-can-gpt-learn-in-context-2.jpg" width="400" />
+	- **If fine-tuning gets it correct, then ICL also gets it correct**:
+		- Out of all the examples that FT gets correct but ZSL (zero-shot learning) does not, how many does ICL also get correct?
+		- <img src="papernotes/figures/why-can-gpt-learn-in-context-3.jpg" width="400" />
+	- **ICL tends to change attention outputs in the same direction as fine-tuning**
+		- For a given example and layer, compute CosineSimilarity(h<sub>ICL</sub> - h<sub>ZSL</sub>, h<sub>FT</sub> - h<sub>ZSL</sub>), where h is the output of the attention layer. Average across examples and layers. We see that the cosine sim is non-negative:
+		- <img src="papernotes/figures/why-can-gpt-learn-in-context-4.jpg" width="400" />
+	- **ICL generates similar attention weights to fine-tuning**
+		- Let m be the pre-softmax attention weights. Compute SimAM (Before FT) = Cosine(m<sub>ICL</sub>, m<sub>ZSL</sub>) and compare to SimAM (After FT) = Cosine(m<sub>ICL</sub>, m<sub>FT</sub>). We see that SimAM (After FT) > SimAM (Before FT):
+		- <img src="papernotes/figures/why-can-gpt-learn-in-context-5.jpg" width="400" />
+
