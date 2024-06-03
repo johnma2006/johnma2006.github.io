@@ -7,6 +7,14 @@
         "src": "papernotes/an-empirical-model-of-large-batch-training.txt"
       },
       {
+        "title": "A Theory on Adam Instability in Large-Scale Machine Learning (Molybog 2023)",
+        "src": "papernotes/a-theory-on-adam-instability-in-large-scale-machine-learning.txt"
+      },
+      {
+        "title": "Small-scale proxies for large-scale Transformer training instabilities (Worstman 2023)",
+        "src": "papernotes/small-scale-proxies-for-large-scale-transformer-training-instabilities.txt"
+      },
+      {
         "title": "Tensor Programs V: Tuning Large Neural Networks via Zero-Shot Hyperparameter Transfer (Yang 2022)",
         "src": "papernotes/tensor-programs-v-tuning-large-neural-networks-via-zero-shot-hyperparameter-transfer.txt"
       },
@@ -481,6 +489,10 @@
     "title": "Evals",
     "content": [
       {
+        "title": "Lessons from the Trenches on Reproducible Evaluation of Language Models (Biderman 2024)",
+        "src": "papernotes/lessons-from-the-trenches-on-reproducible-evaluation-of-language-models.txt"
+      },
+      {
         "title": "Vibe-Eval: A hard evaluation suite for measuring progress of multimodal language models (Padlewski 2024)",
         "src": "papernotes/vibe-eval-a-hard-evaluation-suite-for-measuring-progress-of-multimodal-language-models.txt"
       },
@@ -491,6 +503,10 @@
       {
         "title": "A Careful Examination of Large Language Model Performance on Grade School Arithmetic (Zhang 2024)",
         "src": "papernotes/a-careful-examination-of-large-language-model-performance-on-grade-school-arithmetic.txt"
+      },
+      {
+        "title": "Successful language model evals (Wei 2024)",
+        "src": "papernotes/successful-language-model-evals.txt"
       }
     ]
   },

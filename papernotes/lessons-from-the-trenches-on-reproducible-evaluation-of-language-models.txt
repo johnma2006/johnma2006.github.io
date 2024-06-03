@@ -1,0 +1,34 @@
+[https://arxiv.org/pdf/2405.14782](https://arxiv.org/pdf/2405.14782)
+  
+<img src="papernotes/figures/lessons-from-the-trenches-on-reproducible-evaluation-of-language-models-title.jpg" width="400" />
+<img src="papernotes/figures/lessons-from-the-trenches-on-reproducible-evaluation-of-language-models-abstract.jpg" width="400" />
+
+#### Challenges in Evaluating Language Models
+
+- **Evaluating natural language abilities**
+	- The **Key Problem**: when evaluating LM responses, there are oftentimes many semantically equivalent but syntactically different ways of expressing the same idea
+	- In principle, this is solveable by having expert human annotators score models -- but this is too expensive
+	- Automated metrics such as BLEU and ROUGE exist that compare responses to gold-standard via n-gram overlap
+		- More recently, LLM grader serve as proxies for human preference, but these are known to be flawed and suffer from similar reproducibility issues
+	- This problem can be sidestepped by artificially restricting the answer space, such as multiple choice problems
+- **Benchmark design and validity**
+	- We do not care about the actual numeric score on a benchmark
+		- Rather, we desire the benchmark to be a **useful proxy** for some real-world phenomenon
+- **Implementation details and reproducibility**
+	- Once a benchmark is designed, it must be implemented by ML researchers around the world
+	- It's important that they implement it the same way, as minor implementation details matter
+		- LMs are incredibly sensitive to minor variations in prompt, formatting, ...
+	- Therefore, it's best to include the eval code in the benchmark
+- **Lack of agreement about "Apples to Apples"**
+	- "How to draw fair comparisons across models" is still a difficult question
+	- What should we hold equal? Param count, FLOPs, inference cost, training data, ...? 
+- **Comparisons with prior work are expensive, and sometimes impossible**
+	- Most LMs developed by industry labs are only available via API (that are oftentimes quickly deprecated)
+	
+#### Best Practices for LM Evaluation
+
+- When releasing benchmark figures, always share exact prompts and code
+- Avoid compying benchmark results from other implementations
+- Always provide model outputs, as it allows others to recalculate scores
+- Measure and report statistical uncertainty
+- Qualitatively review a small batch of results to test for issues

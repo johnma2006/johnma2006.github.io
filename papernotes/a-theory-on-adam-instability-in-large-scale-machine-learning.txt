@@ -1,0 +1,115 @@
+[arXiv:2304.09871](https://arxiv.org/abs/2304.09871)
+
+(*Comment: I like this paper a lot, it has great detailed empirical investigations; but there exist quite a few errors in the theoretical analyses*)
+
+<img src="papernotes/figures/a-theory-on-adam-instability-in-large-scale-machine-learning-title.jpg" width="400" />
+<img src="papernotes/figures/a-theory-on-adam-instability-in-large-scale-machine-learning-abstract.jpg" width="400" />
+
+#### Notation
+
+- n: model parameter count
+- ε: Adam epsilon
+- f(θ<sub>t</sub>): loss value at param θ<sub>t</sub>
+- η: learning rate
+- `g[i, t]`: gradient of parameter `i` at step `t`
+- `u[i, t]`: Adam update
+- `r[i, t]`: Adam update, if you set ε=0
+- `m[i, t], v[i, t]`: Adam momentum and variance
+
+<hr />
+
+#### Motivation
+
+- **Loss spikes** during training becomes more common as you scale up models
+	- <img src="papernotes/figures/a-theory-on-adam-instability-in-large-scale-machine-learning-1.jpg" width="400" />
+- Why do loss spikes happen? Why are they more common in larger models?
+
+---
+#### Analysis on Adam optimization
+
+*Assumptions underlying Adam efficacy*
+
+- Adam can be viewed as **an approximation of Newton's method**
+	- 1/sqrt(`v[:, t]`) approximates diag(inverse Hessian)
+- Time-domain independence between the gradient estimations is a crucial assumption
+	- During healthy training, `u[i, t]` is normal
+		- <img src="papernotes/figures/a-theory-on-adam-instability-in-large-scale-machine-learning-2.jpg" width="400" />
+	- If `g[i, t]` becomes time-correlated, then `u[i, t]` becomes bimodal. **This corresponds to periods of loss spikes**
+		- <img src="papernotes/figures/a-theory-on-adam-instability-in-large-scale-machine-learning-3.jpg" width="400" />
+		- Reason for bimodal: if `g[i, t]` is constant for all t, then `u[i, t] = sign(g[i, t])` becomes ±1
+		
+*Time-domain correlation leads to divergence of Adam*
+
+- **If `g[i, t]` has time-domain correlation, then Adam will diverge**, since the learning rate required for divergence falls as 1/n, which is not realistic
+- Proof summary:
+	- Using the Taylor expansion of the loss, compute the loss difference between consecutive steps:
+		- <img src="papernotes/figures/a-theory-on-adam-instability-in-large-scale-machine-learning-4.jpg" width="400" />
+	- When we will see a decreased loss value? If this inequality holds:
+		- <img src="papernotes/figures/a-theory-on-adam-instability-in-large-scale-machine-learning-5.jpg" width="300" />
+		- Analyzing the LHS:
+			- Note that `u[t] = sign(g[t])`, and so the LHS = (L1 norm of `g[t]`) / n.
+			- L1 norm of `g[t]` is Θ(n), so LHS is Θ(1)
+		- Analyzing the RHS:
+			- The RHS is equal to a random eigenvalue of Hessian(f), scaled by learning rate
+				- Reason: **there is no relationship between the direction of `u[t]` and the spectrum of the Hessian** (*Comment: this is (probably) a key difference introduced by time-domain independence*)
+			- Therefore, we should analyze how the average eigenvalue of Hessian(f) scales with n
+				- Assume that θ<sub>t</sub> is near a locally optimal point, and so Hessian(f) is PSD.
+				- Then, model Hessian(f) as a square of a random symmetric matrix A<sup>2</sup> (*Comment: I think they mean Cholesky decomp? It's not guaranteed you can decompose a PSD matrix as A<sup>2</sup>. In which case, the analysis in this section doesn't really work anymore*)
+				- Wigner's Semicircle law says that a symmetric matrix with upper-triangle part filled with zero-mean unit-variance IID random varaibles has normalized and shifted eigenvalue (λ / 2(sqrt(n) + 1/2) that converges to Beta(3/2, 3/2)
+			- Conclusion: the average eigenvalue scales as Θ(n), and so the RHS scales as Θ(n * η)
+		- Therefore, η must scale as 1/n to avoid divergence
+
+---
+#### Theory of the loss instability
+
+Step by step walkthrough of a loss spike:
+
+- (1) Healthy training: Both `u[i, t]` and `r[i, t]` are close to normal, with SD ≈ 1
+	- This implies low time-correlation in `g` and high value of gradient components relative to ε
+- (2) The gradients of some group of params `G` (e.g., a layer) vanish (meaning << ε)
+	- <img src="papernotes/figures/a-theory-on-adam-instability-in-large-scale-machine-learning-6.jpg" width="400" />
+	- This happens in earlier layers, where good feature representations have been learned
+	- Also, **it is much more common for deeper models to have vanishing `g[i, t]`**, and subsequently vanishing `u[i, t]`
+	- Moreover, the frequency of spikes increases later in training when the magnitude of `g` decreases
+- (3) `m[G, t]` and `v[G, t]` vanish
+	- Therefore, `u[G, t]` spikes at 0 due to ε
+	<img src="papernotes/figures/a-theory-on-adam-instability-in-large-scale-machine-learning-7.jpg" width="400" />
+	- `v[G, t]` remains unimodal for now
+- (4) `g[G, t]` becomes highly time-correlated, because:
+	- The model params remain unchanged since `u[G, t]` becomes close to 0
+	- Large batches reduce gradient noise
+- (5) Because of the time-correlation of `g`, `r[G, t]` changes from unimodal to bimodal. (`u[G, t]` remains spiked at 0)
+	- <img src="papernotes/figures/a-theory-on-adam-instability-in-large-scale-machine-learning-8.jpg" width="400" />
+- (6) Loss explosion happens:
+	- Params outside the group G slowly change since their updates `u` are still of order 1. Eventually, a "rare event" happens, where `g[G, t*]` becomes larger than ε.
+	- <img src="papernotes/figures/a-theory-on-adam-instability-in-large-scale-machine-learning-9.jpg" width="400" />
+	- Now, the distribution of `u[G, t]` will change from "spiked at 0" to the bimodal distribution of `r[i, t]`. **This implies divergence for standard learning rate values** according to earlier analysis
+	- Due to divergence, the next gradient estimation `g[G, t* + 1]` will be even larger, which brings `u` even closer to the bimodal distribution of `r`
+	- This process resembles a chain reaction
+- (7) Eventually, `g` starts to vary over large magnitudes and loses correlation in the time-domain, and so `r` and `u` become unimodal
+- (8) Training becomes healthy again
+	- If the size of the group G is small, the loss drops back to pre-explosion values very quickly, learning the good features again
+	- However, sometimes the loss does not always come back to pre-explosino values
+
+---
+#### Snapshots of large model training in the unstable regime
+
+- Snapshots of the 546b model during the final stages of the largest training run, with frequent instabilities
+	- <img src="papernotes/figures/a-theory-on-adam-instability-in-large-scale-machine-learning-10.jpg" width="250" />
+- We highlight 3 timesteps (marked in red), analyzing the token embedding layer:
+	- t1: loss has returned to pre-explosion values
+		- <img src="papernotes/figures/a-theory-on-adam-instability-in-large-scale-machine-learning-11.jpg" width="400" />
+	- t2: loss explosion has started
+		- <img src="papernotes/figures/a-theory-on-adam-instability-in-large-scale-machine-learning-12.jpg" width="400" />
+	- t3: loss explosion has ended by went flat instead of dropping back down
+		- <img src="papernotes/figures/a-theory-on-adam-instability-in-large-scale-machine-learning-13.jpg" width="400" />
+
+---
+#### Ideas for mitigations
+
+- Skip batches: restart training from a checkpoint ~100 steps before the spike, and skip ~200-500 data batches
+	- However, this wastes resources on rolling back the model and saving more frequent checkpoints
+- Tune down ε (as this lessens the prob that `u` will spike at 0)
+	- However, this does not play well with low-precision arithmetic
+- Reducing batch size will increase time-domain variance in gradient estimations
+	- However, large-scale distributed training encourages larger batch sizes

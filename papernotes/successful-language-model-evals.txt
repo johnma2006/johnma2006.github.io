@@ -1,0 +1,25 @@
+[https://www.jasonwei.net/blog/evals](https://www.jasonwei.net/blog/evals)
+  
+#### What makes a successful eval?
+
+- A good score on an eval must mean something significant and easily understandable
+	- The task should be meaningful as a proxy for something in intelligence that people care about, like language understanding and math
+	- e.g. HumanEval measures coding, GSM8K measures grad school math
+- Enough examples (at least 1000) to reduce variance
+	- Noise makes it hard to compare checkpoints or experiments
+- No mistakes in the eval
+	- If there are mistakes, people won't trust it
+- If the eval is too complicated, people won't easily understand it
+	- Critical to have a single-number metric
+- If the eval takes too much infra to set up, people won't run it
+
+#### Discussion
+
+- LLMs have made evals much harder (the "Key Problem" as described in the Eleuther paper)
+	- It would be nice if we standardized around a single prompt, like zero-shot CoT
+- Crowdsourced pairwise ratings like LMSYS are popular, but the downside is that we're not exactly sure what we're measuring (e.g. how much is style weighted compared to correctness)
+- Model-generated evals can be finicky IMO, but it's possible to do them well
+- Test set contamination: examples of the eval tend to leak into the internet, like arxiv papers and redidt
+	- One solution is to keep the test set hidden, but this introduces a lot of friction
+	- Another is to have both a public and private test set, and monitor whether any models deviate substantially on these two test sets
+

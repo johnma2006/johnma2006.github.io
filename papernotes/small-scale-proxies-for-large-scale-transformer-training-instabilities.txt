@@ -1,0 +1,13 @@
+[arXiv:2309.14322](https://arxiv.org/abs/2309.14322)
+
+<img src="papernotes/figures/small-scale-proxies-for-large-scale-transformer-training-instabilities-title.jpg" width="400" />
+<img src="papernotes/figures/small-scale-proxies-for-large-scale-transformer-training-instabilities-abstract.jpg" width="400" />
+
+#### Motivation
+
+- (*Note: this paper deals with loss instabilities that lead to slow divergence, as opposed to loss spikes*)
+
+---
+#### Analysis 
+
+
